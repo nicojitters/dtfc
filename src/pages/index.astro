@@ -1,10 +1,51 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/layout/Container.astro';
+import { WELCOME_HEADING, WELCOME_BODY, SECTION_BOXES, WORKSHOPS_BOX } from '@/data/landing';
 ---
 
-<BaseLayout title="Home" description="Developmental Theatre: Fearless Creativity">
-  <div class="mx-auto max-w-4xl px-6 py-16">
-    <h1>Welcome</h1>
-    <p class="mt-4">Site chrome installed. Real landing page in the next task.</p>
-  </div>
+<BaseLayout
+  title="Home"
+  description="Developmental Theatre: Fearless Creativity — theatre games, plays, Shakespeare, and tools for teachers, players, and helping-vocation professionals."
+>
+  <Container class="py-12 md:py-20">
+    <section
+      class="mx-auto max-w-3xl rounded-[var(--radius-card)] bg-white p-8 text-center shadow-[var(--shadow-soft)]"
+    >
+      <p class="font-display text-clay-500 text-2xl">{WELCOME_HEADING}</p>
+      {WELCOME_BODY.map((p) => <p class="text-ink-700 mt-4 text-lg">{p}</p>)}
+    </section>
+
+    <ul class="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {
+        SECTION_BOXES.map((box) => (
+          <li>
+            <a
+              href={box.href}
+              class="border-ivory-200 bg-ivory-50 block h-full rounded-[var(--radius-card)] border p-6 no-underline transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]"
+            >
+              <h2 class="text-xl">{box.label}</h2>
+              <p class="text-ink-500 mt-2 text-sm">{box.summary}</p>
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a
+          href={WORKSHOPS_BOX.href}
+          class="border-ivory-200 bg-ivory-100/50 block h-full rounded-[var(--radius-card)] border border-dashed p-6 no-underline transition hover:-translate-y-0.5"
+        >
+          <div class="flex items-center gap-2">
+            <h2 class="text-xl">{WORKSHOPS_BOX.label}</h2>
+            <span
+              class="bg-mustard-200 text-ink-700 rounded-[var(--radius-chip)] px-2 py-0.5 text-xs"
+            >
+              Coming Next Year
+            </span>
+          </div>
+          <p class="text-ink-500 mt-2 text-sm">{WORKSHOPS_BOX.summary}</p>
+        </a>
+      </li>
+    </ul>
+  </Container>
 </BaseLayout>

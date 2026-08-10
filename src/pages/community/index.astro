@@ -1,0 +1,23 @@
+---
+import SectionLayout from '@/layouts/SectionLayout.astro';
+import NewsletterSignup from '@/components/ui/NewsletterSignup.astro';
+---
+
+<SectionLayout
+  title="Community"
+  eyebrow="Coming soon"
+  section="community"
+  description="About DT:FC, how we're organized, membership, newsletters, and companion theatres."
+>
+  <div class="max-w-2xl space-y-4">
+    <p>
+      The Community section is in production. It will cover our purpose and values, our
+      distributed-leadership structure, membership, donations, newsletters, companion theatres, and
+      testimonials.
+    </p>
+    <p>Sign up below to be notified when new material lands.</p>
+  </div>
+  <div class="mt-6 max-w-md">
+    <NewsletterSignup source="community-stub" />
+  </div>
+</SectionLayout>

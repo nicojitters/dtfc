@@ -1,0 +1,30 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Container from '@/components/layout/Container.astro';
+import type { NavKey } from '@/lib/nav';
+
+interface Props {
+  title: string;
+  description?: string;
+  section: NavKey;
+  eyebrow?: string;
+}
+const { title, description, section, eyebrow } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} section={section}>
+  <Container class="py-12">
+    <header class="max-w-3xl">
+      {
+        eyebrow && (
+          <p class="text-sm font-medium tracking-wide text-teal-600 uppercase">{eyebrow}</p>
+        )
+      }
+      <h1 class="mt-2">{title}</h1>
+      {description && <p class="text-ink-500 mt-4 max-w-prose text-lg">{description}</p>}
+    </header>
+    <div class="mt-10">
+      <slot />
+    </div>
+  </Container>
+</BaseLayout>

@@ -1,0 +1,21 @@
+---
+import SectionLayout from '@/layouts/SectionLayout.astro';
+import NewsletterSignup from '@/components/ui/NewsletterSignup.astro';
+---
+
+<SectionLayout
+  title="Workshops"
+  eyebrow="Coming next year"
+  section="workshops"
+  description="In-person and online training for teachers, players, and helping-vocation professionals."
+>
+  <div class="max-w-2xl space-y-4">
+    <p>
+      DT:FC workshops launch next year. Drop your email and we'll notify you when registration
+      opens.
+    </p>
+  </div>
+  <div class="mt-6 max-w-md">
+    <NewsletterSignup source="workshops-interest" heading="Notify me when workshops open." />
+  </div>
+</SectionLayout>
