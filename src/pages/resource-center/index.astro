@@ -1,0 +1,69 @@
+---
+import SectionLayout from '@/layouts/SectionLayout.astro';
+import { listConcepts } from '@/lib/concepts';
+import { iconPath } from '@/lib/icons';
+const concepts = await listConcepts();
+---
+
+<SectionLayout
+  title="Players Resource Center"
+  section="resource-center"
+  eyebrow="Glossary"
+  description="Tools, vocabulary, key concepts, and definitions — the site-wide glossary."
+>
+  <div class="max-w-3xl">
+    <div class="rounded-[var(--radius-card)] bg-white p-4 shadow-[var(--shadow-soft)]">
+      <label class="block">
+        <span class="text-sm font-medium">Filter</span>
+        <input
+          type="search"
+          placeholder="Type to filter…"
+          class="border-ivory-200 bg-ivory-50 mt-1 w-full rounded border px-3 py-2 text-base"
+          data-concept-filter
+        />
+      </label>
+    </div>
+
+    <div
+      class="border-mustard-200 bg-mustard-200/40 text-ink-700 mt-6 rounded-[var(--radius-card)] border p-4 text-sm"
+    >
+      <strong>What are the ICONS and how are they used?</strong> Throughout the site, key concepts show
+      a small icon next to their name. Click or tap the icon anywhere it appears to open a definition
+      popover; then click "Read more →" to land here.
+    </div>
+
+    <ul
+      class="divide-ivory-200 border-ivory-200 mt-6 divide-y rounded-[var(--radius-card)] border bg-white"
+      data-concept-list
+    >
+      {
+        concepts.map((entry) => (
+          <li data-concept-name={entry.data.name.toLowerCase()}>
+            <a
+              href={`/resource-center/${entry.data.slug}/`}
+              class="hover:bg-ivory-50 flex items-start gap-3 p-4 no-underline"
+            >
+              <img src={iconPath(entry.data.icon)} alt="" width="24" height="24" class="mt-1" />
+              <div>
+                <p class="font-display text-ink-900 text-lg">{entry.data.name}</p>
+                <p class="text-ink-500 text-sm">{entry.data.shortDefinition}</p>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</SectionLayout>
+
+<script>
+  const filter = document.querySelector<HTMLInputElement>('[data-concept-filter]');
+  const list = document.querySelector<HTMLUListElement>('[data-concept-list]');
+  filter?.addEventListener('input', () => {
+    const q = filter.value.trim().toLowerCase();
+    list?.querySelectorAll<HTMLLIElement>('li').forEach((li) => {
+      const name = li.dataset.conceptName ?? '';
+      li.hidden = q.length > 0 && !name.includes(q);
+    });
+  });
+</script>
