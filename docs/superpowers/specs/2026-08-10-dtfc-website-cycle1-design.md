@@ -11,6 +11,7 @@
 The source spec covers a full content platform across 9 sections with ~60 source documents, an interactive timeline, forms, search, print PDFs, and audio embeds. Its own §9 lists a 10-phase build order. That's too much for a single spec → plan → implementation cycle.
 
 This document scopes **Cycle 1**. Subsequent cycles will each get their own spec:
+
 - Cycle 2 — Shakespeare section (script libraries, Ask Shakespeare, side-by-side Colloquial)
 - Cycle 3 — Children's Theatre (script pages, print stylesheet emphasis, Wayfarer's Journey SVG)
 - Cycle 4 — Legacy (founders, essays, interactive Timeline component)
@@ -187,12 +188,15 @@ Game body is MDX with three conventional headings the detail template renders:
 
 ```mdx
 ## Preparation
+
 …facilitator setup + steps…
 
 ## Facilitation
+
 …what happens in the room…
 
 ## Evaluation
+
 …debrief prompts, game-specific…
 ```
 
@@ -207,8 +211,8 @@ const concepts = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/concepts' }),
   schema: z.object({
     name: z.string(),
-    slug: z.string(),                    // matches filename, used by <Concept id="…" />
-    shortDefinition: z.string().max(240),// popover text
+    slug: z.string(), // matches filename, used by <Concept id="…" />
+    shortDefinition: z.string().max(240), // popover text
     icon: z.string().default('placeholder'),
     related: z.array(z.string()).default([]),
   }),
@@ -334,13 +338,13 @@ Icon button in the finder header opens a modal with an annotated static screensh
 
 Five section landings, all live at real routes using `SectionLayout`. Each shows the section title + a "coming soon" body describing what will land there, sourced from the corresponding section in the source spec (§4.3–4.7).
 
-| Route | Purpose |
-|---|---|
-| `/community/` | About DT:FC teaser + email capture |
-| `/shakespeare/` | List of forthcoming content from spec §4.3 |
-| `/childrens-theatre/` | List of forthcoming scripts (Water of Life, One Seed Child, etc.) |
-| `/legacy/` | Short Colorado Caravan paragraph + "History and timeline coming soon" |
-| `/workshops/` | "Coming Next Year" + email interest capture |
+| Route                 | Purpose                                                               |
+| --------------------- | --------------------------------------------------------------------- |
+| `/community/`         | About DT:FC teaser + email capture                                    |
+| `/shakespeare/`       | List of forthcoming content from spec §4.3                            |
+| `/childrens-theatre/` | List of forthcoming scripts (Water of Life, One Seed Child, etc.)     |
+| `/legacy/`            | Short Colorado Caravan paragraph + "History and timeline coming soon" |
+| `/workshops/`         | "Coming Next Year" + email interest capture                           |
 
 ### 8.4 Landing page (`/`)
 
@@ -385,8 +389,8 @@ Not flat corporate SaaS; not cutesy elementary. Editorial + handmade — the cal
   --color-ivory-50: #fbf7f0;
   --color-ink-900: #1b1b1b;
   --color-ink-500: #5c544a;
-  --font-display: "Fraunces", ui-serif, Georgia, serif;
-  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Fraunces', ui-serif, Georgia, serif;
+  --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
   --text-base: 1.0625rem;
   --leading-body: 1.6;
   --radius-card: 0.75rem;

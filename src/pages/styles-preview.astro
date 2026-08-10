@@ -1,0 +1,80 @@
+---
+import '@/styles/global.css';
+
+const clay = [50, 100, 300, 500, 700];
+const teal = [100, 400, 600, 800];
+const mustard = [200, 400, 600];
+const ivory = [50, 100, 200];
+const ink = [300, 500, 700, 900];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Design tokens</title>
+    <meta name="robots" content="noindex" />
+  </head>
+  <body class="mx-auto max-w-4xl space-y-10 p-8">
+    <header>
+      <h1>DT:FC design tokens</h1>
+      <p class="text-ink-500">Unlisted reference page for the design system.</p>
+    </header>
+
+    <section>
+      <h2>Colors</h2>
+      {
+        [
+          ['clay', clay],
+          ['teal', teal],
+          ['mustard', mustard],
+          ['ivory', ivory],
+          ['ink', ink],
+        ].map(([name, steps]) => (
+          <div class="mt-4">
+            <h3 class="text-lg">{name}</h3>
+            <div class="mt-2 flex flex-wrap gap-2">
+              {steps.map((step) => (
+                <div class="border-ivory-200 w-32 rounded-[var(--radius-card)] border p-3 text-sm">
+                  <div
+                    class={`h-16 rounded-md`}
+                    style={`background: var(--color-${name}-${step})`}
+                  />
+                  <div class="mt-2 font-mono text-xs">
+                    {name}-{step}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </section>
+
+    <section>
+      <h2>Typography</h2>
+      <div class="mt-4 space-y-3">
+        <div style="font-family: var(--font-display); font-size: var(--text-display);">
+          Display serif
+        </div>
+        <div class="text-3xl">H2 — Fraunces 3xl</div>
+        <div class="text-2xl">H3 — Fraunces 2xl</div>
+        <div class="text-xl">H4 — Fraunces xl</div>
+        <div class="max-w-prose text-base">
+          Body copy at 17px / 1.6. This paragraph should feel calm, readable at arm's length, and
+          pair naturally with the display serif. "Be Fearlessly Creative!"
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Shape + shadow</h2>
+      <div class="mt-4 grid grid-cols-3 gap-4">
+        <div class="rounded-[var(--radius-card)] bg-white p-4 shadow-[var(--shadow-soft)]">
+          Card
+        </div>
+        <div class="bg-clay-100 w-fit rounded-[var(--radius-chip)] px-4 py-1 text-sm">Chip</div>
+      </div>
+    </section>
+  </body>
+</html>
