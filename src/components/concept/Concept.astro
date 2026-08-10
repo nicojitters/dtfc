@@ -1,0 +1,25 @@
+---
+import { getConcept } from '@/lib/concepts';
+import { iconPath } from '@/lib/icons';
+import ConceptPopover from './ConceptPopover.astro';
+
+interface Props {
+  id: string;
+}
+const { id } = Astro.props;
+const entry = await getConcept(id);
+const popoverId = `concept-popover-${id}`;
+---
+
+<span class="inline-flex items-baseline">
+  <button
+    type="button"
+    popovertarget={popoverId}
+    class="text-clay-500 hover:bg-clay-50 focus-visible:bg-clay-50 inline-flex items-center gap-1 rounded px-1 py-0.5 no-underline"
+    aria-describedby={popoverId}
+  >
+    <img src={iconPath(entry.data.icon)} alt="" width="16" height="16" class="inline-block" />
+    <span class="border-clay-500 border-b border-dotted">{entry.data.name}</span>
+  </button>
+  <ConceptPopover entry={entry} popoverId={popoverId} />
+</span>
