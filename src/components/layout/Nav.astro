@@ -1,0 +1,31 @@
+---
+import { NAV_ITEMS, type NavKey } from '@/lib/nav';
+interface Props {
+  section?: NavKey;
+  class?: string;
+}
+const { section, class: className = '' } = Astro.props;
+---
+
+<ul class={`flex flex-col gap-1 md:flex-row md:items-center md:gap-6 ${className}`}>
+  {
+    NAV_ITEMS.map((item) => (
+      <li>
+        <a
+          href={item.href}
+          class={`text-ink-900 hover:text-clay-500 inline-flex items-center gap-2 py-1 no-underline ${
+            section === item.key ? 'border-clay-500 border-b-2' : ''
+          }`}
+          aria-current={section === item.key ? 'page' : undefined}
+        >
+          {item.label}
+          {item.comingSoon && (
+            <span class="bg-mustard-200 text-ink-700 rounded-[var(--radius-chip)] px-2 py-0.5 text-xs font-medium">
+              Coming Next Year
+            </span>
+          )}
+        </a>
+      </li>
+    ))
+  }
+</ul>

@@ -1,15 +1,10 @@
 ---
-import '@/styles/global.css';
+import BaseLayout from '@/layouts/BaseLayout.astro';
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>DT:FC — style check</title>
-  </head>
-  <body class="p-8">
-    <h1>Developmental Theatre: Fearless Creativity</h1>
-    <p class="text-ink-500">Tokens + type loaded.</p>
-  </body>
-</html>
+<BaseLayout title="Home" description="Developmental Theatre: Fearless Creativity">
+  <div class="mx-auto max-w-4xl px-6 py-16">
+    <h1>Welcome</h1>
+    <p class="mt-4">Site chrome installed. Real landing page in the next task.</p>
+  </div>
+</BaseLayout>

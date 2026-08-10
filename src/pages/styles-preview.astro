@@ -1,11 +1,11 @@
 ---
 import '@/styles/global.css';
 
-const clay = [50, 100, 300, 500, 700];
-const teal = [100, 400, 600, 800];
-const mustard = [200, 400, 600];
-const ivory = [50, 100, 200];
-const ink = [300, 500, 700, 900];
+const clay: number[] = [50, 100, 300, 500, 700];
+const teal: number[] = [100, 400, 600, 800];
+const mustard: number[] = [200, 400, 600];
+const ivory: number[] = [50, 100, 200];
+const ink: number[] = [300, 500, 700, 900];
 ---
 
 <!doctype html>
@@ -25,16 +25,16 @@ const ink = [300, 500, 700, 900];
       <h2>Colors</h2>
       {
         [
-          ['clay', clay],
-          ['teal', teal],
-          ['mustard', mustard],
-          ['ivory', ivory],
-          ['ink', ink],
-        ].map(([name, steps]) => (
+          ['clay', clay] as const,
+          ['teal', teal] as const,
+          ['mustard', mustard] as const,
+          ['ivory', ivory] as const,
+          ['ink', ink] as const,
+        ].map(([name, steps]: readonly [string, readonly number[]]) => (
           <div class="mt-4">
             <h3 class="text-lg">{name}</h3>
             <div class="mt-2 flex flex-wrap gap-2">
-              {steps.map((step) => (
+              {steps.map((step: number) => (
                 <div class="border-ivory-200 w-32 rounded-[var(--radius-card)] border p-3 text-sm">
                   <div
                     class={`h-16 rounded-md`}

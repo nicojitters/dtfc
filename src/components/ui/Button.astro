@@ -1,0 +1,27 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary';
+  class?: string;
+  type?: 'button' | 'submit';
+}
+const { href, variant = 'primary', class: className = '', type = 'button' } = Astro.props;
+const base = 'inline-flex items-center justify-center rounded px-4 py-2 font-medium no-underline';
+const styles =
+  variant === 'primary'
+    ? 'bg-clay-500 text-ivory-50 hover:bg-clay-700'
+    : 'border border-ink-900 text-ink-900 hover:bg-ivory-100';
+const cls = `${base} ${styles} ${className}`;
+---
+
+{
+  href ? (
+    <a href={href} class={cls}>
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class={cls}>
+      <slot />
+    </button>
+  )
+}
