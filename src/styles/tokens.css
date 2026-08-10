@@ -1,0 +1,50 @@
+@theme {
+  /* Color — palette */
+  --color-clay-50: #fbeee9;
+  --color-clay-100: #f3d1c5;
+  --color-clay-300: #d68a72;
+  --color-clay-500: #b85238;
+  --color-clay-700: #8a3b28;
+
+  --color-teal-100: #cfe1e5;
+  --color-teal-400: #4d8f9b;
+  --color-teal-600: #2c6e7a;
+  --color-teal-800: #1c4b54;
+
+  --color-mustard-200: #f4e0b0;
+  --color-mustard-400: #d9a94a;
+  --color-mustard-600: #a8801e;
+
+  --color-ivory-50: #fbf7f0;
+  --color-ivory-100: #f4ecdd;
+  --color-ivory-200: #e9dfc9;
+
+  --color-ink-900: #1b1b1b;
+  --color-ink-700: #3a3733;
+  --color-ink-500: #5c544a;
+  --color-ink-300: #948a7d;
+
+  /* Typography */
+  --font-display: 'Fraunces Variable', ui-serif, Georgia, serif;
+  --font-body: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --text-base: 1.0625rem; /* 17px */
+  --text-lg: 1.1875rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+  --text-display: clamp(2.5rem, 4vw + 1rem, 3.75rem);
+
+  --leading-body: 1.6;
+  --leading-tight: 1.2;
+
+  /* Shape */
+  --radius-card: 0.75rem;
+  --radius-chip: 999px;
+
+  /* Elevation */
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.06), 0 8px 24px -12px rgb(0 0 0 / 0.15);
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+}

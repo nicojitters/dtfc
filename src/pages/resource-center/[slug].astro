@@ -1,0 +1,20 @@
+---
+import { getCollection, render } from 'astro:content';
+import ConceptLayout from '@/layouts/ConceptLayout.astro';
+import Concept from '@/components/concept/Concept.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('concepts');
+  return entries.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<ConceptLayout entry={entry}>
+  <Content components={{ Concept }} />
+</ConceptLayout>

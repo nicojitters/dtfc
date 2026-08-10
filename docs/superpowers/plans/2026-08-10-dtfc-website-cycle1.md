@@ -35,6 +35,7 @@
 Files created across all tasks (grouped by responsibility):
 
 **Root config**
+
 - `package.json` — deps + scripts (Task 1)
 - `pnpm-workspace.yaml` — none needed; single-package repo
 - `tsconfig.json` — Astro's strict base + path alias `@/*` → `src/*` (Task 1)
@@ -45,11 +46,13 @@ Files created across all tasks (grouped by responsibility):
 - `CLAUDE.md` (Task 15)
 
 **Styles**
+
 - `src/styles/tokens.css` — `@theme` design tokens (Task 2)
 - `src/styles/global.css` — Tailwind import, font imports, base styles (Task 2)
 - `src/styles/print.css` — print stylesheet (Task 12)
 
 **Layouts + chrome**
+
 - `src/layouts/BaseLayout.astro` (Task 3)
 - `src/layouts/SectionLayout.astro` (Task 4)
 - `src/layouts/ConceptLayout.astro` (Task 7)
@@ -57,6 +60,7 @@ Files created across all tasks (grouped by responsibility):
 - `src/components/ui/NewsletterSignup.astro`, `Button.astro`, `Chip.astro` (Task 3)
 
 **Pages**
+
 - `src/pages/index.astro` (Task 4)
 - `src/pages/community/index.astro`, `shakespeare/index.astro`, `childrens-theatre/index.astro`, `legacy/index.astro`, `workshops/index.astro` (Task 4)
 - `src/pages/styles-preview.astro` (Task 2)
@@ -66,12 +70,14 @@ Files created across all tasks (grouped by responsibility):
 - `src/pages/theatre-games/[slug].astro` (Task 12)
 
 **Content**
+
 - `src/content.config.ts` — collections + Zod schemas (Task 5)
 - `src/content/games/puppets-marionettes.mdx`, `changing-person-activity.mdx` (Task 5); 8 more (Task 13)
 - `src/content/concepts/cohesion.mdx`, `theatre-games.mdx` (Task 5); 8 more (Task 13)
 - `src/data/landing.ts` — landing-page section-box copy + teaser questions (Task 4)
 
 **Concept system**
+
 - `src/components/concept/Concept.astro` (Task 6)
 - `src/components/concept/ConceptPopover.astro` (Task 6)
 - `src/lib/concepts.ts` — slug lookup for concept entries (Task 6)
@@ -81,6 +87,7 @@ Files created across all tasks (grouped by responsibility):
 - `public/icons/placeholder.svg` (Task 6)
 
 **Games section**
+
 - `src/lib/gameFilter.ts` — pure filter reducer + URL serialization (Task 10)
 - `tests/unit/gameFilter.test.ts` (Task 10)
 - `src/components/games/GameFinder.tsx` — Preact island (Task 11)
@@ -89,6 +96,7 @@ Files created across all tasks (grouped by responsibility):
 - `src/components/games/HowToModal.astro` (Task 11)
 
 **E2E**
+
 - `tests/e2e/smoke.spec.ts` (Task 14)
 
 ---
@@ -100,9 +108,11 @@ Files created across all tasks (grouped by responsibility):
 Produce a running Astro 5 site at `localhost:4321` with a hello-world page.
 
 **Files:**
+
 - Create: `package.json`, `tsconfig.json`, `astro.config.mjs`, `.gitignore`, `.prettierrc`, `.prettierignore`, `.editorconfig`, `src/pages/index.astro`
 
 **Interfaces:**
+
 - Consumes: nothing (first task)
 - Produces: working `pnpm dev`, `pnpm build`, `pnpm check` scripts; TypeScript path alias `@/*` → `src/*`; MDX + Preact + sitemap integrations pre-registered so later tasks can drop into them.
 
@@ -194,9 +204,7 @@ test-results
   "printWidth": 100,
   "trailingComma": "all",
   "plugins": ["prettier-plugin-astro"],
-  "overrides": [
-    { "files": "*.astro", "options": { "parser": "astro" } }
-  ]
+  "overrides": [{ "files": "*.astro", "options": { "parser": "astro" } }]
 }
 ```
 
@@ -235,7 +243,9 @@ process.exit(0);
 
 ```astro
 ---
+
 ---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -283,10 +293,12 @@ git commit -m "feat: scaffold Astro 5 project with TypeScript strict"
 Install Tailwind v4, self-host Fraunces + Inter, define `@theme` tokens and base styles, add an unlisted `/styles-preview` page that renders every token so Desirae has a review surface.
 
 **Files:**
+
 - Modify: `astro.config.mjs` (add tailwindcss vite plugin), `package.json` (add deps)
 - Create: `src/styles/tokens.css`, `src/styles/global.css`, `src/pages/styles-preview.astro`
 
 **Interfaces:**
+
 - Produces: color / font / spacing tokens accessible via Tailwind utilities (`text-clay-500`, `font-display`, etc.); global font stack applied to `body`; `/styles-preview` renders all tokens.
 
 - [ ] **Step 1: Install Tailwind v4 and font packages**
@@ -328,7 +340,7 @@ export default defineConfig({
 ```css
 @theme {
   /* Color — palette */
-  --color-clay-50:  #fbeee9;
+  --color-clay-50: #fbeee9;
   --color-clay-100: #f3d1c5;
   --color-clay-300: #d68a72;
   --color-clay-500: #b85238;
@@ -343,9 +355,9 @@ export default defineConfig({
   --color-mustard-400: #d9a94a;
   --color-mustard-600: #a8801e;
 
-  --color-ivory-50:   #fbf7f0;
-  --color-ivory-100:  #f4ecdd;
-  --color-ivory-200:  #e9dfc9;
+  --color-ivory-50: #fbf7f0;
+  --color-ivory-100: #f4ecdd;
+  --color-ivory-200: #e9dfc9;
 
   --color-ink-900: #1b1b1b;
   --color-ink-700: #3a3733;
@@ -356,11 +368,11 @@ export default defineConfig({
   --font-display: 'Fraunces Variable', ui-serif, Georgia, serif;
   --font-body: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
 
-  --text-base: 1.0625rem;   /* 17px */
-  --text-lg:   1.1875rem;
-  --text-xl:   1.375rem;
-  --text-2xl:  1.75rem;
-  --text-3xl:  2.25rem;
+  --text-base: 1.0625rem; /* 17px */
+  --text-lg: 1.1875rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
   --text-display: clamp(2.5rem, 4vw + 1rem, 3.75rem);
 
   --leading-body: 1.6;
@@ -397,16 +409,31 @@ export default defineConfig({
     -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-display);
     line-height: var(--leading-tight);
     color: var(--color-ink-900);
   }
 
-  h1 { font-size: var(--text-display); font-weight: 500; }
-  h2 { font-size: var(--text-3xl); font-weight: 500; }
-  h3 { font-size: var(--text-2xl); font-weight: 500; }
-  h4 { font-size: var(--text-xl); font-weight: 500; }
+  h1 {
+    font-size: var(--text-display);
+    font-weight: 500;
+  }
+  h2 {
+    font-size: var(--text-3xl);
+    font-weight: 500;
+  }
+  h3 {
+    font-size: var(--text-2xl);
+    font-weight: 500;
+  }
+  h4 {
+    font-size: var(--text-xl);
+    font-weight: 500;
+  }
 
   a {
     color: var(--color-clay-500);
@@ -414,7 +441,9 @@ export default defineConfig({
     text-underline-offset: 3px;
     text-decoration-thickness: 1px;
   }
-  a:hover { color: var(--color-clay-700); }
+  a:hover {
+    color: var(--color-clay-700);
+  }
 
   :focus-visible {
     outline: 2px solid var(--color-teal-600);
@@ -423,7 +452,9 @@ export default defineConfig({
   }
 
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       animation-duration: 0.001ms !important;
       transition-duration: 0.001ms !important;
     }
@@ -432,10 +463,12 @@ export default defineConfig({
 
 .sr-only {
   position: absolute;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
   overflow: hidden;
-  clip: rect(0,0,0,0);
+  clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
 }
@@ -449,6 +482,7 @@ Replace the current file with a version that imports the stylesheet so the brows
 ---
 import '@/styles/global.css';
 ---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -476,6 +510,7 @@ const mustard = [200, 400, 600];
 const ivory = [50, 100, 200];
 const ink = [300, 500, 700, 900];
 ---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -483,7 +518,7 @@ const ink = [300, 500, 700, 900];
     <title>Design tokens</title>
     <meta name="robots" content="noindex" />
   </head>
-  <body class="mx-auto max-w-4xl p-8 space-y-10">
+  <body class="mx-auto max-w-4xl space-y-10 p-8">
     <header>
       <h1>DT:FC design tokens</h1>
       <p class="text-ink-500">Unlisted reference page for the design system.</p>
@@ -491,34 +526,46 @@ const ink = [300, 500, 700, 900];
 
     <section>
       <h2>Colors</h2>
-      {[
-        ['clay', clay], ['teal', teal], ['mustard', mustard],
-        ['ivory', ivory], ['ink', ink],
-      ].map(([name, steps]) => (
-        <div class="mt-4">
-          <h3 class="text-lg">{name}</h3>
-          <div class="mt-2 flex flex-wrap gap-2">
-            {steps.map(step => (
-              <div class="w-32 rounded-[var(--radius-card)] border border-ivory-200 p-3 text-sm">
-                <div class={`h-16 rounded-md`} style={`background: var(--color-${name}-${step})`}></div>
-                <div class="mt-2 font-mono text-xs">{name}-{step}</div>
-              </div>
-            ))}
+      {
+        [
+          ['clay', clay],
+          ['teal', teal],
+          ['mustard', mustard],
+          ['ivory', ivory],
+          ['ink', ink],
+        ].map(([name, steps]) => (
+          <div class="mt-4">
+            <h3 class="text-lg">{name}</h3>
+            <div class="mt-2 flex flex-wrap gap-2">
+              {steps.map((step) => (
+                <div class="border-ivory-200 w-32 rounded-[var(--radius-card)] border p-3 text-sm">
+                  <div
+                    class={`h-16 rounded-md`}
+                    style={`background: var(--color-${name}-${step})`}
+                  />
+                  <div class="mt-2 font-mono text-xs">
+                    {name}-{step}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      }
     </section>
 
     <section>
       <h2>Typography</h2>
       <div class="mt-4 space-y-3">
-        <div style="font-family: var(--font-display); font-size: var(--text-display);">Display serif</div>
+        <div style="font-family: var(--font-display); font-size: var(--text-display);">
+          Display serif
+        </div>
         <div class="text-3xl">H2 — Fraunces 3xl</div>
         <div class="text-2xl">H3 — Fraunces 2xl</div>
         <div class="text-xl">H4 — Fraunces xl</div>
-        <div class="text-base max-w-prose">
-          Body copy at 17px / 1.6. This paragraph should feel calm, readable at arm's length,
-          and pair naturally with the display serif. "Be Fearlessly Creative!"
+        <div class="max-w-prose text-base">
+          Body copy at 17px / 1.6. This paragraph should feel calm, readable at arm's length, and
+          pair naturally with the display serif. "Be Fearlessly Creative!"
         </div>
       </div>
     </section>
@@ -526,8 +573,10 @@ const ink = [300, 500, 700, 900];
     <section>
       <h2>Shape + shadow</h2>
       <div class="mt-4 grid grid-cols-3 gap-4">
-        <div class="rounded-[var(--radius-card)] bg-white p-4 shadow-[var(--shadow-soft)]">Card</div>
-        <div class="rounded-[var(--radius-chip)] bg-clay-100 px-4 py-1 text-sm w-fit">Chip</div>
+        <div class="rounded-[var(--radius-card)] bg-white p-4 shadow-[var(--shadow-soft)]">
+          Card
+        </div>
+        <div class="bg-clay-100 w-fit rounded-[var(--radius-chip)] px-4 py-1 text-sm">Chip</div>
       </div>
     </section>
   </body>
@@ -537,6 +586,7 @@ const ink = [300, 500, 700, 900];
 - [ ] **Step 8: Verify the dev server renders both pages with tokens applied**
 
 Run: `pnpm dev` in one terminal, then in another:
+
 - `curl -s http://localhost:4321 | grep 'Tokens + type loaded'`
 - `curl -s http://localhost:4321/styles-preview | grep 'design tokens'`
 
@@ -561,9 +611,11 @@ git commit -m "feat: add design tokens, typography, styles-preview reference pag
 Build the reusable page shell: BaseLayout, Header with 7-item nav (including Workshops badge), mobile menu, Footer with newsletter signup UI, skip-to-content link.
 
 **Files:**
+
 - Create: `src/layouts/BaseLayout.astro`, `src/components/layout/Header.astro`, `Nav.astro`, `Footer.astro`, `Container.astro`, `SkipLink.astro`, `src/components/ui/NewsletterSignup.astro`, `Button.astro`, `Chip.astro`, `src/lib/nav.ts`
 
 **Interfaces:**
+
 - Produces: `<BaseLayout title="…" description="…" section="…">…</BaseLayout>` — wraps every page with header, main, footer, skip link. `section` prop marks the current nav item (one of the seven route keys). Also exports `NAV_ITEMS` from `@/lib/nav`.
 
 - [ ] **Step 1: Create `src/lib/nav.ts`**
@@ -600,9 +652,13 @@ export const NAV_ITEMS: NavItem[] = [
 
 ```astro
 ---
+
 ---
-<a href="#main-content"
-   class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-ink-900 focus:px-4 focus:py-2 focus:text-ivory-50">
+
+<a
+  href="#main-content"
+  class="focus:bg-ink-900 focus:text-ivory-50 sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded focus:px-4 focus:py-2"
+>
   Skip to main content
 </a>
 ```
@@ -611,9 +667,12 @@ export const NAV_ITEMS: NavItem[] = [
 
 ```astro
 ---
-interface Props { class?: string; }
+interface Props {
+  class?: string;
+}
 const { class: className = '' } = Astro.props;
 ---
+
 <div class={`mx-auto w-full max-w-6xl px-5 md:px-8 ${className}`}>
   <slot />
 </div>
@@ -624,28 +683,34 @@ const { class: className = '' } = Astro.props;
 ```astro
 ---
 import { NAV_ITEMS, type NavKey } from '@/lib/nav';
-interface Props { section?: NavKey; class?: string; }
+interface Props {
+  section?: NavKey;
+  class?: string;
+}
 const { section, class: className = '' } = Astro.props;
 ---
+
 <ul class={`flex flex-col gap-1 md:flex-row md:items-center md:gap-6 ${className}`}>
-  {NAV_ITEMS.map(item => (
-    <li>
-      <a
-        href={item.href}
-        class={`inline-flex items-center gap-2 py-1 text-ink-900 no-underline hover:text-clay-500 ${
-          section === item.key ? 'border-b-2 border-clay-500' : ''
-        }`}
-        aria-current={section === item.key ? 'page' : undefined}
-      >
-        {item.label}
-        {item.comingSoon && (
-          <span class="rounded-[var(--radius-chip)] bg-mustard-200 px-2 py-0.5 text-xs font-medium text-ink-700">
-            Coming Next Year
-          </span>
-        )}
-      </a>
-    </li>
-  ))}
+  {
+    NAV_ITEMS.map((item) => (
+      <li>
+        <a
+          href={item.href}
+          class={`text-ink-900 hover:text-clay-500 inline-flex items-center gap-2 py-1 no-underline ${
+            section === item.key ? 'border-clay-500 border-b-2' : ''
+          }`}
+          aria-current={section === item.key ? 'page' : undefined}
+        >
+          {item.label}
+          {item.comingSoon && (
+            <span class="bg-mustard-200 text-ink-700 rounded-[var(--radius-chip)] px-2 py-0.5 text-xs font-medium">
+              Coming Next Year
+            </span>
+          )}
+        </a>
+      </li>
+    ))
+  }
 </ul>
 ```
 
@@ -658,19 +723,22 @@ Includes a small vanilla-JS mobile menu toggle — no framework needed.
 import Container from './Container.astro';
 import Nav from './Nav.astro';
 import type { NavKey } from '@/lib/nav';
-interface Props { section?: NavKey; }
+interface Props {
+  section?: NavKey;
+}
 const { section } = Astro.props;
 ---
-<header class="border-b border-ivory-200 bg-ivory-50">
+
+<header class="border-ivory-200 bg-ivory-50 border-b">
   <Container class="flex items-center justify-between py-4">
-    <a href="/" class="flex items-center gap-3 no-underline text-ink-900">
-      <img src="/DTFC-logo.png" alt="" width="40" height="40" class="rounded-full bg-clay-100" />
+    <a href="/" class="text-ink-900 flex items-center gap-3 no-underline">
+      <img src="/DTFC-logo.png" alt="" width="40" height="40" class="bg-clay-100 rounded-full" />
       <span class="font-display text-xl">DT:FC</span>
     </a>
 
     <button
       type="button"
-      class="md:hidden rounded border border-ivory-200 px-3 py-2 text-sm"
+      class="border-ivory-200 rounded border px-3 py-2 text-sm md:hidden"
       aria-expanded="false"
       aria-controls="mobile-nav"
       data-mobile-toggle
@@ -683,7 +751,7 @@ const { section } = Astro.props;
     </nav>
   </Container>
 
-  <div id="mobile-nav" hidden class="md:hidden border-t border-ivory-200 bg-ivory-50">
+  <div id="mobile-nav" hidden class="border-ivory-200 bg-ivory-50 border-t md:hidden">
     <Container class="py-4">
       <Nav section={section} />
     </Container>
@@ -705,12 +773,14 @@ const { section } = Astro.props;
 
 ```astro
 ---
-interface Props { source?: string; heading?: string; }
-const {
-  source = 'footer',
-  heading = 'Get monthly DT:FC news, new games, and new plays.',
-} = Astro.props;
+interface Props {
+  source?: string;
+  heading?: string;
+}
+const { source = 'footer', heading = 'Get monthly DT:FC news, new games, and new plays.' } =
+  Astro.props;
 ---
+
 <form
   class="flex flex-col gap-2 sm:flex-row sm:items-end"
   data-newsletter
@@ -718,29 +788,29 @@ const {
   novalidate
 >
   <label class="flex-1">
-    <span class="block text-sm font-medium text-ink-700">{heading}</span>
+    <span class="text-ink-700 block text-sm font-medium">{heading}</span>
     <input
       type="email"
       required
       name="email"
       autocomplete="email"
       placeholder="you@example.com"
-      class="mt-1 w-full rounded border border-ivory-200 bg-white px-3 py-2 text-base"
+      class="border-ivory-200 mt-1 w-full rounded border bg-white px-3 py-2 text-base"
     />
   </label>
   <button
     type="submit"
-    class="rounded bg-clay-500 px-4 py-2 font-medium text-ivory-50 hover:bg-clay-700"
+    class="bg-clay-500 text-ivory-50 hover:bg-clay-700 rounded px-4 py-2 font-medium"
   >
     Notify me
   </button>
 </form>
-<p class="mt-2 text-xs text-ink-500">We won't share your email.</p>
+<p class="text-ink-500 mt-2 text-xs">We won't share your email.</p>
 
 <script>
   // TODO(esp): wire this to the client's ESP (see CLAUDE.md § Newsletter).
-  document.querySelectorAll<HTMLFormElement>('[data-newsletter]').forEach(form => {
-    form.addEventListener('submit', ev => {
+  document.querySelectorAll<HTMLFormElement>('[data-newsletter]').forEach((form) => {
+    form.addEventListener('submit', (ev) => {
       ev.preventDefault();
       const data = new FormData(form);
       // eslint-disable-next-line no-console
@@ -764,27 +834,32 @@ import { NAV_ITEMS } from '@/lib/nav';
 import NewsletterSignup from '@/components/ui/NewsletterSignup.astro';
 const year = 2026; // build-time literal; avoid new Date() to keep the plan deterministic
 ---
-<footer class="mt-16 border-t border-ivory-200 bg-ivory-100">
+
+<footer class="border-ivory-200 bg-ivory-100 mt-16 border-t">
   <Container class="grid gap-10 py-12 md:grid-cols-3">
     <div>
       <p class="font-display text-xl">Developmental Theatre: Fearless Creativity</p>
-      <p class="mt-2 text-sm text-ink-500">
+      <p class="text-ink-500 mt-2 text-sm">
         Fiscally sponsored by We Tell Stories, Inc., a California 501(c)(3).
       </p>
     </div>
 
     <nav aria-label="Footer">
       <ul class="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
-        {NAV_ITEMS.map(item => (
-          <li><a href={item.href}>{item.label}</a></li>
-        ))}
+        {
+          NAV_ITEMS.map((item) => (
+            <li>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))
+        }
       </ul>
     </nav>
 
     <NewsletterSignup source="footer" />
   </Container>
-  <div class="border-t border-ivory-200">
-    <Container class="flex flex-wrap items-center justify-between gap-2 py-4 text-xs text-ink-500">
+  <div class="border-ivory-200 border-t">
+    <Container class="text-ink-500 flex flex-wrap items-center justify-between gap-2 py-4 text-xs">
       <span>&copy; {year} Developmental Theatre: Fearless Creativity</span>
       <span>
         <a href="/community/">About</a> · <a href="/community/">Donate</a>
@@ -811,6 +886,7 @@ interface Props {
 }
 const { title, description, section } = Astro.props;
 ---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -819,7 +895,7 @@ const { title, description, section } = Astro.props;
     <title>{title} — DT:FC</title>
     {description && <meta name="description" content={description} />}
   </head>
-  <body class="min-h-screen bg-ivory-50 text-ink-900">
+  <body class="bg-ivory-50 text-ink-900 min-h-screen">
     <SkipLink />
     <Header section={section} />
     <main id="main-content" class="pt-6 md:pt-10">
@@ -844,14 +920,23 @@ interface Props {
 }
 const { href, variant = 'primary', class: className = '', type = 'button' } = Astro.props;
 const base = 'inline-flex items-center justify-center rounded px-4 py-2 font-medium no-underline';
-const styles = variant === 'primary'
-  ? 'bg-clay-500 text-ivory-50 hover:bg-clay-700'
-  : 'border border-ink-900 text-ink-900 hover:bg-ivory-100';
+const styles =
+  variant === 'primary'
+    ? 'bg-clay-500 text-ivory-50 hover:bg-clay-700'
+    : 'border border-ink-900 text-ink-900 hover:bg-ivory-100';
 const cls = `${base} ${styles} ${className}`;
 ---
-{href
-  ? <a href={href} class={cls}><slot /></a>
-  : <button type={type} class={cls}><slot /></button>
+
+{
+  href ? (
+    <a href={href} class={cls}>
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class={cls}>
+      <slot />
+    </button>
+  )
 }
 ```
 
@@ -859,7 +944,10 @@ const cls = `${base} ${styles} ${className}`;
 
 ```astro
 ---
-interface Props { tone?: 'clay' | 'teal' | 'mustard' | 'neutral'; class?: string; }
+interface Props {
+  tone?: 'clay' | 'teal' | 'mustard' | 'neutral';
+  class?: string;
+}
 const { tone = 'neutral', class: className = '' } = Astro.props;
 const tones = {
   clay: 'bg-clay-100 text-clay-700',
@@ -868,7 +956,10 @@ const tones = {
   neutral: 'bg-ivory-200 text-ink-700',
 };
 ---
-<span class={`inline-flex items-center rounded-[var(--radius-chip)] px-3 py-0.5 text-xs font-medium ${tones[tone]} ${className}`}>
+
+<span
+  class={`inline-flex items-center rounded-[var(--radius-chip)] px-3 py-0.5 text-xs font-medium ${tones[tone]} ${className}`}
+>
   <slot />
 </span>
 ```
@@ -893,6 +984,7 @@ Placeholder still — real landing comes in Task 4.
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 ---
+
 <BaseLayout title="Home" description="Developmental Theatre: Fearless Creativity">
   <div class="mx-auto max-w-4xl px-6 py-16">
     <h1>Welcome</h1>
@@ -904,6 +996,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 - [ ] **Step 12: Verify dev server renders the shell**
 
 Run: `pnpm dev`; open `http://localhost:4321/` in a browser. Check:
+
 - Header with logo + 7 nav items (Workshops shows "Coming Next Year" badge)
 - Skip-to-content link appears when you press Tab
 - Footer with tri-column layout + newsletter form
@@ -931,10 +1024,12 @@ git commit -m "feat: add BaseLayout with Header, Footer, mobile nav, newsletter 
 Populate the landing page (center welcome + 6 section boxes + Workshops secondary box) and create the 5 stub section landings using a shared `SectionLayout`.
 
 **Files:**
+
 - Create: `src/layouts/SectionLayout.astro`, `src/data/landing.ts`, `src/pages/community/index.astro`, `src/pages/shakespeare/index.astro`, `src/pages/childrens-theatre/index.astro`, `src/pages/legacy/index.astro`, `src/pages/workshops/index.astro`
 - Modify: `src/pages/index.astro`
 
 **Interfaces:**
+
 - Produces: `<SectionLayout title description section eyebrow?>…</SectionLayout>` — renders section page shell with eyebrow-label, big title, description, and body slot.
 - Produces: exported `SECTION_BOXES` from `@/data/landing` — array of `{ key, label, href, summary, teaser? }` used by the landing page.
 
@@ -965,7 +1060,7 @@ export const SECTION_BOXES: SectionBox[] = [
     key: 'community',
     label: 'Community',
     href: '/community/',
-    summary: 'Who we are, how we\'re organized, newsletters, and companion theatres.',
+    summary: "Who we are, how we're organized, newsletters, and companion theatres.",
     teasers: ['What is a "fearlessly creative" community?', 'How can I join?'],
   },
   {
@@ -981,8 +1076,8 @@ export const SECTION_BOXES: SectionBox[] = [
     href: '/shakespeare/',
     summary: 'Scenes, monologues, themed montages, and 40-minute cuttings for K through adult.',
     teasers: [
-      'How many of Shakespeare\'s plays are performed now — 440+ years later?',
-      'Why leave the language as Shakespeare\'s own?',
+      "How many of Shakespeare's plays are performed now — 440+ years later?",
+      "Why leave the language as Shakespeare's own?",
     ],
   },
   {
@@ -990,13 +1085,17 @@ export const SECTION_BOXES: SectionBox[] = [
     label: "Children's Theatre",
     href: '/childrens-theatre/',
     summary: 'Plays, teaching modules, and storytelling — myth-driven and minimalist.',
-    teasers: ['Why do 600 kids sit still for these plays?', 'How can children write a play together?'],
+    teasers: [
+      'Why do 600 kids sit still for these plays?',
+      'How can children write a play together?',
+    ],
   },
   {
     key: 'legacy',
     label: 'Legacy',
     href: '/legacy/',
-    summary: 'The Colorado Caravan story, founders, essays, and the Developmental Theatre timeline.',
+    summary:
+      'The Colorado Caravan story, founders, essays, and the Developmental Theatre timeline.',
     teasers: ['In the 1970s what did the University of Colorado create that led to this website?'],
   },
   {
@@ -1034,12 +1133,17 @@ interface Props {
 }
 const { title, description, section, eyebrow } = Astro.props;
 ---
+
 <BaseLayout title={title} description={description} section={section}>
   <Container class="py-12">
     <header class="max-w-3xl">
-      {eyebrow && <p class="text-sm font-medium uppercase tracking-wide text-teal-600">{eyebrow}</p>}
+      {
+        eyebrow && (
+          <p class="text-sm font-medium tracking-wide text-teal-600 uppercase">{eyebrow}</p>
+        )
+      }
       <h1 class="mt-2">{title}</h1>
-      {description && <p class="mt-4 text-lg text-ink-500 max-w-prose">{description}</p>}
+      {description && <p class="text-ink-500 mt-4 max-w-prose text-lg">{description}</p>}
     </header>
     <div class="mt-10">
       <slot />
@@ -1056,42 +1160,47 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/layout/Container.astro';
 import { WELCOME_HEADING, WELCOME_BODY, SECTION_BOXES, WORKSHOPS_BOX } from '@/data/landing';
 ---
+
 <BaseLayout
   title="Home"
   description="Developmental Theatre: Fearless Creativity — theatre games, plays, Shakespeare, and tools for teachers, players, and helping-vocation professionals."
 >
   <Container class="py-12 md:py-20">
-    <section class="mx-auto max-w-3xl rounded-[var(--radius-card)] bg-white p-8 shadow-[var(--shadow-soft)] text-center">
-      <p class="font-display text-2xl text-clay-500">{WELCOME_HEADING}</p>
-      {WELCOME_BODY.map(p => (
-        <p class="mt-4 text-lg text-ink-700">{p}</p>
-      ))}
+    <section
+      class="mx-auto max-w-3xl rounded-[var(--radius-card)] bg-white p-8 text-center shadow-[var(--shadow-soft)]"
+    >
+      <p class="font-display text-clay-500 text-2xl">{WELCOME_HEADING}</p>
+      {WELCOME_BODY.map((p) => <p class="text-ink-700 mt-4 text-lg">{p}</p>)}
     </section>
 
     <ul class="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {SECTION_BOXES.map(box => (
-        <li>
-          <a
-            href={box.href}
-            class="block h-full rounded-[var(--radius-card)] border border-ivory-200 bg-ivory-50 p-6 no-underline transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]"
-          >
-            <h2 class="text-xl">{box.label}</h2>
-            <p class="mt-2 text-sm text-ink-500">{box.summary}</p>
-          </a>
-        </li>
-      ))}
+      {
+        SECTION_BOXES.map((box) => (
+          <li>
+            <a
+              href={box.href}
+              class="border-ivory-200 bg-ivory-50 block h-full rounded-[var(--radius-card)] border p-6 no-underline transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]"
+            >
+              <h2 class="text-xl">{box.label}</h2>
+              <p class="text-ink-500 mt-2 text-sm">{box.summary}</p>
+            </a>
+          </li>
+        ))
+      }
       <li>
         <a
           href={WORKSHOPS_BOX.href}
-          class="block h-full rounded-[var(--radius-card)] border border-dashed border-ivory-200 bg-ivory-100/50 p-6 no-underline transition hover:-translate-y-0.5"
+          class="border-ivory-200 bg-ivory-100/50 block h-full rounded-[var(--radius-card)] border border-dashed p-6 no-underline transition hover:-translate-y-0.5"
         >
           <div class="flex items-center gap-2">
             <h2 class="text-xl">{WORKSHOPS_BOX.label}</h2>
-            <span class="rounded-[var(--radius-chip)] bg-mustard-200 px-2 py-0.5 text-xs text-ink-700">
+            <span
+              class="bg-mustard-200 text-ink-700 rounded-[var(--radius-chip)] px-2 py-0.5 text-xs"
+            >
               Coming Next Year
             </span>
           </div>
-          <p class="mt-2 text-sm text-ink-500">{WORKSHOPS_BOX.summary}</p>
+          <p class="text-ink-500 mt-2 text-sm">{WORKSHOPS_BOX.summary}</p>
         </a>
       </li>
     </ul>
@@ -1108,6 +1217,7 @@ import { WELCOME_HEADING, WELCOME_BODY, SECTION_BOXES, WORKSHOPS_BOX } from '@/d
 import SectionLayout from '@/layouts/SectionLayout.astro';
 import NewsletterSignup from '@/components/ui/NewsletterSignup.astro';
 ---
+
 <SectionLayout
   title="Community"
   eyebrow="Coming soon"
@@ -1115,7 +1225,11 @@ import NewsletterSignup from '@/components/ui/NewsletterSignup.astro';
   description="About DT:FC, how we're organized, membership, newsletters, and companion theatres."
 >
   <div class="max-w-2xl space-y-4">
-    <p>The Community section is in production. It will cover our purpose and values, our distributed-leadership structure, membership, donations, newsletters, companion theatres, and testimonials.</p>
+    <p>
+      The Community section is in production. It will cover our purpose and values, our
+      distributed-leadership structure, membership, donations, newsletters, companion theatres, and
+      testimonials.
+    </p>
     <p>Sign up below to be notified when new material lands.</p>
   </div>
   <div class="mt-6 max-w-md">
@@ -1130,6 +1244,7 @@ import NewsletterSignup from '@/components/ui/NewsletterSignup.astro';
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
 ---
+
 <SectionLayout
   title="Shakespeare"
   eyebrow="Coming soon"
@@ -1138,9 +1253,12 @@ import SectionLayout from '@/layouts/SectionLayout.astro';
 >
   <div class="max-w-2xl">
     <p>In production for this section:</p>
-    <ul class="mt-4 list-disc space-y-1 pl-6 text-ink-700">
+    <ul class="text-ink-700 mt-4 list-disc space-y-1 pl-6">
       <li>Creating Fearless Shakespeare Scripts — four alternatives to staging a full play</li>
-      <li>Script libraries — soliloquies, scenes, scenes around a theme, cuttings, Children's Shakespeare</li>
+      <li>
+        Script libraries — soliloquies, scenes, scenes around a theme, cuttings, Children's
+        Shakespeare
+      </li>
       <li>Shakespeare Into Current Colloquial Language — side-by-side texts</li>
       <li>Ask Shakespeare — Q&amp;A archive</li>
       <li>Honoring Our Guides (Shakespeare)</li>
@@ -1155,6 +1273,7 @@ import SectionLayout from '@/layouts/SectionLayout.astro';
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
 ---
+
 <SectionLayout
   title="Children's Theatre"
   eyebrow="Coming soon"
@@ -1163,7 +1282,7 @@ import SectionLayout from '@/layouts/SectionLayout.astro';
 >
   <div class="max-w-2xl">
     <p>Scripts in production:</p>
-    <ul class="mt-4 list-disc space-y-1 pl-6 text-ink-700">
+    <ul class="text-ink-700 mt-4 list-disc space-y-1 pl-6">
       <li>Water of Life</li>
       <li>One Seed Child (© 1973/2022 Chuck and Lola Wilcox)</li>
       <li>The Treasure Inside</li>
@@ -1182,6 +1301,7 @@ import SectionLayout from '@/layouts/SectionLayout.astro';
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
 ---
+
 <SectionLayout
   title="Legacy"
   eyebrow="Coming soon"
@@ -1190,15 +1310,19 @@ import SectionLayout from '@/layouts/SectionLayout.astro';
 >
   <div class="max-w-2xl space-y-4">
     <p>
-      DT:FC descends from the <strong>Colorado Caravan</strong>, a touring theatre created in the 1970s
-      by the University of Colorado Theatre Department and the Colorado Shakespeare Festival under
-      NEA Title III grants. Founders: Richard Knaub, Chuck Wilcox, Lola Wilcox, and Martin Cobin.
+      DT:FC descends from the <strong>Colorado Caravan</strong>, a touring theatre created in the
+      1970s by the University of Colorado Theatre Department and the Colorado Shakespeare Festival
+      under NEA Title III grants. Founders: Richard Knaub, Chuck Wilcox, Lola Wilcox, and Martin
+      Cobin.
     </p>
     <p>
-      That work produced an M.A. program in Developmental Theatre/Drama, successor companies on three
-      continents, and audiences totaling over six million.
+      That work produced an M.A. program in Developmental Theatre/Drama, successor companies on
+      three continents, and audiences totaling over six million.
     </p>
-    <p>Full history, founder profiles, essays, and an interactive 1971–present timeline are coming soon.</p>
+    <p>
+      Full history, founder profiles, essays, and an interactive 1971–present timeline are coming
+      soon.
+    </p>
   </div>
 </SectionLayout>
 ```
@@ -1210,6 +1334,7 @@ import SectionLayout from '@/layouts/SectionLayout.astro';
 import SectionLayout from '@/layouts/SectionLayout.astro';
 import NewsletterSignup from '@/components/ui/NewsletterSignup.astro';
 ---
+
 <SectionLayout
   title="Workshops"
   eyebrow="Coming next year"
@@ -1217,7 +1342,10 @@ import NewsletterSignup from '@/components/ui/NewsletterSignup.astro';
   description="In-person and online training for teachers, players, and helping-vocation professionals."
 >
   <div class="max-w-2xl space-y-4">
-    <p>DT:FC workshops launch next year. Drop your email and we'll notify you when registration opens.</p>
+    <p>
+      DT:FC workshops launch next year. Drop your email and we'll notify you when registration
+      opens.
+    </p>
   </div>
   <div class="mt-6 max-w-md">
     <NewsletterSignup source="workshops-interest" heading="Notify me when workshops open." />
@@ -1228,6 +1356,7 @@ import NewsletterSignup from '@/components/ui/NewsletterSignup.astro';
 - [ ] **Step 5: Verify all 7 nav items resolve in the dev server**
 
 Run: `pnpm dev`; open each of these in a browser:
+
 - `/`
 - `/community/`
 - `/theatre-games/` — will 404, that's fine (we haven't built it yet); come back to this after Task 9
@@ -1258,9 +1387,11 @@ git commit -m "feat: add landing page and five section stubs"
 Register `games` and `concepts` content collections with Zod schemas. Seed 2 real games and 2 concepts (`cohesion`, `theatre-games`) — enough to build the Concept component + PRC + Theatre Games landing against.
 
 **Files:**
+
 - Create: `src/content.config.ts`, `src/content/games/puppets-marionettes.mdx`, `src/content/games/changing-person-activity.mdx`, `src/content/concepts/cohesion.mdx`, `src/content/concepts/theatre-games.mdx`
 
 **Interfaces:**
+
 - Produces: exported `collections` from `src/content.config.ts`; the following types available via `astro:content` — `CollectionEntry<'games'>`, `CollectionEntry<'concepts'>`.
 - Produces: the string literal type `Competency = 'physical-expression' | 'vocal-expression' | 'context-awareness' | 'risk-assessment' | 'resilience'`; `Cohesion = 'low' | 'medium' | 'high'`; `Structure = 'individual' | 'group'` — re-exported from `src/lib/types.ts`.
 
@@ -1287,7 +1418,7 @@ export const COMPETENCY_LABELS: Record<Competency, string> = {
   'vocal-expression': 'Vocal Expression',
   'context-awareness': 'Context Awareness',
   'risk-assessment': 'Risk Assessment & Management',
-  'resilience': 'Resilience',
+  resilience: 'Resilience',
 };
 
 export const COMPETENCY_SUBSETS: Record<Competency, string[]> = {
@@ -1295,7 +1426,7 @@ export const COMPETENCY_SUBSETS: Record<Competency, string[]> = {
   'vocal-expression': ['Expression', 'Articulation', 'Finding a Voice', 'Storytelling'],
   'context-awareness': [],
   'risk-assessment': [],
-  'resilience': [],
+  resilience: [],
 };
 ```
 
@@ -1340,7 +1471,7 @@ export const collections = { games, concepts };
 ---
 name: Cohesion
 slug: cohesion
-shortDefinition: 'How bonded a group is right now. Every game is rated Low, Medium, or High — matching game to group cohesion is the facilitator''s core skill.'
+shortDefinition: "How bonded a group is right now. Every game is rated Low, Medium, or High — matching game to group cohesion is the facilitator's core skill."
 icon: placeholder
 related: ['theatre-games']
 ---
@@ -1462,9 +1593,11 @@ git commit -m "feat: register games and concepts collections with seed content"
 Build the `<Concept id="…" />` component using the native Popover API and a small runtime registry that reads from the `concepts` collection.
 
 **Files:**
+
 - Create: `src/lib/icons.ts`, `src/lib/concepts.ts`, `src/components/concept/Concept.astro`, `src/components/concept/ConceptPopover.astro`, `public/icons/placeholder.svg`, `tests/unit/icons.test.ts`, `vitest.config.ts`
 
 **Interfaces:**
+
 - Consumes: `getCollection('concepts')` from `astro:content`; the concepts seeded in Task 5.
 - Produces:
   - `<Concept id="cohesion" />` — Astro component; renders inline button + popover; **throws at build time** if `id` is not a known slug.
@@ -1508,7 +1641,7 @@ let cache: Map<string, ConceptEntry> | null = null;
 async function loadIndex(): Promise<Map<string, ConceptEntry>> {
   if (cache) return cache;
   const entries = await getCollection('concepts');
-  cache = new Map(entries.map(e => [e.data.slug, e]));
+  cache = new Map(entries.map((e) => [e.data.slug, e]));
   return cache;
 }
 
@@ -1534,19 +1667,23 @@ export async function listConcepts(): Promise<ConceptEntry[]> {
 ---
 import { iconPath } from '@/lib/icons';
 import type { ConceptEntry } from '@/lib/concepts';
-interface Props { entry: ConceptEntry; popoverId: string; }
+interface Props {
+  entry: ConceptEntry;
+  popoverId: string;
+}
 const { entry, popoverId } = Astro.props;
 ---
+
 <div
   id={popoverId}
   popover
-  class="max-w-xs rounded-[var(--radius-card)] border border-ivory-200 bg-white p-4 text-left shadow-[var(--shadow-soft)]"
+  class="border-ivory-200 max-w-xs rounded-[var(--radius-card)] border bg-white p-4 text-left shadow-[var(--shadow-soft)]"
 >
   <div class="flex items-center gap-2">
     <img src={iconPath(entry.data.icon)} alt="" width="24" height="24" />
     <span class="font-display text-lg">{entry.data.name}</span>
   </div>
-  <p class="mt-2 text-sm text-ink-700">{entry.data.shortDefinition}</p>
+  <p class="text-ink-700 mt-2 text-sm">{entry.data.shortDefinition}</p>
   <a class="mt-3 inline-block text-sm" href={`/resource-center/${entry.data.slug}/`}>Read more →</a>
 </div>
 ```
@@ -1559,20 +1696,23 @@ import { getConcept } from '@/lib/concepts';
 import { iconPath } from '@/lib/icons';
 import ConceptPopover from './ConceptPopover.astro';
 
-interface Props { id: string; }
+interface Props {
+  id: string;
+}
 const { id } = Astro.props;
 const entry = await getConcept(id);
 const popoverId = `concept-popover-${id}`;
 ---
+
 <span class="inline-flex items-baseline">
   <button
     type="button"
     popovertarget={popoverId}
-    class="inline-flex items-center gap-1 rounded px-1 py-0.5 text-clay-500 no-underline hover:bg-clay-50 focus-visible:bg-clay-50"
+    class="text-clay-500 hover:bg-clay-50 focus-visible:bg-clay-50 inline-flex items-center gap-1 rounded px-1 py-0.5 no-underline"
     aria-describedby={popoverId}
   >
     <img src={iconPath(entry.data.icon)} alt="" width="16" height="16" class="inline-block" />
-    <span class="border-b border-dotted border-clay-500">{entry.data.name}</span>
+    <span class="border-clay-500 border-b border-dotted">{entry.data.name}</span>
   </button>
   <ConceptPopover entry={entry} popoverId={popoverId} />
 </span>
@@ -1644,11 +1784,13 @@ Add a quick sanity page at `src/pages/_concept-test.astro` (leading underscore k
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Concept from '@/components/concept/Concept.astro';
 ---
+
 <BaseLayout title="Concept sanity">
   <div class="mx-auto max-w-2xl p-8">
     <p>
-      Every game is rated <Concept id="cohesion" /> Low, Medium, or High.
-      Learn more about <Concept id="theatre-games" />.
+      Every game is rated <Concept id="cohesion" /> Low, Medium, or High. Learn more about <Concept
+        id="theatre-games"
+      />.
     </p>
   </div>
 </BaseLayout>
@@ -1681,9 +1823,11 @@ git commit -m "feat: add Concept component + registry with native Popover API"
 Build the PRC landing (alphabetical list + search-as-you-type) and per-concept detail page.
 
 **Files:**
+
 - Create: `src/layouts/ConceptLayout.astro`, `src/pages/resource-center/index.astro`, `src/pages/resource-center/[slug].astro`
 
 **Interfaces:**
+
 - Consumes: `listConcepts`, `iconPath` from `@/lib/concepts`; `getCollection('concepts')` for static path generation.
 - Produces: routes `/resource-center/` and `/resource-center/<slug>/` for every concept.
 
@@ -1696,6 +1840,7 @@ import { listConcepts } from '@/lib/concepts';
 import { iconPath } from '@/lib/icons';
 const concepts = await listConcepts();
 ---
+
 <SectionLayout
   title="Players Resource Center"
   section="resource-center"
@@ -1709,29 +1854,40 @@ const concepts = await listConcepts();
         <input
           type="search"
           placeholder="Type to filter…"
-          class="mt-1 w-full rounded border border-ivory-200 bg-ivory-50 px-3 py-2 text-base"
+          class="border-ivory-200 bg-ivory-50 mt-1 w-full rounded border px-3 py-2 text-base"
           data-concept-filter
         />
       </label>
     </div>
 
-    <div class="mt-6 rounded-[var(--radius-card)] border border-mustard-200 bg-mustard-200/40 p-4 text-sm text-ink-700">
-      <strong>What are the ICONS and how are they used?</strong> Throughout the site, key concepts show a small icon next to their name. Click or tap the icon anywhere it appears to open a definition popover; then click "Read more →" to land here.
+    <div
+      class="border-mustard-200 bg-mustard-200/40 text-ink-700 mt-6 rounded-[var(--radius-card)] border p-4 text-sm"
+    >
+      <strong>What are the ICONS and how are they used?</strong> Throughout the site, key concepts show
+      a small icon next to their name. Click or tap the icon anywhere it appears to open a definition
+      popover; then click "Read more →" to land here.
     </div>
 
-    <ul class="mt-6 divide-y divide-ivory-200 rounded-[var(--radius-card)] border border-ivory-200 bg-white" data-concept-list>
-      {concepts.map(entry => (
-        <li data-concept-name={entry.data.name.toLowerCase()}>
-          <a href={`/resource-center/${entry.data.slug}/`}
-             class="flex items-start gap-3 p-4 no-underline hover:bg-ivory-50">
-            <img src={iconPath(entry.data.icon)} alt="" width="24" height="24" class="mt-1" />
-            <div>
-              <p class="font-display text-lg text-ink-900">{entry.data.name}</p>
-              <p class="text-sm text-ink-500">{entry.data.shortDefinition}</p>
-            </div>
-          </a>
-        </li>
-      ))}
+    <ul
+      class="divide-ivory-200 border-ivory-200 mt-6 divide-y rounded-[var(--radius-card)] border bg-white"
+      data-concept-list
+    >
+      {
+        concepts.map((entry) => (
+          <li data-concept-name={entry.data.name.toLowerCase()}>
+            <a
+              href={`/resource-center/${entry.data.slug}/`}
+              class="hover:bg-ivory-50 flex items-start gap-3 p-4 no-underline"
+            >
+              <img src={iconPath(entry.data.icon)} alt="" width="24" height="24" class="mt-1" />
+              <div>
+                <p class="font-display text-ink-900 text-lg">{entry.data.name}</p>
+                <p class="text-ink-500 text-sm">{entry.data.shortDefinition}</p>
+              </div>
+            </a>
+          </li>
+        ))
+      }
     </ul>
   </div>
 </SectionLayout>
@@ -1741,7 +1897,7 @@ const concepts = await listConcepts();
   const list = document.querySelector<HTMLUListElement>('[data-concept-list]');
   filter?.addEventListener('input', () => {
     const q = filter.value.trim().toLowerCase();
-    list?.querySelectorAll<HTMLLIElement>('li').forEach(li => {
+    list?.querySelectorAll<HTMLLIElement>('li').forEach((li) => {
       const name = li.dataset.conceptName ?? '';
       li.hidden = q.length > 0 && !name.includes(q);
     });
@@ -1759,35 +1915,46 @@ import Chip from '@/components/ui/Chip.astro';
 import { iconPath } from '@/lib/icons';
 import type { ConceptEntry } from '@/lib/concepts';
 
-interface Props { entry: ConceptEntry; }
+interface Props {
+  entry: ConceptEntry;
+}
 const { entry } = Astro.props;
 ---
-<BaseLayout title={entry.data.name} description={entry.data.shortDefinition} section="resource-center">
+
+<BaseLayout
+  title={entry.data.name}
+  description={entry.data.shortDefinition}
+  section="resource-center"
+>
   <Container class="py-12">
     <article class="max-w-3xl">
-      <p class="text-sm font-medium uppercase tracking-wide text-teal-600">Players Resource Center</p>
+      <p class="text-sm font-medium tracking-wide text-teal-600 uppercase">
+        Players Resource Center
+      </p>
       <div class="mt-2 flex items-center gap-3">
         <img src={iconPath(entry.data.icon)} alt="" width="48" height="48" />
         <h1 class="mb-0">{entry.data.name}</h1>
       </div>
-      <p class="mt-4 text-lg text-ink-500">{entry.data.shortDefinition}</p>
+      <p class="text-ink-500 mt-4 text-lg">{entry.data.shortDefinition}</p>
 
       <div class="prose prose-neutral mt-8 max-w-none">
         <slot />
       </div>
 
-      {entry.data.related.length > 0 && (
-        <div class="mt-10 border-t border-ivory-200 pt-6">
-          <p class="text-sm font-medium text-ink-500">Related resources</p>
-          <div class="mt-3 flex flex-wrap gap-2">
-            {entry.data.related.map(slug => (
-              <a href={`/resource-center/${slug}/`} class="no-underline">
-                <Chip tone="teal">{slug}</Chip>
-              </a>
-            ))}
+      {
+        entry.data.related.length > 0 && (
+          <div class="border-ivory-200 mt-10 border-t pt-6">
+            <p class="text-ink-500 text-sm font-medium">Related resources</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              {entry.data.related.map((slug) => (
+                <a href={`/resource-center/${slug}/`} class="no-underline">
+                  <Chip tone="teal">{slug}</Chip>
+                </a>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )
+      }
     </article>
   </Container>
 </BaseLayout>
@@ -1815,7 +1982,7 @@ import Concept from '@/components/concept/Concept.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('concepts');
-  return entries.map(entry => ({
+  return entries.map((entry) => ({
     params: { slug: entry.data.slug },
     props: { entry },
   }));
@@ -1824,6 +1991,7 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 ---
+
 <ConceptLayout entry={entry}>
   <Content components={{ Concept }} />
 </ConceptLayout>
@@ -1832,6 +2000,7 @@ const { Content } = await render(entry);
 - [ ] **Step 4: Verify the PRC pages render**
 
 Run: `pnpm dev`; open:
+
 - `/resource-center/` — alphabetical list with 2 entries (Cohesion, Theatre Games); ICONS callout visible; search input filters as you type
 - `/resource-center/cohesion/` — full page with icon, description, MDX body, related chip linking to Theatre Games
 - `/resource-center/theatre-games/` — same shape
@@ -1857,9 +2026,11 @@ git commit -m "feat: add Players Resource Center landing and detail pages"
 Replace the no-op stub script from Task 1 with a real prebuild check: scan `.astro` and `.mdx` files for `<Concept id="…" />` usages and fail if any referenced slug is not a real concept.
 
 **Files:**
+
 - Modify: `scripts/check-concept-refs.mjs`
 
 **Interfaces:**
+
 - Runs before `astro build` via the `check:concepts` npm script (already wired into `build`).
 - Exits non-zero with a clear error listing offending files, line numbers, and unknown slug.
 
@@ -1911,7 +2082,7 @@ for (const file of await fg(['src/**/*.astro', 'src/**/*.mdx'])) {
 }
 
 // Validate.
-const unknown = REFS.filter(r => !KNOWN.has(r.id));
+const unknown = REFS.filter((r) => !KNOWN.has(r.id));
 if (unknown.length > 0) {
   console.error('\nUnknown <Concept> references:\n');
   for (const r of unknown) {
@@ -1942,6 +2113,7 @@ Create `src/pages/_concept-check.astro`:
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Concept from '@/components/concept/Concept.astro';
 ---
+
 <BaseLayout title="check"><Concept id="cohesion" /></BaseLayout>
 ```
 
@@ -1984,11 +2156,13 @@ git commit -m "feat: prebuild check fails build on unknown Concept ids"
 Build `/theatre-games/` with the five-competency explainer, cohesion explainer, audience-use blurbs, "Find a Game" CTA. Uses `<Concept>` inline.
 
 **Files:**
+
 - Create: `src/pages/theatre-games/index.astro`
 
 **Interfaces:**
+
 - Consumes: `COMPETENCY_LABELS`, `COMPETENCY_SUBSETS` from `@/lib/types`; `Concept` component.
-- Note: the client's verbatim landing-page copy lives in the Google Drive doc "DT:FC THEATRE GAMES LANDING PAGE". This task ships a well-structured page using the *structural* description from source spec §4.2; **Task 13 replaces the copy with the verbatim text from Drive.**
+- Note: the client's verbatim landing-page copy lives in the Google Drive doc "DT:FC THEATRE GAMES LANDING PAGE". This task ships a well-structured page using the _structural_ description from source spec §4.2; **Task 13 replaces the copy with the verbatim text from Drive.**
 
 - [ ] **Step 1: Create `src/pages/theatre-games/index.astro`**
 
@@ -2001,18 +2175,43 @@ import Chip from '@/components/ui/Chip.astro';
 import { COMPETENCIES, COMPETENCY_LABELS, COMPETENCY_SUBSETS } from '@/lib/types';
 
 const audiences = [
-  { title: 'Teaching', body: 'Elementary through high school, religious/supplementary schools, museums, libraries, camps, and scouting — pick a game and go.' },
-  { title: 'Rehearsal', body: 'Directors and program coordinators use these games as warmups, focus-builders, and characterization tools before a run.' },
-  { title: 'Counseling and helping vocations', body: 'Counselors, coaches, medical staff, HR, and consultants use games to create shared attention and rehearse hard conversations.' },
-  { title: 'Warmups', body: 'Start every gathering with a game that fits your group — see Warmup Theatre Games in the how-to library.' },
+  {
+    title: 'Teaching',
+    body: 'Elementary through high school, religious/supplementary schools, museums, libraries, camps, and scouting — pick a game and go.',
+  },
+  {
+    title: 'Rehearsal',
+    body: 'Directors and program coordinators use these games as warmups, focus-builders, and characterization tools before a run.',
+  },
+  {
+    title: 'Counseling and helping vocations',
+    body: 'Counselors, coaches, medical staff, HR, and consultants use games to create shared attention and rehearse hard conversations.',
+  },
+  {
+    title: 'Warmups',
+    body: 'Start every gathering with a game that fits your group — see Warmup Theatre Games in the how-to library.',
+  },
 ];
 
 const cohesionRungs = [
-  { label: 'Low', tone: 'teal' as const, body: 'Strangers, new-year classrooms, first-day workshops. The game asks little of players and doesn\'t require personal risk.' },
-  { label: 'Medium', tone: 'mustard' as const, body: 'A group that has warmed up together but hasn\'t yet built trust for exposed or vulnerable play.' },
-  { label: 'High', tone: 'clay' as const, body: 'An ensemble that already trusts each other; ready for risk, invention, and self-revelation.' },
+  {
+    label: 'Low',
+    tone: 'teal' as const,
+    body: "Strangers, new-year classrooms, first-day workshops. The game asks little of players and doesn't require personal risk.",
+  },
+  {
+    label: 'Medium',
+    tone: 'mustard' as const,
+    body: "A group that has warmed up together but hasn't yet built trust for exposed or vulnerable play.",
+  },
+  {
+    label: 'High',
+    tone: 'clay' as const,
+    body: 'An ensemble that already trusts each other; ready for risk, invention, and self-revelation.',
+  },
 ];
 ---
+
 <SectionLayout
   title="Theatre Games"
   section="theatre-games"
@@ -2020,62 +2219,81 @@ const cohesionRungs = [
   description="Structured play that builds physical readiness, vocal range, context awareness, thoughtful risk, and resilience. Hundreds of games, organized so you can find the right one fast."
 >
   <div class="grid gap-10 lg:grid-cols-3">
-    <div class="lg:col-span-2 space-y-8">
+    <div class="space-y-8 lg:col-span-2">
       <section>
         <h2>What is a <Concept id="theatre-games" />?</h2>
         <p class="mt-4 max-w-prose">
-          Every DT:FC game has a clear objective, a small set of rules, and a chance to reflect after — a delivery vehicle for one or more of the five competencies below.
+          Every DT:FC game has a clear objective, a small set of rules, and a chance to reflect
+          after — a delivery vehicle for one or more of the five competencies below.
         </p>
       </section>
 
       <section>
         <h2>The five competencies</h2>
         <div class="mt-4 grid gap-4 md:grid-cols-2">
-          {COMPETENCIES.map(c => (
-            <div class="rounded-[var(--radius-card)] border border-ivory-200 bg-white p-5">
-              <h3 class="text-xl">{COMPETENCY_LABELS[c]}</h3>
-              {COMPETENCY_SUBSETS[c].length > 0 && (
-                <ul class="mt-3 flex flex-wrap gap-2">
-                  {COMPETENCY_SUBSETS[c].map(s => <li><Chip tone="teal">{s}</Chip></li>)}
-                </ul>
-              )}
-            </div>
-          ))}
+          {
+            COMPETENCIES.map((c) => (
+              <div class="border-ivory-200 rounded-[var(--radius-card)] border bg-white p-5">
+                <h3 class="text-xl">{COMPETENCY_LABELS[c]}</h3>
+                {COMPETENCY_SUBSETS[c].length > 0 && (
+                  <ul class="mt-3 flex flex-wrap gap-2">
+                    {COMPETENCY_SUBSETS[c].map((s) => (
+                      <li>
+                        <Chip tone="teal">{s}</Chip>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))
+          }
         </div>
       </section>
 
       <section>
         <h2><Concept id="cohesion" /> — matching game to group</h2>
-        <p class="mt-4 max-w-prose">Every game is rated by the level of group bonding it assumes:</p>
+        <p class="mt-4 max-w-prose">
+          Every game is rated by the level of group bonding it assumes:
+        </p>
         <div class="mt-4 grid gap-3 md:grid-cols-3">
-          {cohesionRungs.map(r => (
-            <div class="rounded-[var(--radius-card)] border border-ivory-200 bg-white p-4">
-              <Chip tone={r.tone}>{r.label}</Chip>
-              <p class="mt-3 text-sm text-ink-700">{r.body}</p>
-            </div>
-          ))}
+          {
+            cohesionRungs.map((r) => (
+              <div class="border-ivory-200 rounded-[var(--radius-card)] border bg-white p-4">
+                <Chip tone={r.tone}>{r.label}</Chip>
+                <p class="text-ink-700 mt-3 text-sm">{r.body}</p>
+              </div>
+            ))
+          }
         </div>
       </section>
 
       <section>
         <h2>Use Theatre Games for…</h2>
         <div class="mt-4 grid gap-4 md:grid-cols-2">
-          {audiences.map(a => (
-            <div>
-              <h3 class="text-lg">{a.title}</h3>
-              <p class="mt-2 text-sm text-ink-700">{a.body}</p>
-            </div>
-          ))}
+          {
+            audiences.map((a) => (
+              <div>
+                <h3 class="text-lg">{a.title}</h3>
+                <p class="text-ink-700 mt-2 text-sm">{a.body}</p>
+              </div>
+            ))
+          }
         </div>
       </section>
     </div>
 
     <aside class="lg:sticky lg:top-8 lg:self-start">
-      <div class="rounded-[var(--radius-card)] bg-clay-500 p-6 text-ivory-50">
+      <div class="bg-clay-500 text-ivory-50 rounded-[var(--radius-card)] p-6">
         <p class="font-display text-2xl">Find a game</p>
-        <p class="mt-2 text-sm text-clay-50/90">Filter by competency, cohesion, group size, or name.</p>
+        <p class="text-clay-50/90 mt-2 text-sm">
+          Filter by competency, cohesion, group size, or name.
+        </p>
         <div class="mt-4">
-          <Button href="/theatre-games/finder" variant="secondary" class="border-ivory-50 text-ivory-50 hover:bg-clay-700">
+          <Button
+            href="/theatre-games/finder"
+            variant="secondary"
+            class="border-ivory-50 text-ivory-50 hover:bg-clay-700"
+          >
             Open the Game Index →
           </Button>
         </div>
@@ -2088,6 +2306,7 @@ const cohesionRungs = [
 - [ ] **Step 2: Verify page renders**
 
 Run: `pnpm dev`; open `/theatre-games/`. Check:
+
 - Five competency cards with subset chips where applicable
 - Cohesion section with 3 rungs
 - Concept icons render inline (Cohesion, Theatre Games)
@@ -2115,15 +2334,17 @@ git commit -m "feat: add Theatre Games section landing page"
 Write the pure filter logic and URL-state serialization as a testable module. This is the brain of the Game Finder — no framework, no DOM.
 
 **Files:**
+
 - Create: `src/lib/gameFilter.ts`, `tests/unit/gameFilter.test.ts`
 
 **Interfaces:**
+
 - Produces (exported from `@/lib/gameFilter`):
   - `type GameLite = { slug: string; name: string; competency: Competency; subset?: string; structure: Structure; cohesion: Cohesion; intent: string; source?: string; sample: boolean; }`
   - `type FilterState = { competencies: Competency[]; cohesions: Cohesion[]; structures: Structure[]; subset: string | null; intent: string; name: string; }`
   - `EMPTY_STATE: FilterState`
   - `filterGames(games: GameLite[], state: FilterState): GameLite[]`
-  - `stateToQuery(state: FilterState): string`  (returns e.g. `competency=physical-expression&cohesion=low`)
+  - `stateToQuery(state: FilterState): string` (returns e.g. `competency=physical-expression&cohesion=low`)
   - `queryToState(query: URLSearchParams): FilterState`
 
 - [ ] **Step 1: Create `tests/unit/gameFilter.test.ts` — failing first**
@@ -2179,7 +2400,7 @@ describe('filterGames', () => {
   it('filters by competency (OR within the axis)', () => {
     const state = { ...EMPTY_STATE, competencies: ['resilience', 'context-awareness'] as const };
     const result = filterGames(games, state as any);
-    expect(result.map(g => g.slug).sort()).toEqual(['changing-person', 'x']);
+    expect(result.map((g) => g.slug).sort()).toEqual(['changing-person', 'x']);
   });
 
   it('filters by cohesion', () => {
@@ -2193,7 +2414,11 @@ describe('filterGames', () => {
   });
 
   it('filters by subset (only within selected competency)', () => {
-    const state = { ...EMPTY_STATE, competencies: ['physical-expression' as const], subset: 'Mime' };
+    const state = {
+      ...EMPTY_STATE,
+      competencies: ['physical-expression' as const],
+      subset: 'Mime',
+    };
     expect(filterGames(games, state)).toEqual([puppets]);
   });
 
@@ -2280,7 +2505,14 @@ Expected: FAIL with "Cannot find module '../../src/lib/gameFilter'".
 - [ ] **Step 3: Create `src/lib/gameFilter.ts`**
 
 ```ts
-import { COMPETENCIES, COHESIONS, STRUCTURES, type Competency, type Cohesion, type Structure } from './types';
+import {
+  COMPETENCIES,
+  COHESIONS,
+  STRUCTURES,
+  type Competency,
+  type Cohesion,
+  type Structure,
+} from './types';
 
 export interface GameLite {
   slug: string;
@@ -2318,7 +2550,7 @@ function containsCI(haystack: string, needle: string): boolean {
 }
 
 export function filterGames(games: GameLite[], s: FilterState): GameLite[] {
-  return games.filter(g => {
+  return games.filter((g) => {
     if (s.competencies.length && !s.competencies.includes(g.competency)) return false;
     if (s.cohesions.length && !s.cohesions.includes(g.cohesion)) return false;
     if (s.structures.length && !s.structures.includes(g.structure)) return false;
@@ -2331,9 +2563,9 @@ export function filterGames(games: GameLite[], s: FilterState): GameLite[] {
 
 export function stateToQuery(s: FilterState): string {
   const p = new URLSearchParams();
-  s.competencies.forEach(c => p.append('competency', c));
-  s.cohesions.forEach(c => p.append('cohesion', c));
-  s.structures.forEach(c => p.append('structure', c));
+  s.competencies.forEach((c) => p.append('competency', c));
+  s.cohesions.forEach((c) => p.append('cohesion', c));
+  s.structures.forEach((c) => p.append('structure', c));
   if (s.subset) p.set('subset', s.subset);
   if (s.intent) p.set('intent', s.intent);
   if (s.name) p.set('name', s.name);
@@ -2380,9 +2612,11 @@ git commit -m "feat: add pure game-filter reducer with URL serialization"
 Build the interactive Preact island for the Game Index, the finder route, the GameCard component, and the "How to use the index" modal.
 
 **Files:**
+
 - Create: `src/components/games/GameFinder.tsx`, `src/components/games/IndexFilters.tsx`, `src/components/games/GameCard.astro`, `src/components/games/HowToModal.astro`, `src/pages/theatre-games/finder.astro`, `src/lib/games.ts`
 
 **Interfaces:**
+
 - Consumes: `filterGames`, `stateToQuery`, `queryToState`, `EMPTY_STATE`, `GameLite`, `FilterState` from `@/lib/gameFilter`; `COMPETENCIES`, `COHESIONS`, `STRUCTURES`, `COMPETENCY_LABELS`, `COMPETENCY_SUBSETS` from `@/lib/types`.
 - Produces: `toGameLite(entry: CollectionEntry<'games'>): GameLite` from `@/lib/games`; `/theatre-games/finder` route.
 
@@ -2415,7 +2649,13 @@ export async function loadGamesLite(): Promise<GameLite[]> {
 - [ ] **Step 2: Create `src/components/games/IndexFilters.tsx`**
 
 ```tsx
-import { COMPETENCIES, COHESIONS, STRUCTURES, COMPETENCY_LABELS, COMPETENCY_SUBSETS } from '@/lib/types';
+import {
+  COMPETENCIES,
+  COHESIONS,
+  STRUCTURES,
+  COMPETENCY_LABELS,
+  COMPETENCY_SUBSETS,
+} from '@/lib/types';
 import type { FilterState } from '@/lib/gameFilter';
 import type { Competency, Cohesion, Structure } from '@/lib/types';
 
@@ -2426,29 +2666,34 @@ interface Props {
 }
 
 function toggleIn<T>(arr: T[], value: T): T[] {
-  return arr.includes(value) ? arr.filter(x => x !== value) : [...arr, value];
+  return arr.includes(value) ? arr.filter((x) => x !== value) : [...arr, value];
 }
 
 export function IndexFilters({ state, onChange, onReset }: Props) {
   const availableSubsets = state.competencies.length
-    ? state.competencies.flatMap(c => COMPETENCY_SUBSETS[c])
+    ? state.competencies.flatMap((c) => COMPETENCY_SUBSETS[c])
     : Object.values(COMPETENCY_SUBSETS).flat();
   const uniqueSubsets = Array.from(new Set(availableSubsets));
 
   return (
     <div class="space-y-6">
       <fieldset>
-        <legend class="text-sm font-medium text-ink-700">Competency</legend>
+        <legend class="text-ink-700 text-sm font-medium">Competency</legend>
         <div class="mt-2 flex flex-wrap gap-2">
-          {COMPETENCIES.map(c => (
+          {COMPETENCIES.map((c) => (
             <button
               type="button"
               key={c}
-              onClick={() => onChange({ ...state, competencies: toggleIn(state.competencies, c) as Competency[] })}
+              onClick={() =>
+                onChange({
+                  ...state,
+                  competencies: toggleIn(state.competencies, c) as Competency[],
+                })
+              }
               class={`rounded-[var(--radius-chip)] border px-3 py-1 text-sm ${
                 state.competencies.includes(c)
                   ? 'border-clay-500 bg-clay-500 text-ivory-50'
-                  : 'border-ivory-200 bg-white text-ink-700 hover:border-clay-500'
+                  : 'border-ivory-200 text-ink-700 hover:border-clay-500 bg-white'
               }`}
               aria-pressed={state.competencies.includes(c)}
             >
@@ -2460,30 +2705,38 @@ export function IndexFilters({ state, onChange, onReset }: Props) {
 
       {uniqueSubsets.length > 0 && (
         <label class="block">
-          <span class="text-sm font-medium text-ink-700">Subset</span>
+          <span class="text-ink-700 text-sm font-medium">Subset</span>
           <select
-            class="mt-1 w-full rounded border border-ivory-200 bg-white px-3 py-2 text-base"
+            class="border-ivory-200 mt-1 w-full rounded border bg-white px-3 py-2 text-base"
             value={state.subset ?? ''}
-            onInput={ev => onChange({ ...state, subset: (ev.target as HTMLSelectElement).value || null })}
+            onInput={(ev) =>
+              onChange({ ...state, subset: (ev.target as HTMLSelectElement).value || null })
+            }
           >
             <option value="">Any subset</option>
-            {uniqueSubsets.map(s => <option value={s} key={s}>{s}</option>)}
+            {uniqueSubsets.map((s) => (
+              <option value={s} key={s}>
+                {s}
+              </option>
+            ))}
           </select>
         </label>
       )}
 
       <fieldset>
-        <legend class="text-sm font-medium text-ink-700">Cohesion</legend>
+        <legend class="text-ink-700 text-sm font-medium">Cohesion</legend>
         <div class="mt-2 flex flex-wrap gap-2">
-          {COHESIONS.map(c => (
+          {COHESIONS.map((c) => (
             <button
               type="button"
               key={c}
-              onClick={() => onChange({ ...state, cohesions: toggleIn(state.cohesions, c) as Cohesion[] })}
+              onClick={() =>
+                onChange({ ...state, cohesions: toggleIn(state.cohesions, c) as Cohesion[] })
+              }
               class={`rounded-[var(--radius-chip)] border px-3 py-1 text-sm capitalize ${
                 state.cohesions.includes(c)
-                  ? 'border-teal-600 bg-teal-600 text-ivory-50'
-                  : 'border-ivory-200 bg-white text-ink-700 hover:border-teal-600'
+                  ? 'text-ivory-50 border-teal-600 bg-teal-600'
+                  : 'border-ivory-200 text-ink-700 bg-white hover:border-teal-600'
               }`}
               aria-pressed={state.cohesions.includes(c)}
             >
@@ -2494,17 +2747,19 @@ export function IndexFilters({ state, onChange, onReset }: Props) {
       </fieldset>
 
       <fieldset>
-        <legend class="text-sm font-medium text-ink-700">Structure</legend>
+        <legend class="text-ink-700 text-sm font-medium">Structure</legend>
         <div class="mt-2 flex flex-wrap gap-2">
-          {STRUCTURES.map(s => (
+          {STRUCTURES.map((s) => (
             <button
               type="button"
               key={s}
-              onClick={() => onChange({ ...state, structures: toggleIn(state.structures, s) as Structure[] })}
+              onClick={() =>
+                onChange({ ...state, structures: toggleIn(state.structures, s) as Structure[] })
+              }
               class={`rounded-[var(--radius-chip)] border px-3 py-1 text-sm capitalize ${
                 state.structures.includes(s)
                   ? 'border-mustard-600 bg-mustard-400 text-ink-900'
-                  : 'border-ivory-200 bg-white text-ink-700 hover:border-mustard-400'
+                  : 'border-ivory-200 text-ink-700 hover:border-mustard-400 bg-white'
               }`}
               aria-pressed={state.structures.includes(s)}
             >
@@ -2515,32 +2770,28 @@ export function IndexFilters({ state, onChange, onReset }: Props) {
       </fieldset>
 
       <label class="block">
-        <span class="text-sm font-medium text-ink-700">Intent</span>
+        <span class="text-ink-700 text-sm font-medium">Intent</span>
         <input
           type="search"
           value={state.intent}
-          onInput={ev => onChange({ ...state, intent: (ev.target as HTMLInputElement).value })}
+          onInput={(ev) => onChange({ ...state, intent: (ev.target as HTMLInputElement).value })}
           placeholder="e.g. physical readiness"
-          class="mt-1 w-full rounded border border-ivory-200 bg-white px-3 py-2 text-base"
+          class="border-ivory-200 mt-1 w-full rounded border bg-white px-3 py-2 text-base"
         />
       </label>
 
       <label class="block">
-        <span class="text-sm font-medium text-ink-700">Game name</span>
+        <span class="text-ink-700 text-sm font-medium">Game name</span>
         <input
           type="search"
           value={state.name}
-          onInput={ev => onChange({ ...state, name: (ev.target as HTMLInputElement).value })}
+          onInput={(ev) => onChange({ ...state, name: (ev.target as HTMLInputElement).value })}
           placeholder="e.g. puppets"
-          class="mt-1 w-full rounded border border-ivory-200 bg-white px-3 py-2 text-base"
+          class="border-ivory-200 mt-1 w-full rounded border bg-white px-3 py-2 text-base"
         />
       </label>
 
-      <button
-        type="button"
-        onClick={onReset}
-        class="text-sm text-clay-500 underline"
-      >
+      <button type="button" onClick={onReset} class="text-clay-500 text-sm underline">
         Reset filters
       </button>
     </div>
@@ -2556,12 +2807,15 @@ import Chip from '@/components/ui/Chip.astro';
 import { COMPETENCY_LABELS } from '@/lib/types';
 import type { GameLite } from '@/lib/gameFilter';
 
-interface Props { game: GameLite; }
+interface Props {
+  game: GameLite;
+}
 const { game } = Astro.props;
 ---
+
 <a
   href={`/theatre-games/${game.slug}/`}
-  class="block h-full rounded-[var(--radius-card)] border border-ivory-200 bg-white p-5 no-underline transition hover:border-clay-500 hover:shadow-[var(--shadow-soft)]"
+  class="border-ivory-200 hover:border-clay-500 block h-full rounded-[var(--radius-card)] border bg-white p-5 no-underline transition hover:shadow-[var(--shadow-soft)]"
 >
   <div class="flex flex-wrap items-center gap-2">
     <Chip tone="clay">{COMPETENCY_LABELS[game.competency]}</Chip>
@@ -2570,10 +2824,8 @@ const { game } = Astro.props;
     <Chip tone="neutral">{game.structure}</Chip>
   </div>
   <h3 class="mt-3 text-xl">{game.name}</h3>
-  <p class="mt-1 text-sm text-ink-500">{game.intent}</p>
-  {game.sample && (
-    <p class="mt-2 text-xs text-ink-300">Sample content — pending final import</p>
-  )}
+  <p class="text-ink-500 mt-1 text-sm">{game.intent}</p>
+  {game.sample && <p class="text-ink-300 mt-2 text-xs">Sample content — pending final import</p>}
 </a>
 ```
 
@@ -2583,11 +2835,20 @@ The island receives all games as a prop, holds filter state, renders the filter 
 
 ```tsx
 import { useEffect, useState } from 'preact/hooks';
-import { EMPTY_STATE, filterGames, queryToState, stateToQuery, type FilterState, type GameLite } from '@/lib/gameFilter';
+import {
+  EMPTY_STATE,
+  filterGames,
+  queryToState,
+  stateToQuery,
+  type FilterState,
+  type GameLite,
+} from '@/lib/gameFilter';
 import { COMPETENCY_LABELS } from '@/lib/types';
 import { IndexFilters } from './IndexFilters';
 
-interface Props { games: GameLite[]; }
+interface Props {
+  games: GameLite[];
+}
 
 export default function GameFinder({ games }: Props) {
   const [state, setState] = useState<FilterState>(EMPTY_STATE);
@@ -2610,43 +2871,51 @@ export default function GameFinder({ games }: Props) {
   return (
     <div class="grid gap-8 lg:grid-cols-[280px_1fr]">
       <aside class="rounded-[var(--radius-card)] bg-white p-5 shadow-[var(--shadow-soft)]">
-        <IndexFilters
-          state={state}
-          onChange={setState}
-          onReset={() => setState(EMPTY_STATE)}
-        />
+        <IndexFilters state={state} onChange={setState} onReset={() => setState(EMPTY_STATE)} />
       </aside>
 
       <div>
         <div class="flex items-center justify-between" aria-live="polite">
-          <p class="text-sm text-ink-500">
+          <p class="text-ink-500 text-sm">
             Showing <strong>{results.length}</strong> of {games.length} games
           </p>
         </div>
 
         <ul class="mt-4 grid gap-4 sm:grid-cols-2">
-          {results.map(game => (
+          {results.map((game) => (
             <li key={game.slug}>
               <a
                 href={`/theatre-games/${game.slug}/`}
-                class="block h-full rounded-[var(--radius-card)] border border-ivory-200 bg-white p-5 no-underline transition hover:border-clay-500 hover:shadow-[var(--shadow-soft)]"
+                class="border-ivory-200 hover:border-clay-500 block h-full rounded-[var(--radius-card)] border bg-white p-5 no-underline transition hover:shadow-[var(--shadow-soft)]"
               >
                 <div class="flex flex-wrap items-center gap-2">
-                  <span class="rounded-[var(--radius-chip)] bg-clay-100 px-3 py-0.5 text-xs text-clay-700">{COMPETENCY_LABELS[game.competency]}</span>
-                  {game.subset && <span class="rounded-[var(--radius-chip)] bg-teal-100 px-3 py-0.5 text-xs text-teal-800">{game.subset}</span>}
-                  <span class="rounded-[var(--radius-chip)] bg-mustard-200 px-3 py-0.5 text-xs text-ink-700">{game.cohesion} cohesion</span>
-                  <span class="rounded-[var(--radius-chip)] bg-ivory-200 px-3 py-0.5 text-xs text-ink-700">{game.structure}</span>
+                  <span class="bg-clay-100 text-clay-700 rounded-[var(--radius-chip)] px-3 py-0.5 text-xs">
+                    {COMPETENCY_LABELS[game.competency]}
+                  </span>
+                  {game.subset && (
+                    <span class="rounded-[var(--radius-chip)] bg-teal-100 px-3 py-0.5 text-xs text-teal-800">
+                      {game.subset}
+                    </span>
+                  )}
+                  <span class="bg-mustard-200 text-ink-700 rounded-[var(--radius-chip)] px-3 py-0.5 text-xs">
+                    {game.cohesion} cohesion
+                  </span>
+                  <span class="bg-ivory-200 text-ink-700 rounded-[var(--radius-chip)] px-3 py-0.5 text-xs">
+                    {game.structure}
+                  </span>
                 </div>
-                <h3 class="mt-3 font-display text-xl">{game.name}</h3>
-                <p class="mt-1 text-sm text-ink-500">{game.intent}</p>
-                {game.sample && <p class="mt-2 text-xs text-ink-300">Sample — pending final import</p>}
+                <h3 class="font-display mt-3 text-xl">{game.name}</h3>
+                <p class="text-ink-500 mt-1 text-sm">{game.intent}</p>
+                {game.sample && (
+                  <p class="text-ink-300 mt-2 text-xs">Sample — pending final import</p>
+                )}
               </a>
             </li>
           ))}
         </ul>
 
         {results.length === 0 && (
-          <p class="mt-8 rounded-[var(--radius-card)] border border-dashed border-ivory-200 bg-ivory-50 p-6 text-center text-sm text-ink-500">
+          <p class="border-ivory-200 bg-ivory-50 text-ink-500 mt-8 rounded-[var(--radius-card)] border border-dashed p-6 text-center text-sm">
             No games match. Try loosening a filter or resetting.
           </p>
         )}
@@ -2662,29 +2931,51 @@ export default function GameFinder({ games }: Props) {
 ---
 const dialogId = 'how-to-use-index';
 ---
+
 <button
   type="button"
-  class="rounded border border-ink-900 px-3 py-1.5 text-sm"
+  class="border-ink-900 rounded border px-3 py-1.5 text-sm"
   onclick={`document.getElementById('${dialogId}').showModal()`}
 >
   How to use the index
 </button>
 
-<dialog id={dialogId} class="w-full max-w-lg rounded-[var(--radius-card)] p-0 backdrop:bg-ink-900/50">
+<dialog
+  id={dialogId}
+  class="backdrop:bg-ink-900/50 w-full max-w-lg rounded-[var(--radius-card)] p-0"
+>
   <form method="dialog" class="p-6">
     <div class="flex items-start justify-between gap-4">
       <h2 class="text-2xl">How to use the Game Index</h2>
       <button type="submit" class="text-ink-500" aria-label="Close">✕</button>
     </div>
-    <ol class="mt-4 list-decimal space-y-2 pl-5 text-sm text-ink-700">
-      <li>Pick one or more <strong>competencies</strong> to narrow the list to games that build the skills you want.</li>
-      <li>If your competency has <strong>subsets</strong> (Physical or Vocal Expression do), refine further.</li>
-      <li>Match <strong>cohesion</strong> to your group — Low for strangers, Medium for warmed-up groups, High for tight ensembles.</li>
-      <li>Choose <strong>Individual</strong> or <strong>Group</strong> depending on how you want players to work.</li>
-      <li>Search <strong>intent</strong> or <strong>name</strong> if you already have a specific game or purpose in mind.</li>
-      <li>Every filter change updates the URL, so you can share a filtered view with a colleague.</li>
+    <ol class="text-ink-700 mt-4 list-decimal space-y-2 pl-5 text-sm">
+      <li>
+        Pick one or more <strong>competencies</strong> to narrow the list to games that build the skills
+        you want.
+      </li>
+      <li>
+        If your competency has <strong>subsets</strong> (Physical or Vocal Expression do), refine further.
+      </li>
+      <li>
+        Match <strong>cohesion</strong> to your group — Low for strangers, Medium for warmed-up groups,
+        High for tight ensembles.
+      </li>
+      <li>
+        Choose <strong>Individual</strong> or <strong>Group</strong> depending on how you want players
+        to work.
+      </li>
+      <li>
+        Search <strong>intent</strong> or <strong>name</strong> if you already have a specific game or
+        purpose in mind.
+      </li>
+      <li>
+        Every filter change updates the URL, so you can share a filtered view with a colleague.
+      </li>
     </ol>
-    <p class="mt-4 text-xs text-ink-500">A narrated video walkthrough with screenshots is coming in a later release.</p>
+    <p class="text-ink-500 mt-4 text-xs">
+      A narrated video walkthrough with screenshots is coming in a later release.
+    </p>
   </form>
 </dialog>
 ```
@@ -2700,6 +2991,7 @@ import { loadGamesLite } from '@/lib/games';
 
 const games = await loadGamesLite();
 ---
+
 <SectionLayout
   title="Game Index"
   section="theatre-games"
@@ -2718,6 +3010,7 @@ const games = await loadGamesLite();
 - [ ] **Step 7: Verify the finder works in the browser**
 
 Run: `pnpm dev`; open `/theatre-games/finder`. Check:
+
 - Two cards visible (Puppets, Changing Person)
 - Clicking a competency chip narrows the results; URL updates (`?competency=…`)
 - Cohesion, structure chips work
@@ -2747,20 +3040,28 @@ git commit -m "feat: add Game Finder island with filters, URL state, how-to moda
 Render `/theatre-games/<slug>/` with the game frontmatter as a chip header + MDX body (Preparation / Facilitation / Evaluation) + print styling + sample badge.
 
 **Files:**
+
 - Create: `src/pages/theatre-games/[slug].astro`, `src/styles/print.css`
 - Modify: `src/styles/global.css` (import print.css)
 
 **Interfaces:**
+
 - Consumes: `getCollection('games')`, `render` from `astro:content`; `Concept` for inline concept refs in game MDX bodies.
 
 - [ ] **Step 1: Create `src/styles/print.css`**
 
 ```css
 @media print {
-  header, footer, aside, nav, [data-mobile-toggle], [data-print-hide] {
+  header,
+  footer,
+  aside,
+  nav,
+  [data-mobile-toggle],
+  [data-print-hide] {
     display: none !important;
   }
-  html, body {
+  html,
+  body {
     background: #fff !important;
     color: #000 !important;
     font-size: 11pt;
@@ -2772,9 +3073,15 @@ Render `/theatre-games/<slug>/` with the game frontmatter as a chip header + MDX
     color: #000 !important;
     text-decoration: none !important;
   }
-  h1 { font-size: 20pt; }
-  h2 { font-size: 14pt; }
-  h3 { font-size: 12pt; }
+  h1 {
+    font-size: 20pt;
+  }
+  h2 {
+    font-size: 14pt;
+  }
+  h3 {
+    font-size: 12pt;
+  }
   .rounded-\[var\(--radius-card\)\],
   .rounded {
     border-radius: 0 !important;
@@ -2807,7 +3114,7 @@ import { COMPETENCY_LABELS } from '@/lib/types';
 
 export async function getStaticPaths() {
   const entries = await getCollection('games');
-  return entries.map(entry => ({
+  return entries.map((entry) => ({
     params: { slug: entry.id.replace(/\.mdx?$/, '') },
     props: { entry },
   }));
@@ -2817,10 +3124,11 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 const g = entry.data;
 ---
+
 <BaseLayout title={g.name} description={g.intent} section="theatre-games">
   <Container class="py-12">
     <article class="mx-auto max-w-3xl">
-      <p class="text-sm text-ink-500">
+      <p class="text-ink-500 text-sm">
         <a href="/theatre-games/">Theatre Games</a> ·
         <a href="/theatre-games/finder">Game Index</a>
       </p>
@@ -2834,17 +3142,15 @@ const g = entry.data;
       </div>
 
       <h1 class="mt-3">{g.name}</h1>
-      <p class="mt-2 text-lg text-ink-500">{g.intent}</p>
+      <p class="text-ink-500 mt-2 text-lg">{g.intent}</p>
 
-      {g.source && (
-        <p class="mt-2 text-sm text-ink-500">Source: {g.source}</p>
-      )}
+      {g.source && <p class="text-ink-500 mt-2 text-sm">Source: {g.source}</p>}
 
       <div class="mt-4" data-print-hide>
         <button
           type="button"
           onclick="window.print()"
-          class="rounded border border-ink-900 px-3 py-1.5 text-sm"
+          class="border-ink-900 rounded border px-3 py-1.5 text-sm"
         >
           Print this game
         </button>
@@ -2861,6 +3167,7 @@ const g = entry.data;
 - [ ] **Step 4: Verify both game detail pages render**
 
 Run: `pnpm dev`; open:
+
 - `/theatre-games/puppets-marionettes/` — chips, name, intent, source, print button, MDX body with Preparation/Facilitation/Evaluation headings, sample badge
 - `/theatre-games/changing-person-activity/` — same shape
 
@@ -2889,11 +3196,13 @@ Pull 8 more games from the client's Drive folder + populate 8 additional concept
 **Prerequisites:** the client's Google Drive folder URL. Ask the user for it before starting this task. The Google Drive MCP is available (see agent tools).
 
 **Files:**
+
 - Create: 8 new files under `src/content/games/` (slugs TBD from source docs)
 - Create: 8 new files under `src/content/concepts/` — `warmup.mdx`, `competency.mdx`, `magic-toolbox.mdx`, `facilitation.mdx`, `fearless-creativity.mdx`, `players.mdx`, `resilience.mdx`, `archetype.mdx`
 - Modify: `src/pages/theatre-games/index.astro` (if the Drive doc's verbatim copy differs from the structural placeholder)
 
 **Interfaces:**
+
 - Consumes: seed schemas from Task 5; nothing else new.
 
 - [ ] **Step 1: Ask the user for the Google Drive folder link**
@@ -2932,16 +3241,16 @@ Use it to update `src/pages/theatre-games/index.astro` — the top intro paragra
 
 The 8 additional concepts and their likely source docs in Drive:
 
-| Slug | Likely Drive doc |
-|---|---|
-| `warmup` | "Warmup" (PRC folder) |
-| `competency` | "Competency: DT:FC" |
-| `magic-toolbox` | "Magic Toolbox" |
-| `facilitation` | "Facilitation & Facilitator Profile" |
-| `fearless-creativity` | "Fearless Creativity" (Roger Holzberg genesis) |
-| `players` | "Players" or extract from source spec §2 |
-| `resilience` | "Resilience" (or synthesize from Theatre Games competency doc) |
-| `archetype` | "Archetypes" |
+| Slug                  | Likely Drive doc                                               |
+| --------------------- | -------------------------------------------------------------- |
+| `warmup`              | "Warmup" (PRC folder)                                          |
+| `competency`          | "Competency: DT:FC"                                            |
+| `magic-toolbox`       | "Magic Toolbox"                                                |
+| `facilitation`        | "Facilitation & Facilitator Profile"                           |
+| `fearless-creativity` | "Fearless Creativity" (Roger Holzberg genesis)                 |
+| `players`             | "Players" or extract from source spec §2                       |
+| `resilience`          | "Resilience" (or synthesize from Theatre Games competency doc) |
+| `archetype`           | "Archetypes"                                                   |
 
 Follow the same schema as Task 5. Each frontmatter needs `name`, `slug`, `shortDefinition` (≤240 chars), `icon: placeholder`, `related`.
 
@@ -2978,9 +3287,11 @@ git commit -m "feat: import 8 games and 8 concepts from client Drive folder"
 Add a single end-to-end test that covers the golden path: landing → PRC → Theatre Games → finder → filter interaction → concept popover.
 
 **Files:**
+
 - Create: `playwright.config.ts`, `tests/e2e/smoke.spec.ts`
 
 **Interfaces:**
+
 - Test runs against a dev server that Playwright starts and stops.
 
 - [ ] **Step 1: Install Playwright**
@@ -3038,7 +3349,9 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   // Open the Concept popover (Cohesion)
   const cohesionButton = page.getByRole('button', { name: /Cohesion/i }).first();
   await cohesionButton.click();
-  await expect(page.getByText(/level of group bonding|How bonded a group is/i).first()).toBeVisible();
+  await expect(
+    page.getByText(/level of group bonding|How bonded a group is/i).first(),
+  ).toBeVisible();
   await page.keyboard.press('Escape');
 
   // Open the Game Index
@@ -3054,8 +3367,10 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
 
   // No unexpected console errors
   const errors: string[] = [];
-  page.on('pageerror', e => errors.push(e.message));
-  page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
+  page.on('pageerror', (e) => errors.push(e.message));
+  page.on('console', (m) => {
+    if (m.type() === 'error') errors.push(m.text());
+  });
   await page.reload();
   expect(errors, `Console/page errors:\n${errors.join('\n')}`).toEqual([]);
 });
@@ -3082,9 +3397,11 @@ git commit -m "test: add Playwright smoke test covering golden path"
 Write the project's CLAUDE.md, verify every Cycle 1 success criterion from the design doc, and mark the cycle complete.
 
 **Files:**
+
 - Create: `CLAUDE.md`
 
 **Interfaces:**
+
 - Consumes: everything built so far.
 
 - [ ] **Step 1: Create `CLAUDE.md`**
@@ -3172,7 +3489,7 @@ For the AA audit, install and run `axe` via a browser devtools extension or CLI,
 
 ```js
 // Requires the axe-core extension or a manual paste of axe.min.js
-axe.run().then(r => console.log(r.violations));
+axe.run().then((r) => console.log(r.violations));
 ```
 
 Fix any critical violations (contrast, missing labels) before shipping. Log any deferred non-critical items in this file.

@@ -1,0 +1,42 @@
+@media print {
+  header,
+  footer,
+  aside,
+  nav,
+  [data-mobile-toggle],
+  [data-print-hide] {
+    display: none !important;
+  }
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 11pt;
+  }
+  main {
+    padding: 0 !important;
+  }
+  a {
+    color: #000 !important;
+    text-decoration: none !important;
+  }
+  h1 {
+    font-size: 20pt;
+  }
+  h2 {
+    font-size: 14pt;
+  }
+  h3 {
+    font-size: 12pt;
+  }
+  .rounded-\[var\(--radius-card\)\],
+  .rounded {
+    border-radius: 0 !important;
+  }
+  .shadow-\[var\(--shadow-soft\)\] {
+    box-shadow: none !important;
+  }
+  .prose {
+    max-width: none;
+  }
+}

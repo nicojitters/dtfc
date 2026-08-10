@@ -1,0 +1,51 @@
+---
+interface Props {
+  source?: string;
+  heading?: string;
+}
+const { source = 'footer', heading = 'Get monthly DT:FC news, new games, and new plays.' } =
+  Astro.props;
+---
+
+<form
+  class="flex flex-col gap-2 sm:flex-row sm:items-end"
+  data-newsletter
+  data-source={source}
+  novalidate
+>
+  <label class="flex-1">
+    <span class="text-ink-700 block text-sm font-medium">{heading}</span>
+    <input
+      type="email"
+      required
+      name="email"
+      autocomplete="email"
+      placeholder="you@example.com"
+      class="border-ivory-200 mt-1 w-full rounded border bg-white px-3 py-2 text-base"
+    />
+  </label>
+  <button
+    type="submit"
+    class="bg-clay-500 text-ivory-50 hover:bg-clay-700 rounded px-4 py-2 font-medium"
+  >
+    Notify me
+  </button>
+</form>
+<p class="text-ink-500 mt-2 text-xs">We won't share your email.</p>
+
+<script>
+  // TODO(esp): wire this to the client's ESP (see CLAUDE.md § Newsletter).
+  document.querySelectorAll<HTMLFormElement>('[data-newsletter]').forEach((form) => {
+    form.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      const data = new FormData(form);
+      // eslint-disable-next-line no-console
+      console.info('[newsletter/placeholder]', form.dataset.source, Object.fromEntries(data));
+      form.reset();
+      form.insertAdjacentHTML(
+        'afterend',
+        '<p role="status" class="mt-2 text-sm text-teal-600">Thanks — we\'ll be in touch.</p>',
+      );
+    });
+  });
+</script>

@@ -1,0 +1,81 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+@import './tokens.css';
+@import './print.css';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/fraunces';
+
+@layer base {
+  html {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-body);
+    color: var(--color-ink-900);
+    background: var(--color-ivory-50);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    line-height: var(--leading-tight);
+    color: var(--color-ink-900);
+  }
+
+  h1 {
+    font-size: var(--text-display);
+    font-weight: 500;
+  }
+  h2 {
+    font-size: var(--text-3xl);
+    font-weight: 500;
+  }
+  h3 {
+    font-size: var(--text-2xl);
+    font-weight: 500;
+  }
+  h4 {
+    font-size: var(--text-xl);
+    font-weight: 500;
+  }
+
+  a {
+    color: var(--color-clay-500);
+    text-decoration-line: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+  a:hover {
+    color: var(--color-clay-700);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-teal-600);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

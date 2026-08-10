@@ -1,0 +1,48 @@
+---
+import Container from './Container.astro';
+import Nav from './Nav.astro';
+import type { NavKey } from '@/lib/nav';
+interface Props {
+  section?: NavKey;
+}
+const { section } = Astro.props;
+---
+
+<header class="border-ivory-200 bg-ivory-50 border-b">
+  <Container class="flex items-center justify-between py-4">
+    <a href="/" class="text-ink-900 flex items-center gap-3 no-underline">
+      <img src="/DTFC-logo.png" alt="" width="40" height="40" class="bg-clay-100 rounded-full" />
+      <span class="font-display text-xl">DT:FC</span>
+    </a>
+
+    <button
+      type="button"
+      class="border-ivory-200 rounded border px-3 py-2 text-sm md:hidden"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      data-mobile-toggle
+    >
+      Menu
+    </button>
+
+    <nav aria-label="Primary" class="hidden md:block">
+      <Nav section={section} />
+    </nav>
+  </Container>
+
+  <div id="mobile-nav" hidden class="border-ivory-200 bg-ivory-50 border-t md:hidden">
+    <Container class="py-4">
+      <Nav section={section} />
+    </Container>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-mobile-toggle]');
+  const panel = document.getElementById('mobile-nav');
+  toggle?.addEventListener('click', () => {
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    if (panel) panel.hidden = expanded;
+  });
+</script>

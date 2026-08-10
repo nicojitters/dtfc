@@ -1,0 +1,153 @@
+---
+import SectionLayout from '@/layouts/SectionLayout.astro';
+import Button from '@/components/ui/Button.astro';
+import Concept from '@/components/concept/Concept.astro';
+import Chip from '@/components/ui/Chip.astro';
+import { COMPETENCIES, COMPETENCY_LABELS, COMPETENCY_SUBSETS } from '@/lib/types';
+
+const audiences = [
+  {
+    title: 'For Facilitation Warm-up',
+    body: 'How to "warm up" a group for action — replace individual preoccupations with a shared focus before the real work begins.',
+  },
+  {
+    title: 'For Teaching',
+    body: 'Welcoming, fun and accessible games to enhance and deepen your and the group\'s journey to more creative and imaginative expression.',
+  },
+  {
+    title: 'For Theatre',
+    body: 'Use at rehearsals to explore character and action, train context awareness of other actors and audience, and encourage experimentation.',
+  },
+  {
+    title: 'For Counselors',
+    body: 'Encourage exploration of expression and new roles, build confidence, add new skills — in group treatment, coaching, or support settings.',
+  },
+];
+
+const cohesionRungs = [
+  {
+    label: 'Low',
+    tone: 'teal' as const,
+    body: "Strangers, new-year classrooms, first-day workshops. The game asks little of players and doesn't require personal risk.",
+  },
+  {
+    label: 'Medium',
+    tone: 'mustard' as const,
+    body: "A group that has warmed up together but hasn't yet built trust for exposed or vulnerable play.",
+  },
+  {
+    label: 'High',
+    tone: 'clay' as const,
+    body: 'An ensemble that already trusts each other; ready for risk, invention, and self-revelation.',
+  },
+];
+---
+
+<SectionLayout
+  title="Theatre Games"
+  section="theatre-games"
+  eyebrow="Welcome Players"
+  description="Welcome Players to creating a world of fearless imaginative expression using DT:FC Theatre Games. Within is the information you need to play wisely and well."
+>
+  <div class="grid gap-10 lg:grid-cols-3">
+    <div class="space-y-8 lg:col-span-2">
+      <section>
+        <h2>What are <Concept id="theatre-games" />?</h2>
+        <p class="mt-4 max-w-prose">
+          Theatre games are an action-packed, performance-based method for individual and group
+          development. Using entertaining dramatic techniques activates individual expression as
+          each player steps outside ordinary responses. The process expands the five natural
+          competencies necessary for Fearless Creativity. Theatre Games demonstrate individual and
+          group understanding of the concept being explored.
+        </p>
+        <ul class="mt-4 max-w-prose space-y-1 text-sm">
+          <li>— Explore different perspectives and behaviors</li>
+          <li>— Balance internal/external focus</li>
+          <li>— Move beyond memorization to embodied learning</li>
+          <li>— Support other players' explorations</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>What Happens in a Theatre Game?</h2>
+        <ul class="mt-4 max-w-prose space-y-2 text-sm">
+          <li>Using dramatic techniques encourages expression and demonstrates understanding of what is being explored.</li>
+          <li>Each person feels, sees, hears, and embodies the experience.</li>
+          <li>The process expands the five natural competencies necessary for Fearless Creativity.</li>
+          <li>Those involved often apply what they learn to every aspect of their learning process and, indeed, their lives.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>The five competencies</h2>
+        <div class="mt-4 grid gap-4 md:grid-cols-2">
+          {
+            COMPETENCIES.map((c) => (
+              <div class="border-ivory-200 rounded-[var(--radius-card)] border bg-white p-5">
+                <h3 class="text-xl">{COMPETENCY_LABELS[c]}</h3>
+                {COMPETENCY_SUBSETS[c].length > 0 && (
+                  <ul class="mt-3 flex flex-wrap gap-2">
+                    {COMPETENCY_SUBSETS[c].map((s) => (
+                      <li>
+                        <Chip tone="teal">{s}</Chip>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <section>
+        <h2><Concept id="cohesion" /> — matching game to group</h2>
+        <p class="mt-4 max-w-prose">
+          Every game is rated by the level of group bonding it assumes:
+        </p>
+        <div class="mt-4 grid gap-3 md:grid-cols-3">
+          {
+            cohesionRungs.map((r) => (
+              <div class="border-ivory-200 rounded-[var(--radius-card)] border bg-white p-4">
+                <Chip tone={r.tone}>{r.label}</Chip>
+                <p class="text-ink-700 mt-3 text-sm">{r.body}</p>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <section>
+        <h2>Use Theatre Games for…</h2>
+        <div class="mt-4 grid gap-4 md:grid-cols-2">
+          {
+            audiences.map((a) => (
+              <div>
+                <h3 class="text-lg">{a.title}</h3>
+                <p class="text-ink-700 mt-2 text-sm">{a.body}</p>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+    </div>
+
+    <aside class="lg:sticky lg:top-8 lg:self-start">
+      <div class="bg-clay-500 text-ivory-50 rounded-[var(--radius-card)] p-6">
+        <p class="font-display text-2xl">Find a game</p>
+        <p class="text-clay-50/90 mt-2 text-sm">
+          Filter by competency, cohesion, group size, or name.
+        </p>
+        <div class="mt-4">
+          <Button
+            href="/theatre-games/finder"
+            variant="secondary"
+            class="border-ivory-50 text-ivory-50 hover:bg-clay-700"
+          >
+            Open the Game Index →
+          </Button>
+        </div>
+      </div>
+    </aside>
+  </div>
+</SectionLayout>

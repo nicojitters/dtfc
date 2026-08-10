@@ -1,0 +1,32 @@
+---
+import '@/styles/global.css';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import SkipLink from '@/components/layout/SkipLink.astro';
+import type { NavKey } from '@/lib/nav';
+
+interface Props {
+  title: string;
+  description?: string;
+  section?: NavKey;
+}
+const { title, description, section } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} — DT:FC</title>
+    {description && <meta name="description" content={description} />}
+  </head>
+  <body class="bg-ivory-50 text-ink-900 min-h-screen">
+    <SkipLink />
+    <Header section={section} />
+    <main id="main-content" class="pt-6 md:pt-10">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

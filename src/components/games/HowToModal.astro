@@ -1,0 +1,50 @@
+---
+const dialogId = 'how-to-use-index';
+---
+
+<button
+  type="button"
+  class="border-ink-900 rounded border px-3 py-1.5 text-sm"
+  onclick={`document.getElementById('${dialogId}').showModal()`}
+>
+  How to use the index
+</button>
+
+<dialog
+  id={dialogId}
+  class="backdrop:bg-ink-900/50 w-full max-w-lg rounded-[var(--radius-card)] p-0"
+>
+  <form method="dialog" class="p-6">
+    <div class="flex items-start justify-between gap-4">
+      <h2 class="text-2xl">How to use the Game Index</h2>
+      <button type="submit" class="text-ink-500" aria-label="Close">✕</button>
+    </div>
+    <ol class="text-ink-700 mt-4 list-decimal space-y-2 pl-5 text-sm">
+      <li>
+        Pick one or more <strong>competencies</strong> to narrow the list to games that build the skills
+        you want.
+      </li>
+      <li>
+        If your competency has <strong>subsets</strong> (Physical or Vocal Expression do), refine further.
+      </li>
+      <li>
+        Match <strong>cohesion</strong> to your group — Low for strangers, Medium for warmed-up groups,
+        High for tight ensembles.
+      </li>
+      <li>
+        Choose <strong>Individual</strong> or <strong>Group</strong> depending on how you want players
+        to work.
+      </li>
+      <li>
+        Search <strong>intent</strong> or <strong>name</strong> if you already have a specific game or
+        purpose in mind.
+      </li>
+      <li>
+        Every filter change updates the URL, so you can share a filtered view with a colleague.
+      </li>
+    </ol>
+    <p class="text-ink-500 mt-4 text-xs">
+      A narrated video walkthrough with screenshots is coming in a later release.
+    </p>
+  </form>
+</dialog>
