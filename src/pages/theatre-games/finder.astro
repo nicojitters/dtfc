@@ -1,0 +1,22 @@
+---
+import SectionLayout from '@/layouts/SectionLayout.astro';
+import GameFinder from '@/components/games/GameFinder';
+import HowToModal from '@/components/games/HowToModal.astro';
+import { loadGamesLite } from '@/lib/games';
+
+const games = await loadGamesLite();
+---
+
+<SectionLayout
+  title="Game Index"
+  section="theatre-games"
+  eyebrow="Theatre Games"
+  description="Filter by competency, cohesion, group size, or search by name or intent."
+>
+  <div class="mb-6 flex items-center justify-between gap-4">
+    <a href="/theatre-games/" class="text-sm">← Back to Theatre Games</a>
+    <HowToModal />
+  </div>
+
+  <GameFinder client:load games={games} />
+</SectionLayout>

@@ -1,0 +1,25 @@
+---
+import Chip from '@/components/ui/Chip.astro';
+import { COMPETENCY_LABELS } from '@/lib/types';
+import type { GameLite } from '@/lib/gameFilter';
+
+interface Props {
+  game: GameLite;
+}
+const { game } = Astro.props;
+---
+
+<a
+  href={`/theatre-games/${game.slug}/`}
+  class="border-ivory-200 hover:border-clay-500 block h-full rounded-[var(--radius-card)] border bg-white p-5 no-underline transition hover:shadow-[var(--shadow-soft)]"
+>
+  <div class="flex flex-wrap items-center gap-2">
+    <Chip tone="clay">{COMPETENCY_LABELS[game.competency]}</Chip>
+    {game.subset && <Chip tone="teal">{game.subset}</Chip>}
+    <Chip tone="mustard">{game.cohesion} cohesion</Chip>
+    <Chip tone="neutral">{game.structure}</Chip>
+  </div>
+  <h3 class="mt-3 text-xl">{game.name}</h3>
+  <p class="text-ink-500 mt-1 text-sm">{game.intent}</p>
+  {game.sample && <p class="text-ink-300 mt-2 text-xs">Sample content — pending final import</p>}
+</a>
