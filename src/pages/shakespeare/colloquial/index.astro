@@ -1,0 +1,58 @@
+---
+import ShakespeareLayout from '@/layouts/ShakespeareLayout.astro';
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('colloquial')).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title),
+);
+---
+
+<ShakespeareLayout
+  title="Colloquial Shakespeare"
+  subPage="colloquial"
+  eyebrow="Shakespeare"
+  description="Side-by-side original and vernacular adaptations — with audio where available."
+>
+  <div class="max-w-2xl">
+    <p class="text-ink-700 text-base leading-relaxed">
+      Each pairing places Shakespeare's original language beside a colloquial version so readers can
+      bridge from the vernacular into the original words. These are reading aids, not performance
+      scripts — the section landing's pedagogical stance holds: performance leaves the language
+      as Shakespeare's own.
+    </p>
+  </div>
+
+  {
+    entries.length === 0 ? (
+      <p class="text-ink-500 mt-8 italic">No pairings available yet — check back soon.</p>
+    ) : (
+      <ul class="mt-8 grid list-none gap-4 md:grid-cols-2">
+        {entries.map((entry) => {
+          const slug = entry.id.replace(/\.mdx?$/, '');
+          const href = `/shakespeare/colloquial/${slug}/`;
+          return (
+            <li>
+              <article class="border-ivory-200 bg-ivory-50 hover:border-clay-500/60 h-full rounded-[var(--radius-card)] border p-5 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]">
+                <h3 class="font-display text-ink-900 text-xl">
+                  <a href={href} class="hover:text-clay-500 no-underline">
+                    {entry.data.title}
+                  </a>
+                </h3>
+                {entry.data.subtitle && (
+                  <p class="text-ink-500 mt-1 text-sm">{entry.data.subtitle}</p>
+                )}
+                <p class="text-ink-700 mt-2 text-sm">
+                  Translator: <strong>{entry.data.translator}</strong>
+                  {entry.data.audio && <span class="ml-2">· audio available</span>}
+                </p>
+                {entry.data.sample && (
+                  <p class="text-ink-500 mt-2 text-xs italic">Sample — pending final import</p>
+                )}
+              </article>
+            </li>
+          );
+        })}
+      </ul>
+    )
+  }
+</ShakespeareLayout>
