@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import ScriptCard from './ScriptCard.astro';
+
+interface Props {
+  library: 'soliloquies' | 'scenes' | 'themes' | 'cuttings' | 'childrens-shakespeare';
+  title: string;
+  intro: string;
+}
+const { library, title, intro } = Astro.props;
+
+const entries = (await getCollection('scripts'))
+  .filter((e) => e.data.library === library)
+  .sort((a, b) => a.data.title.localeCompare(b.data.title));
+---
+
+<section>
+  <header class="max-w-2xl">
+    <h2 class="font-display text-2xl">{title}</h2>
+    <p class="text-ink-700 mt-2 text-sm leading-relaxed">{intro}</p>
+    <p class="text-ink-500 mt-2 text-sm">
+      <a href="/shakespeare/alternatives/">See how this library fits into Creating Fearless Shakespeare Scripts →</a>
+    </p>
+  </header>
+
+  {
+    entries.length === 0 ? (
+      <p class="text-ink-500 mt-8 italic">
+        This library is being populated — check back soon.
+      </p>
+    ) : (
+      <ul class="mt-8 grid list-none gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {entries.map((entry) => (
+          <li>
+            <ScriptCard entry={entry} />
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</section>
