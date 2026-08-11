@@ -1,27 +1,53 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
+import ReflectivePrompt from '@/components/section/ReflectivePrompt.astro';
 ---
 
 <SectionLayout
   title="Legacy"
-  eyebrow="Coming soon"
   section="legacy"
-  description="History, Foundational Concepts, Who — When — Why, Next Steps."
+  eyebrow="Coming soon"
+  description="History, foundational concepts, who — when — why, and next steps."
 >
-  <div class="max-w-2xl space-y-4">
-    <p>
-      DT:FC descends from the <strong>Colorado Caravan</strong>, a touring theatre created in the
-      1970s by the University of Colorado Theatre Department and the Colorado Shakespeare Festival
-      under NEA Title III grants. Founders: Richard Knaub, Chuck Wilcox, Lola Wilcox, and Martin
-      Cobin.
-    </p>
-    <p>
-      That work produced an M.A. program in Developmental Theatre/Drama, successor companies on
-      three continents, and audiences totaling over six million.
-    </p>
-    <p>
-      Full history, founder profiles, essays, and an interactive 1971–present timeline are coming
-      soon.
-    </p>
+  <ReflectivePrompt sectionKey="legacy" />
+
+  <div class="max-w-2xl space-y-6 pt-8">
+    <section id="colorado-caravan">
+      <h2>The Colorado Caravan</h2>
+      <p>
+        DT:FC descends from the <strong>Colorado Caravan</strong>, a touring theatre created in
+        the 1970s by the University of Colorado Theatre Department and the Colorado Shakespeare
+        Festival under NEA Title III grants. It's the direct answer to the landing-page question:
+        what did CU create in the 1970s that led to this site?
+      </p>
+    </section>
+
+    <section id="founders">
+      <h2>The Founders</h2>
+      <p>
+        Developmental Theatre was founded by Richard Knaub, Chuck Wilcox, Lola Wilcox, and
+        Martin Cobin. That work produced an M.A. program in Developmental Theatre/Drama, successor
+        companies on three continents, and audiences totaling over six million.
+      </p>
+    </section>
+
+    <section>
+      <h2>Become part of this Legacy</h2>
+      {/* CLIENT REVIEW: cross-link resolves Idea Two #13 to the Community
+          membership paragraph (see /community/#membership). */}
+      <p>
+        The Legacy is a working one — anyone who plays, teaches, watches, or supports the work
+        adds to it. Start on the <a href="/community/#membership">Community page</a> to learn
+        how to join.
+      </p>
+    </section>
+
+    <section>
+      <h2>Full history — coming next</h2>
+      <p>
+        Founder profiles, essays, and an interactive 1971–present timeline are landing in an
+        upcoming release.
+      </p>
+    </section>
   </div>
 </SectionLayout>
