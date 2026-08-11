@@ -58,6 +58,37 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   const visiblePrompts = reflective.locator('li:not([hidden])');
   await expect(visiblePrompts).toHaveCount(1);
 
+  // Shakespeare section — landing, sub-nav, one library, one script, colloquial, ask
+  await page.goto('/shakespeare/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Shakespeare' })).toBeVisible();
+  const subNav = page.getByRole('navigation', { name: 'Shakespeare section' });
+  await expect(subNav).toBeVisible();
+  await expect(subNav.getByRole('link', { name: 'Alternatives' })).toBeVisible();
+
+  // Follow a directory-grid link into the Scenes library
+  await page.getByRole('link', { name: 'Script Libraries' }).click();
+  await expect(page).toHaveURL(/\/shakespeare\/scenes\/?/);
+  await expect(page.getByRole('heading', { level: 2, name: /Scenes library/i })).toBeVisible();
+
+  // Follow into an individual script (any card that exists — the first one)
+  const firstScriptLink = page.locator('article a').first();
+  await firstScriptLink.click();
+  await expect(page).toHaveURL(/\/shakespeare\/scripts\/[^/]+\/?/);
+  await expect(page.getByRole('button', { name: /Print this script/i })).toBeVisible();
+
+  // Colloquial index → detail
+  await page.goto('/shakespeare/colloquial/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Colloquial Shakespeare' })).toBeVisible();
+  const firstColloquial = page.locator('article a').first();
+  await firstColloquial.click();
+  await expect(page).toHaveURL(/\/shakespeare\/colloquial\/[^/]+\/?/);
+
+  // Ask Shakespeare index has the form
+  await page.goto('/shakespeare/ask-shakespeare/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Ask Shakespeare' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: /Your question/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Send to Shakespeare/i })).toBeVisible();
+
   // No unexpected console errors
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
