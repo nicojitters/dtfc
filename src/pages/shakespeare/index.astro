@@ -1,24 +1,46 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
+import ReflectivePrompt from '@/components/section/ReflectivePrompt.astro';
 ---
 
 <SectionLayout
   title="Shakespeare"
-  eyebrow="Coming soon"
   section="shakespeare"
-  description="K through Adult — Oral literacy — Monologues, Scenes, Scenes on Themes."
+  eyebrow="Coming soon"
+  description="Scenes, monologues, themed montages, and 40-minute cuttings for K through Adult players."
 >
-  <div class="max-w-2xl">
-    <p>In production for this section:</p>
-    <ul class="text-ink-700 mt-4 list-disc space-y-1 pl-6">
-      <li>Creating Fearless Shakespeare Scripts — four alternatives to staging a full play</li>
-      <li>
-        Script libraries — soliloquies, scenes, scenes around a theme, cuttings, Children's
-        Shakespeare
-      </li>
-      <li>Shakespeare Into Current Colloquial Language — side-by-side texts</li>
-      <li>Ask Shakespeare — Q&amp;A archive</li>
-      <li>Honoring Our Guides (Shakespeare)</li>
-    </ul>
+  <ReflectivePrompt sectionKey="shakespeare" />
+
+  <div class="max-w-2xl space-y-6 pt-8">
+    {/* CLIENT REVIEW: drafted the three answer paragraphs below for Cycle 2. */}
+    <section id="four-hundred-forty">
+      <h2>440+ years, and still on stage</h2>
+      <p>
+        Shakespeare left roughly 37 plays; every one of them is still being performed somewhere in
+        the world, more than four centuries after they were written. DT:FC's Shakespeare section
+        works with that living body of scripts — scenes, monologues, themed montages, and 40-minute
+        cuttings — so players of any age can step into the language directly.
+      </p>
+    </section>
+
+    <section id="daniel-yang">
+      <h2>Translating Shakespeare into Chinese</h2>
+      <p>
+        Daniel S.P. Yang, one of Developmental Theatre's honored guides, has spent decades
+        translating Shakespeare's plays into Chinese. His work is one of the reasons DT:FC treats
+        Shakespeare not as a museum object but as a script that keeps finding new audiences on new
+        continents.
+      </p>
+    </section>
+
+    <section id="ask-shakespeare">
+      <h2>Ask Shakespeare</h2>
+      <p>
+        Players and audiences send questions to "Shakespeare" — about lines, characters, choices,
+        or their own moment of stage fright — and we publish the answers here. Have a question in
+        mind? The submission form is opening in the next release; in the meantime, notes about the
+        archive live below.
+      </p>
+    </section>
   </div>
 </SectionLayout>
