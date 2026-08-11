@@ -1,46 +1,102 @@
 ---
-import SectionLayout from '@/layouts/SectionLayout.astro';
+import ShakespeareLayout from '@/layouts/ShakespeareLayout.astro';
 import ReflectivePrompt from '@/components/section/ReflectivePrompt.astro';
+
+const directoryCards = [
+  {
+    label: 'Alternatives',
+    href: '/shakespeare/alternatives/',
+    description: 'Four fearless alternatives to staging a full play — the keystone essay.',
+  },
+  {
+    label: 'Script Libraries',
+    href: '/shakespeare/scenes/',
+    description: 'Scenes, Themes, Cuttings, Soliloquies, and Children\'s Shakespeare.',
+  },
+  {
+    label: 'Colloquial',
+    href: '/shakespeare/colloquial/',
+    description: 'Side-by-side original and vernacular adaptations, with audio where available.',
+  },
+  {
+    label: 'Ask Shakespeare',
+    href: '/shakespeare/ask-shakespeare/',
+    description: 'A Q&A column archive, plus a form for your own question.',
+  },
+  {
+    label: 'Honoring Our Guides',
+    href: '/shakespeare/honoring-our-guides/',
+    description: 'CSF, CU, Daniel S.P. Yang, Joe Craft, Amanda Giguere.',
+  },
+];
 ---
 
-<SectionLayout
+<ShakespeareLayout
   title="Shakespeare"
-  section="shakespeare"
-  eyebrow="Coming soon"
-  description="Scenes, monologues, themed montages, and 40-minute cuttings for K through Adult players."
+  eyebrow="K through Adult"
+  description="Scenes, monologues, themed montages, and 40-minute cuttings — for Players of any age, in Shakespeare's own language."
 >
   <ReflectivePrompt sectionKey="shakespeare" />
 
-  <div class="max-w-2xl space-y-6 pt-8">
-    {/* CLIENT REVIEW: drafted the three answer paragraphs below for Cycle 2. */}
+  {/* CLIENT REVIEW: "Leave the Language as Shakespeare's Own" callout drafted from spec §4.3 item 7. */}
+  <aside class="border-clay-500/25 bg-clay-500/5 mt-8 rounded-[var(--radius-card)] border-l-4 p-5">
+    <h2 class="font-display text-ink-900 text-xl">Leave the Language as Shakespeare&rsquo;s Own.</h2>
+    <p class="text-ink-700 mt-2 max-w-prose text-base leading-relaxed">
+      When Players of any age step into Shakespeare&rsquo;s words as written, they train ear, breath, and
+      imagination together. DT:FC does not paraphrase or &ldquo;translate&rdquo; the original in performance
+      &mdash; the language itself does the teaching. (For readers who want a bridge into the words,
+      see our <a href="/shakespeare/colloquial/" class="hover:text-clay-500">Colloquial pairings</a>
+      alongside the originals.)
+    </p>
+  </aside>
+
+  <div class="mt-10 max-w-2xl space-y-6">
+    {/* CLIENT REVIEW: Cycle 3 rewrites — each teaser now links to the destination built this cycle. */}
     <section id="four-hundred-forty">
       <h2>440+ years, and still on stage</h2>
       <p>
         Shakespeare left roughly 37 plays; every one of them is still being performed somewhere in
-        the world, more than four centuries after they were written. DT:FC's Shakespeare section
-        works with that living body of scripts — scenes, monologues, themed montages, and 40-minute
-        cuttings — so players of any age can step into the language directly.
+        the world, more than four centuries after they were written. The Alternatives essay lays out
+        how DT:FC works with that living body of scripts.
+        <a href="/shakespeare/alternatives/" class="hover:text-clay-500">Read Creating Fearless Shakespeare Scripts &rarr;</a>
       </p>
     </section>
 
     <section id="daniel-yang">
       <h2>Translating Shakespeare into Chinese</h2>
       <p>
-        Daniel S.P. Yang, one of Developmental Theatre's honored guides, has spent decades
-        translating Shakespeare's plays into Chinese. His work is one of the reasons DT:FC treats
-        Shakespeare not as a museum object but as a script that keeps finding new audiences on new
-        continents.
+        Daniel S.P. Yang has spent decades translating Shakespeare's plays into Chinese. See our
+        full acknowledgements of the guides whose work made DT:FC's Shakespeare section possible.
+        <a href="/shakespeare/honoring-our-guides/" class="hover:text-clay-500">See Honoring Our Guides &rarr;</a>
       </p>
     </section>
 
     <section id="ask-shakespeare">
       <h2>Ask Shakespeare</h2>
       <p>
-        Players and audiences send questions to "Shakespeare" — about lines, characters, choices,
-        or their own moment of stage fright — and we publish the answers here. Have a question in
-        mind? The submission form is opening in the next release; in the meantime, notes about the
-        archive live below.
+        Players and audiences send questions to &ldquo;Shakespeare&rdquo; &mdash; about lines,
+        characters, choices, or a moment of stage fright &mdash; and we publish the answers.
+        <a href="/shakespeare/ask-shakespeare/" class="hover:text-clay-500">Browse the archive or submit a question &rarr;</a>
       </p>
     </section>
   </div>
-</SectionLayout>
+
+  <section class="mt-14">
+    <h2 class="font-display text-2xl">Explore the section</h2>
+    <ul class="mt-6 grid list-none gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {
+        directoryCards.map((card) => (
+          <li>
+            <a
+              href={card.href}
+              class="border-ivory-200 bg-ivory-50 hover:border-clay-500/60 block h-full rounded-[var(--radius-card)] border p-5 no-underline transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]"
+            >
+              <h3 class="font-display text-ink-900 text-xl">{card.label}</h3>
+              <p class="text-ink-700 mt-1 text-sm">{card.description}</p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</ShakespeareLayout>
