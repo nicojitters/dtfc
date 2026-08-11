@@ -269,37 +269,3 @@ export function pickIndex(bank: readonly unknown[], seed: number): number {
     }
   }
 })();
-
-// -----------------------------------------------------------------------------
-// BACKWARD-COMPAT ALIASES — used by src/pages/index.astro until Task 9 rewrites it.
-// Delete this block in Task 9.
-// -----------------------------------------------------------------------------
-
-export const WELCOME_HEADING = `COMMUNITY — ${COMMUNITY_CENTER.headline}`;
-export const WELCOME_BODY: readonly string[] = [COMMUNITY_CENTER.body, ...COMMUNITY_CENTER.extended];
-
-export interface SectionBox {
-  key: NavKey;
-  label: string;
-  href: string;
-  summary: string;
-  teasers: string[];
-  comingSoon?: boolean;
-}
-
-export const SECTION_BOXES: SectionBox[] = [
-  {
-    key: 'community',
-    label: 'Community',
-    href: '/community/',
-    summary: "Who we are, how we're organized, newsletters, and companion theatres.",
-    teasers: [],
-  },
-  ...SECTION_TILES.map<SectionBox>((t) => ({
-    key: t.key,
-    label: t.label,
-    href: t.href,
-    summary: t.summary,
-    teasers: t.questions,
-  })),
-];
