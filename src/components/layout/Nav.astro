@@ -7,20 +7,20 @@ interface Props {
 const { section, class: className = '' } = Astro.props;
 ---
 
-<ul class={`flex flex-col gap-1 md:flex-row md:items-center md:gap-6 ${className}`}>
+<ul class={`flex flex-col gap-1 lg:flex-row lg:items-baseline lg:gap-5 ${className}`}>
   {
     NAV_ITEMS.map((item) => (
       <li>
         <a
           href={item.href}
-          class={`text-ink-900 hover:text-clay-500 inline-flex items-center gap-2 py-1 no-underline ${
-            section === item.key ? 'border-clay-500 border-b-2' : ''
-          }`}
+          class={`hover:text-clay-500 inline-flex flex-col items-start whitespace-nowrap py-1 leading-tight no-underline ${
+            item.comingSoon ? 'text-ink-500' : 'text-ink-900'
+          } ${section === item.key ? 'border-clay-500 border-b-2' : ''}`}
           aria-current={section === item.key ? 'page' : undefined}
         >
-          {item.label}
+          <span>{item.label}</span>
           {item.comingSoon && (
-            <span class="bg-mustard-200 text-ink-700 rounded-[var(--radius-chip)] px-2 py-0.5 text-xs font-medium">
+            <span class="text-mustard-600 mt-0.5 text-[0.625rem] font-semibold tracking-widest uppercase">
               Coming Next Year
             </span>
           )}

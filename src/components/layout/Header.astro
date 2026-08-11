@@ -9,15 +9,15 @@ const { section } = Astro.props;
 ---
 
 <header class="border-ivory-200 bg-ivory-50 border-b">
-  <Container class="flex items-center justify-between py-4">
-    <a href="/" class="text-ink-900 flex items-center gap-3 no-underline">
+  <div class="mx-auto grid w-full max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-8 px-5 py-4 md:px-8">
+    <a href="/" class="text-ink-900 flex shrink-0 items-center gap-3 justify-self-start no-underline">
       <img src="/DTFC-logo.png" alt="" width="40" height="40" class="bg-clay-100 rounded-full" />
       <span class="font-display text-xl">DT:FC</span>
     </a>
 
     <button
       type="button"
-      class="border-ivory-200 rounded border px-3 py-2 text-sm md:hidden"
+      class="border-ivory-200 col-start-3 justify-self-end rounded border px-3 py-2 text-sm lg:hidden"
       aria-expanded="false"
       aria-controls="mobile-nav"
       data-mobile-toggle
@@ -25,12 +25,14 @@ const { section } = Astro.props;
       Menu
     </button>
 
-    <nav aria-label="Primary" class="hidden md:block">
+    <nav aria-label="Primary" class="col-start-2 hidden justify-self-center lg:block">
       <Nav section={section} />
     </nav>
-  </Container>
 
-  <div id="mobile-nav" hidden class="border-ivory-200 bg-ivory-50 border-t md:hidden">
+    <div class="hidden lg:block" aria-hidden="true"></div>
+  </div>
+
+  <div id="mobile-nav" hidden class="border-ivory-200 bg-ivory-50 border-t lg:hidden">
     <Container class="py-4">
       <Nav section={section} />
     </Container>
