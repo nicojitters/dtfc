@@ -1,23 +1,36 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
+import ReflectivePrompt from '@/components/section/ReflectivePrompt.astro';
 ---
 
 <SectionLayout
   title="Children's Theatre"
-  eyebrow="Coming soon"
   section="childrens-theatre"
-  description="Plays — Theatre Teaching Units — Storytelling."
+  eyebrow="Coming soon"
+  description="Plays, teaching modules, and storytelling — myth-driven, minimalist, and designed so that every child in the room has a real part to play."
 >
-  <div class="max-w-2xl">
-    <p>Scripts in production:</p>
-    <ul class="text-ink-700 mt-4 list-disc space-y-1 pl-6">
-      <li>Water of Life</li>
-      <li>One Seed Child (© 1973/2022 Chuck and Lola Wilcox)</li>
-      <li>The Treasure Inside</li>
-      <li>Conquering the Sun (Hawai'i)</li>
-      <li>Aesop's Fables</li>
-      <li>Teaching Modules — Theseus, Ariadne and the Minotaur; One Seed Child module</li>
-      <li>Shakespeare for Children</li>
-    </ul>
+  <ReflectivePrompt sectionKey="childrens-theatre" />
+
+  <div class="max-w-2xl space-y-6 pt-8">
+    {/* CLIENT REVIEW: drafted the two answer paragraphs below for Cycle 2. */}
+    <section id="imagination">
+      <h2>Imagination provides everything</h2>
+      <p>
+        Our plays are written for the bare stage: no built sets, no elaborate props. A cloak
+        becomes a castle wall, a chair becomes a throne, a broom becomes a horse. Children step
+        into that convention immediately — and once they have, the whole imaginative apparatus of
+        the play becomes theirs, not the production designer's.
+      </p>
+    </section>
+
+    <section id="every-person">
+      <h2>A part for every player</h2>
+      <p>
+        Each script is written with <strong>versatile casting</strong> — every role can be split,
+        shared, or doubled so no child sits out. Rehearsal isn't a competition for the leads;
+        it's an ensemble that grows every player's confidence at the same time. See the
+        Players Resource Center's casting entry for the full principle.
+      </p>
+    </section>
   </div>
 </SectionLayout>
