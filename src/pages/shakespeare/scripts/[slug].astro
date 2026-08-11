@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import ShakespeareLayout from '@/layouts/ShakespeareLayout.astro';
-import ScriptDetail from '@/components/shakespeare/ScriptDetail.astro';
+import ScriptDetail from '@/components/scripts/ScriptDetail.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('scripts');
