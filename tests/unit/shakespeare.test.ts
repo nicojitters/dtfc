@@ -70,3 +70,50 @@ describe('colloquial collection', () => {
     }
   });
 });
+
+describe('scripts collection — Cycle 4 extensions', () => {
+  it('has at least one entry for each new library', async () => {
+    const entries = await getCollection('scripts');
+    const libraries = new Set(entries.map((e) => e.data.library));
+    for (const lib of ['childrens-plays', 'teaching-modules'] as const) {
+      expect(libraries.has(lib), `no scripts entry has library="${lib}"`).toBe(true);
+    }
+  });
+
+  it("existing Shakespeare entries parse unchanged (regression check)", async () => {
+    const entries = await getCollection('scripts');
+    const shakespeareLibs = new Set(['soliloquies', 'scenes', 'themes', 'cuttings', 'childrens-shakespeare']);
+    const shakespeareEntries = entries.filter((e) => shakespeareLibs.has(e.data.library));
+    expect(shakespeareEntries.length).toBeGreaterThan(0);
+    for (const e of shakespeareEntries) {
+      // If Cycle 3 entries broke, this collection wouldn't have loaded at all
+      expect(e.data.title).toBeTruthy();
+    }
+  });
+
+  it('every imagery entry with src set has a matching file under public/', async () => {
+    const { existsSync } = await import('node:fs');
+    const { fileURLToPath } = await import('node:url');
+    const publicDir = fileURLToPath(new URL('../../public/', import.meta.url));
+    const entries = await getCollection('scripts');
+    for (const e of entries) {
+      for (const img of e.data.imagery) {
+        // Convention: src starts with "/images/" — strip the leading slash for fs check.
+        const rel = img.src.startsWith('/') ? img.src.slice(1) : img.src;
+        expect(
+          existsSync(publicDir + rel),
+          `${img.src} referenced by ${e.id} not found under public/`,
+        ).toBe(true);
+      }
+    }
+  });
+
+  it('imagery entries require alt text', async () => {
+    const entries = await getCollection('scripts');
+    for (const e of entries) {
+      for (const img of e.data.imagery) {
+        expect(img.alt, `${e.id} imagery entry missing alt text`).toBeTruthy();
+      }
+    }
+  });
+});

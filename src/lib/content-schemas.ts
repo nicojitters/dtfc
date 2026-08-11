@@ -12,6 +12,8 @@ export const SCRIPT_LIBRARIES = [
   'themes',
   'cuttings',
   'childrens-shakespeare',
+  'childrens-plays',
+  'teaching-modules',
 ] as const;
 
 export const gameSchema = z.object({
@@ -54,6 +56,21 @@ export const scriptsSchema = z
     stagingNotes: z.string().optional(),
     sourceDoc: z.string().optional(),
     sample: z.boolean().default(false),
+    // Cycle 4 — Children's-Theatre-scoped optional fields
+    sourceMaterials: z.string().optional(),
+    authorIntentions: z.string().optional(),
+    whatToWatch: z.string().optional(),
+    imagery: z
+      .array(
+        z.object({
+          src: z.string(),
+          alt: z.string(),
+          credit: z.string().optional(),
+        }),
+      )
+      .default([]),
+    aiPrompt: z.string().optional(),
+    series: z.string().optional(),
   })
   .refine((s) => s.library !== 'themes' || !!s.theme, {
     message: "scripts entries with library === 'themes' must set a `theme`",
