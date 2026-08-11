@@ -1,0 +1,35 @@
+---
+import { getCollection, render } from 'astro:content';
+import ShakespeareLayout from '@/layouts/ShakespeareLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('askShakespeare');
+  return entries.map((entry) => ({
+    params: { slug: entry.id.replace(/\.mdx?$/, '') },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<ShakespeareLayout
+  title={entry.data.title}
+  subPage="ask-shakespeare"
+  eyebrow={`Ask Shakespeare #${entry.data.columnNumber}`}
+  description={entry.data.excerpt}
+>
+  <div class="max-w-2xl">
+    <p class="text-ink-500 text-sm">
+      <a href="/shakespeare/ask-shakespeare/">All columns</a>
+      · {entry.data.publishedIn}
+      {entry.data.asker !== 'Reader' && <span> · from {entry.data.asker}</span>}
+      {entry.data.sample && <span class="ml-1 italic">· sample — pending final import</span>}
+    </p>
+
+    <div class="prose prose-neutral mt-6 max-w-none">
+      <Content />
+    </div>
+  </div>
+</ShakespeareLayout>

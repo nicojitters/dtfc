@@ -1,0 +1,43 @@
+---
+import ShakespeareLayout from '@/layouts/ShakespeareLayout.astro';
+import { getCollection } from 'astro:content';
+import AskShakespeareCard from '@/components/shakespeare/AskShakespeareCard.astro';
+import AskShakespeareForm from '@/components/shakespeare/AskShakespeareForm.astro';
+
+const entries = (await getCollection('askShakespeare')).sort(
+  (a, b) => b.data.columnNumber - a.data.columnNumber,
+);
+---
+
+<ShakespeareLayout
+  title="Ask Shakespeare"
+  subPage="ask-shakespeare"
+  eyebrow="Q&A archive"
+  description="Shakespeare, in first person, responds to reader questions from our newsletters. Have your own? Submit below."
+>
+  <section class="max-w-2xl">
+    <h2 class="font-display text-2xl">The archive</h2>
+    <p class="text-ink-700 mt-2 text-sm leading-relaxed">
+      Every column pairs a reader question with Shakespeare’s first-person response, drawn from
+      DT:FC newsletters.
+    </p>
+  </section>
+
+  {
+    entries.length === 0 ? (
+      <p class="text-ink-500 mt-8 italic">No columns published yet.</p>
+    ) : (
+      <ul class="mt-8 grid list-none gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {entries.map((entry) => (
+          <li>
+            <AskShakespeareCard entry={entry} />
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  <section class="mt-14 max-w-2xl">
+    <AskShakespeareForm />
+  </section>
+</ShakespeareLayout>

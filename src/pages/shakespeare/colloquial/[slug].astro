@@ -1,0 +1,46 @@
+---
+import { getCollection, render } from 'astro:content';
+import ShakespeareLayout from '@/layouts/ShakespeareLayout.astro';
+import SideBySideText from '@/components/shakespeare/SideBySideText.astro';
+import Original from '@/components/shakespeare/Original.astro';
+import Colloquial from '@/components/shakespeare/Colloquial.astro';
+import AudioEmbed from '@/components/media/AudioEmbed.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('colloquial');
+  return entries.map((entry) => ({
+    params: { slug: entry.id.replace(/\.mdx?$/, '') },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<ShakespeareLayout
+  title={entry.data.title}
+  subPage="colloquial"
+  eyebrow={entry.data.subtitle}
+  description={`Colloquial pairing translated by ${entry.data.translator}.`}
+>
+  <div class="max-w-3xl">
+    <p class="text-ink-500 text-sm">
+      <a href="/shakespeare/colloquial/">All colloquial pairings</a>
+    </p>
+
+    <p class="text-ink-700 mt-4 text-base">
+      Source play: <strong>{entry.data.sourcePlay}</strong>
+      · Translator: <strong>{entry.data.translator}</strong>
+      {entry.data.sample && <span class="text-ink-500 ml-2 italic">· sample — pending final import</span>}
+    </p>
+
+    {entry.data.audio && (
+      <AudioEmbed src={`/audio/${entry.data.audio}`} caption={entry.data.audioCaption} />
+    )}
+
+    <div class="prose prose-neutral mt-6 max-w-none">
+      <Content components={{ SideBySide: SideBySideText, Original, Colloquial }} />
+    </div>
+  </div>
+</ShakespeareLayout>

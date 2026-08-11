@@ -1,0 +1,30 @@
+---
+interface Props {
+  src: string;
+  type?: string;
+  caption?: string;
+  downloadable?: boolean;
+}
+const { src, type = 'audio/mp4', caption, downloadable = true } = Astro.props;
+---
+
+<figure class="my-6">
+  <audio controls preload="metadata" class="w-full">
+    <source src={src} type={type} />
+    Your browser does not support the audio element.
+    <a href={src}>Download the audio file</a>.
+  </audio>
+  {
+    (caption || downloadable) && (
+      <figcaption class="text-ink-500 mt-2 text-sm">
+        {caption}
+        {caption && downloadable && ' · '}
+        {downloadable && (
+          <a href={src} download class="hover:text-clay-500 no-underline">
+            Download →
+          </a>
+        )}
+      </figcaption>
+    )
+  }
+</figure>

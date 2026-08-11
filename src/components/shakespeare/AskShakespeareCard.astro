@@ -1,0 +1,26 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'askShakespeare'>;
+}
+const { entry } = Astro.props;
+const slug = entry.id.replace(/\.mdx?$/, '');
+const href = `/shakespeare/ask-shakespeare/${slug}/`;
+---
+
+<article class="border-ivory-200 bg-ivory-50 hover:border-clay-500/60 rounded-[var(--radius-card)] border p-5 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]">
+  <div class="flex items-baseline gap-3">
+    <span class="text-mustard-600 text-xs font-semibold tracking-widest uppercase">
+      #{entry.data.columnNumber}
+    </span>
+    <span class="text-ink-500 text-xs">{entry.data.publishedIn}</span>
+    {entry.data.sample && <span class="text-ink-500 text-xs italic">· sample</span>}
+  </div>
+  <h3 class="font-display text-ink-900 mt-2 text-xl">
+    <a href={href} class="hover:text-clay-500 no-underline">
+      {entry.data.title}
+    </a>
+  </h3>
+  <p class="text-ink-700 mt-2 text-sm">{entry.data.excerpt}</p>
+</article>

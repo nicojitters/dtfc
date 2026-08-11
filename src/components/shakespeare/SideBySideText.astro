@@ -1,0 +1,8 @@
+---
+// Wraps a sequence of alternating <Original> and <Colloquial> children in a
+// definition list rendered as a two-column grid on desktop and stacked on
+// mobile. Screen readers get the DL pairing regardless of viewport.
+---
+<dl class="grid gap-x-8 gap-y-3 md:grid-cols-2">
+  <slot />
+</dl>

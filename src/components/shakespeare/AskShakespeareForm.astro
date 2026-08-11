@@ -1,0 +1,55 @@
+---
+// Ask Shakespeare submission form. Submit is stubbed to a placeholder
+// handler (console.log with a TODO(esp) marker) matching the newsletter
+// signup pattern. Cycle 6 wires this to the chosen form provider.
+// TODO(esp): wire to real provider when the client picks one; see CLAUDE.md.
+---
+
+<form
+  class="border-teal-600/25 bg-teal-600/5 rounded-[var(--radius-card)] border p-6"
+  data-ask-shakespeare
+  onsubmit="event.preventDefault(); console.log('[TODO(esp)] ask-shakespeare submit', Object.fromEntries(new FormData(event.target)));"
+>
+  <h2 class="font-display text-ink-900 text-xl">Submit a question</h2>
+  <p class="text-ink-500 mt-1 text-sm">
+    Ask "Shakespeare" a question about a line, a character, a choice, or your own moment of stage fright.
+  </p>
+
+  <div class="mt-4 grid gap-4 md:grid-cols-2">
+    <label class="flex flex-col gap-1">
+      <span class="text-ink-700 text-sm font-medium">Your name (optional)</span>
+      <input
+        type="text"
+        name="name"
+        autocomplete="name"
+        class="border-ink-500/30 focus:border-teal-600 focus:ring-teal-600 rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
+      />
+    </label>
+    <label class="flex flex-col gap-1">
+      <span class="text-ink-700 text-sm font-medium">Email (optional)</span>
+      <input
+        type="email"
+        name="email"
+        autocomplete="email"
+        class="border-ink-500/30 focus:border-teal-600 focus:ring-teal-600 rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
+      />
+    </label>
+  </div>
+
+  <label class="mt-4 flex flex-col gap-1">
+    <span class="text-ink-700 text-sm font-medium">Your question</span>
+    <textarea
+      name="question"
+      required
+      rows="4"
+      class="border-ink-500/30 focus:border-teal-600 focus:ring-teal-600 rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
+    ></textarea>
+  </label>
+
+  <button
+    type="submit"
+    class="bg-clay-500 hover:bg-clay-700 text-ivory-50 focus-visible:ring-clay-500 mt-4 rounded px-4 py-2 text-sm font-medium transition focus-visible:ring-2 focus-visible:ring-offset-2"
+  >
+    Send to Shakespeare
+  </button>
+</form>

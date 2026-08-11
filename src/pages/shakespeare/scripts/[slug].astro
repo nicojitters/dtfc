@@ -1,0 +1,27 @@
+---
+import { getCollection, render } from 'astro:content';
+import ShakespeareLayout from '@/layouts/ShakespeareLayout.astro';
+import ScriptDetail from '@/components/shakespeare/ScriptDetail.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('scripts');
+  return entries.map((entry) => ({
+    params: { slug: entry.id.replace(/\.mdx?$/, '') },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<ShakespeareLayout
+  title={entry.data.title}
+  subPage={entry.data.library}
+  eyebrow={`${entry.data.play}`}
+  description={entry.data.title}
+>
+  <ScriptDetail entry={entry}>
+    <Content />
+  </ScriptDetail>
+</ShakespeareLayout>
