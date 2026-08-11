@@ -1,0 +1,46 @@
+---
+import { REFLECTIVE_BANKS } from '@/data/landing';
+import type { NavKey } from '@/lib/nav';
+
+interface Props {
+  sectionKey: NavKey;
+}
+const { sectionKey } = Astro.props;
+
+const bank = REFLECTIVE_BANKS.find((b) => b.sectionKey === sectionKey);
+if (!bank) {
+  throw new Error(
+    `<ReflectivePrompt sectionKey="${sectionKey}"> has no matching bank in REFLECTIVE_BANKS. Add one to src/data/landing.ts.`,
+  );
+}
+---
+
+<aside class="border-teal-600/25 bg-teal-600/5 mt-6 rounded-[var(--radius-card)] border-l-4 p-4 md:p-5">
+  <p class="text-teal-600 text-xs font-semibold tracking-widest uppercase">
+    Take a moment…
+  </p>
+  <ul class="mt-2 space-y-2" data-reflective>
+    {bank.prompts.map((prompt, i) => (
+      <li class="text-ink-700 text-base leading-relaxed italic md:text-lg" hidden={i > 0}>
+        {prompt}
+      </li>
+    ))}
+  </ul>
+</aside>
+
+<script is:inline>
+  (function initReflectiveRotation() {
+    if (window.__dtfcReflectiveInit) return;
+    window.__dtfcReflectiveInit = true;
+    const banks = document.querySelectorAll('[data-reflective]');
+    banks.forEach((bank) => {
+      const items = bank.querySelectorAll('li');
+      if (items.length === 0) return;
+      const pick = Math.floor(Math.random() * items.length);
+      items.forEach((li, i) => {
+        if (i === pick) li.removeAttribute('hidden');
+        else li.setAttribute('hidden', '');
+      });
+    });
+  })();
+</script>
