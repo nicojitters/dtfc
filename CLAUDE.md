@@ -27,18 +27,24 @@
 
 **Design tokens.** All colors, fonts, and spacing come from `src/styles/tokens.css`. Do not hardcode hex codes in components. The unlisted `/styles-preview` page is the design-system reference (share the URL with Desirae).
 
+**Landing page data.** All landing-page copy — Community center text, section tiles, reflective banks, and the Idea Two answer map — lives in `src/data/landing.ts`, Zod-validated at import. The single line `export const LANDING_MODE: BoxMode = 'hybrid'` toggles every section tile's render mode (`list` | `questions` | `hybrid`). Per-box overrides go on the tile's `mode` field.
+
+**Component directories.** Landing components live under `src/components/landing/`; the shared reflective prompt component lives under `src/components/section/`.
+
 ## Commands
 
 - `pnpm dev` — dev server at http://localhost:4321
-- `pnpm build` — runs the Concept ref check then builds
+- `pnpm build` — runs the Concept ref check and prohibited-text guardrail then builds
 - `pnpm check` — Astro type check
 - `pnpm test` — Vitest unit tests
 - `pnpm test:e2e` — Playwright smoke test (starts its own dev server)
+- `pnpm check:prohibited` — runs the prohibited-text guardrail (fails build on any occurrence of the vision-spec-rejected phrases; runs automatically in `pnpm build`)
 - `pnpm format` — Prettier
 
 ## Deferred / TODO markers
 
 - `TODO(esp)` in `src/components/ui/NewsletterSignup.astro` — the form submits to console; wire to the client's chosen ESP when picked.
+- `TODO(esp)` in `src/components/landing/NewsletterTile.astro` — inherits the same ESP integration TODO as the footer signup.
 - Donate link in `src/components/layout/Footer.astro` — currently points to `/community/`; replace with Zeffy URL when client provides.
 - Placeholder icons in `public/icons/` — replace when Desirae delivers.
 - `public/DTFC-logo.png` — placeholder; replace with client asset.

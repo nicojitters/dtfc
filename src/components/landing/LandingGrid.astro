@@ -1,0 +1,61 @@
+---
+import { SECTION_TILES, LANDING_MODE, type BoxMode } from '@/data/landing';
+import CommunityCenter from './CommunityCenter.astro';
+import SectionBox from './SectionBox.astro';
+import WorkshopsTile from './WorkshopsTile.astro';
+import NewsletterTile from './NewsletterTile.astro';
+
+// Resolve per-tile mode (per-box override wins over global LANDING_MODE).
+const resolveMode = (override?: BoxMode): BoxMode => override ?? LANDING_MODE;
+
+// Grid cell assignments — desktop only. On mobile the grid collapses to
+// a single column and the DOM order below determines reading order.
+// (See CSS below for the cell-position classes.)
+const findTile = (key: string) => {
+  const t = SECTION_TILES.find((s) => s.key === key);
+  if (!t) throw new Error(`LandingGrid: missing tile ${key}`);
+  return t;
+};
+const theatreGames = findTile('theatre-games');
+const shakespeare = findTile('shakespeare');
+const childrens = findTile('childrens-theatre');
+const legacy = findTile('legacy');
+const prc = findTile('resource-center');
+---
+
+<section aria-label="Explore DT:FC" class="mx-auto max-w-6xl">
+  {/* Desktop 3x3; mobile single-column stack (DOM order = reading order) */}
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-3 md:grid-rows-3">
+    {/* Section tiles — single ul preserves grid geometry via display:contents */}
+    <ul class="contents">
+      <SectionBox box={theatreGames} mode={resolveMode(theatreGames.mode)} class="md:col-start-1 md:row-start-1" />
+      <SectionBox box={shakespeare}  mode={resolveMode(shakespeare.mode)}  class="md:col-start-2 md:row-start-1" />
+      <SectionBox box={childrens}    mode={resolveMode(childrens.mode)}    class="md:col-start-3 md:row-start-1" />
+      <SectionBox box={legacy}       mode={resolveMode(legacy.mode)}       class="md:col-start-1 md:row-start-2" />
+      <SectionBox box={prc}          mode={resolveMode(prc.mode)}          class="md:col-start-3 md:row-start-2" />
+    </ul>
+
+    {/* Row 2 center — Community (not a section tile; remains a plain div) */}
+    <div class="order-first md:order-none md:col-start-2 md:row-start-2">
+      <CommunityCenter />
+    </div>
+
+    {/* Row 3 — Newsletter | Workshops | ornament (ornament hidden on mobile) */}
+    <div class="md:col-start-2 md:row-start-3">
+      <WorkshopsTile />
+    </div>
+    <div class="md:col-start-1 md:row-start-3">
+      <NewsletterTile />
+    </div>
+    <div
+      class="hidden md:col-start-3 md:row-start-3 md:block"
+      aria-hidden="true"
+    >
+      <div class="bg-ivory-100 h-full rounded-[var(--radius-card)] p-6 opacity-70">
+        <p class="text-ink-500 font-display text-center text-sm italic">
+          Developmental Theatre: Fearless Creativity
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
