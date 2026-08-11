@@ -1,5 +1,6 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
+import ReflectivePrompt from '@/components/section/ReflectivePrompt.astro';
 import { listConcepts } from '@/lib/concepts';
 import { iconPath } from '@/lib/icons';
 const concepts = await listConcepts();
@@ -11,6 +12,19 @@ const concepts = await listConcepts();
   eyebrow="Glossary"
   description="Tools, vocabulary, key concepts, and definitions — the site-wide glossary."
 >
+  <ReflectivePrompt sectionKey="resource-center" />
+
+  <section id="icons" class="border-teal-600/20 bg-teal-600/5 mt-6 rounded-[var(--radius-card)] border p-5">
+    {/* CLIENT REVIEW: landing-page callout answering Idea Two #4
+        ("What are the ICONS and how are they used?") */}
+    <h2 class="font-display text-xl">What are the ICONS?</h2>
+    <p class="text-ink-700 mt-2 max-w-prose text-sm">
+      The small visual symbols throughout the site — pictures paired with a name and a short
+      definition — are called <strong>ICONs</strong>. Click any one to see its definition without
+      leaving the page. <a href="/resource-center/icons/">Read the full ICONs entry →</a>
+    </p>
+  </section>
+
   <div class="max-w-3xl">
     <div class="rounded-[var(--radius-card)] bg-white p-4 shadow-[var(--shadow-soft)]">
       <label class="block">
@@ -22,14 +36,6 @@ const concepts = await listConcepts();
           data-concept-filter
         />
       </label>
-    </div>
-
-    <div
-      class="border-mustard-200 bg-mustard-200/40 text-ink-700 mt-6 rounded-[var(--radius-card)] border p-4 text-sm"
-    >
-      <strong>What are the ICONS and how are they used?</strong> Throughout the site, key concepts show
-      a small icon next to their name. Click or tap the icon anywhere it appears to open a definition
-      popover; then click "Read more →" to land here.
     </div>
 
     <ul
