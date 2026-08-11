@@ -1,23 +1,38 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
-import NewsletterSignup from '@/components/ui/NewsletterSignup.astro';
+import ReflectivePrompt from '@/components/section/ReflectivePrompt.astro';
 ---
 
 <SectionLayout
   title="Community"
-  eyebrow="Coming soon"
   section="community"
-  description="About DT:FC, how we're organized, membership, newsletters, and companion theatres."
+  eyebrow="Be Fearlessly Creative!"
+  description="Who we are, how we're organized, and how you can be part of Developmental Theatre: Fearless Creativity."
 >
-  <div class="max-w-2xl space-y-4">
-    <p>
-      The Community section is in production. It will cover our purpose and values, our
-      distributed-leadership structure, membership, donations, newsletters, companion theatres, and
-      testimonials.
-    </p>
-    <p>Sign up below to be notified when new material lands.</p>
-  </div>
-  <div class="mt-6 max-w-md">
-    <NewsletterSignup source="community-stub" />
+  <ReflectivePrompt sectionKey="community" />
+
+  <div class="max-w-2xl space-y-4 pt-8">
+    {/* CLIENT REVIEW: drafted this paragraph for Cycle 2 to resolve Idea Two #13
+        ("How do I become part of this Legacy?") from Legacy → Community. Confirm
+        wording before launch. */}
+    <section id="membership">
+      <h2>Become part of this Legacy</h2>
+      <p>
+        Everyone who explores this site is already part of DT:FC's living community. If you'd like
+        to go further — receive our monthly notes, be invited to open sessions, or offer your own
+        work as part of the archive — start with the newsletter below. Full membership tiers and a
+        direct-sponsorship path are landing in the next content release.
+      </p>
+    </section>
+
+    <section>
+      <h2>What is DT:FC?</h2>
+      <p>
+        Developmental Theatre: Fearless Creativity is a fiscally sponsored nonprofit that trains
+        physical and vocal readiness, teaches how to recognize new contexts, and nurtures the
+        resilience players carry into every kind of learning. We do it through Theatre Games,
+        Shakespeare, children's plays, and the practitioner tools in the Players Resource Center.
+      </p>
+    </section>
   </div>
 </SectionLayout>
