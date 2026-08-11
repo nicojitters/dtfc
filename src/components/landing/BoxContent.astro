@@ -1,0 +1,65 @@
+---
+import type { Box, BoxMode } from '@/data/landing';
+
+interface Props {
+  box: Box;
+  mode: BoxMode;
+}
+const { box, mode } = Astro.props;
+
+const showSummary = mode === 'hybrid' || (mode === 'list' && box.listItems.length === 0);
+const showList = mode === 'list' && box.listItems.length > 0;
+const showAllQuestions = mode === 'questions' && box.questions.length > 0;
+const showTeaser = mode === 'hybrid' && box.questions.length > 0;
+---
+
+{showSummary && <p class="text-ink-700 mt-2 text-sm leading-relaxed">{box.summary}</p>}
+
+{
+  showList && (
+    <ul class="text-ink-700 mt-3 space-y-1 text-sm">
+      {box.listItems.map((item) => (
+        <li>· {item}</li>
+      ))}
+    </ul>
+  )
+}
+
+{
+  showAllQuestions && (
+    <ul class="text-ink-700 mt-3 space-y-2 text-sm">
+      {box.questions.map((q) => (
+        <li class="italic">{q}</li>
+      ))}
+    </ul>
+  )
+}
+
+{
+  showTeaser && (
+    <ul class="text-clay-700 mt-3 space-y-2 text-sm" data-teaser>
+      {box.questions.map((q, i) => (
+        <li class="italic" hidden={i > 0}>
+          {q}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+<script is:inline>
+  (function initTeaserRotation() {
+    if (window.__dtfcTeaserInit) return;
+    window.__dtfcTeaserInit = true;
+    const banks = document.querySelectorAll('[data-teaser]');
+    banks.forEach((bank) => {
+      const items = bank.querySelectorAll('li');
+      if (items.length === 0) return;
+      const pick = Math.floor(Math.random() * items.length);
+      items.forEach((li, i) => {
+        if (i === pick) li.removeAttribute('hidden');
+        else li.setAttribute('hidden', '');
+      });
+    });
+  })();
+</script>
