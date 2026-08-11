@@ -13,6 +13,8 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   // A rotating teaser question is visible on at least one tile (one <li> revealed per bank).
   const visibleTeasers = grid.locator('[data-teaser] li:not([hidden])');
   await expect(visibleTeasers.first()).toBeVisible();
+  // RESILIENCE must render inside <strong>, never as raw uppercase text.
+  await expect(page.locator('strong', { hasText: 'RESILIENCE' }).first()).toBeVisible();
 
   // Navigate to PRC
   await page.getByRole('link', { name: 'Players Resource Center' }).first().click();

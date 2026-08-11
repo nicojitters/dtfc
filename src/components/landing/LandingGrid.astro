@@ -26,36 +26,18 @@ const prc = findTile('resource-center');
 <section aria-label="Explore DT:FC" class="mx-auto max-w-6xl">
   {/* Desktop 3x3; mobile single-column stack (DOM order = reading order) */}
   <div class="grid grid-cols-1 gap-4 md:grid-cols-3 md:grid-rows-3">
-    {/* Row 1 */}
-    <div class="md:col-start-1 md:row-start-1">
-      <ul class="contents">
-        <SectionBox box={theatreGames} mode={resolveMode(theatreGames.mode)} />
-      </ul>
-    </div>
-    <div class="md:col-start-2 md:row-start-1">
-      <ul class="contents">
-        <SectionBox box={shakespeare} mode={resolveMode(shakespeare.mode)} />
-      </ul>
-    </div>
-    <div class="md:col-start-3 md:row-start-1">
-      <ul class="contents">
-        <SectionBox box={childrens} mode={resolveMode(childrens.mode)} />
-      </ul>
-    </div>
+    {/* Section tiles — single ul preserves grid geometry via display:contents */}
+    <ul class="contents">
+      <SectionBox box={theatreGames} mode={resolveMode(theatreGames.mode)} class="md:col-start-1 md:row-start-1" />
+      <SectionBox box={shakespeare}  mode={resolveMode(shakespeare.mode)}  class="md:col-start-2 md:row-start-1" />
+      <SectionBox box={childrens}    mode={resolveMode(childrens.mode)}    class="md:col-start-3 md:row-start-1" />
+      <SectionBox box={legacy}       mode={resolveMode(legacy.mode)}       class="md:col-start-1 md:row-start-2" />
+      <SectionBox box={prc}          mode={resolveMode(prc.mode)}          class="md:col-start-3 md:row-start-2" />
+    </ul>
 
-    {/* Row 2 — Legacy | COMMUNITY (center) | PRC */}
-    <div class="md:col-start-1 md:row-start-2">
-      <ul class="contents">
-        <SectionBox box={legacy} mode={resolveMode(legacy.mode)} />
-      </ul>
-    </div>
+    {/* Row 2 center — Community (not a section tile; remains a plain div) */}
     <div class="order-first md:order-none md:col-start-2 md:row-start-2">
       <CommunityCenter />
-    </div>
-    <div class="md:col-start-3 md:row-start-2">
-      <ul class="contents">
-        <SectionBox box={prc} mode={resolveMode(prc.mode)} />
-      </ul>
     </div>
 
     {/* Row 3 — Newsletter | Workshops | ornament (ornament hidden on mobile) */}

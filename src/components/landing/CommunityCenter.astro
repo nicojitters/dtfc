@@ -22,7 +22,19 @@ const bodyAfter = ' that will keep you learning in unexpected and challenging si
     {bodyBefore}<Resilience />{bodyAfter}
   </p>
   <div class="text-clay-50/70 mt-6 space-y-2 text-sm leading-relaxed">
-    {COMMUNITY_CENTER.extended.map((p) => <p>{p}</p>)}
+    {COMMUNITY_CENTER.extended.map((p) => {
+      const parts = p.split('RESILIENCE');
+      return (
+        <p>
+          {parts.map((part, i) => (
+            <Fragment>
+              {part}
+              {i < parts.length - 1 && <Resilience />}
+            </Fragment>
+          ))}
+        </p>
+      );
+    })}
   </div>
   <p class="mt-6">
     <a href="/community/" class="text-ivory-50 border-ivory-50/40 hover:border-ivory-50 inline-block border-b-2 pb-0.5 font-medium no-underline">
