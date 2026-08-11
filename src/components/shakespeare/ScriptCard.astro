@@ -1,0 +1,27 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Chip from '@/components/ui/Chip.astro';
+
+interface Props {
+  entry: CollectionEntry<'scripts'>;
+}
+const { entry } = Astro.props;
+const slug = entry.id.replace(/\.mdx?$/, '');
+const href = `/shakespeare/scripts/${slug}/`;
+const characterCount = entry.data.characters.length;
+---
+
+<article class="border-ivory-200 bg-ivory-50 hover:border-clay-500/60 rounded-[var(--radius-card)] border p-5 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]">
+  <h3 class="font-display text-ink-900 text-xl">
+    <a href={href} class="hover:text-clay-500 no-underline">
+      {entry.data.title}
+    </a>
+  </h3>
+  <p class="text-ink-500 mt-1 text-sm">From: {entry.data.play}</p>
+  <div class="mt-3 flex flex-wrap items-center gap-2">
+    {entry.data.minutes && <Chip tone="teal">{entry.data.minutes} min</Chip>}
+    {characterCount > 0 && <Chip tone="mustard">{characterCount} character{characterCount === 1 ? '' : 's'}</Chip>}
+    {entry.data.theme && <Chip tone="clay">{entry.data.theme}</Chip>}
+    {entry.data.sample && <Chip tone="neutral">Sample — pending final import</Chip>}
+  </div>
+</article>
