@@ -1,0 +1,32 @@
+---
+import { COMMUNITY_CENTER } from '@/data/landing';
+import Resilience from './Resilience.astro';
+
+// The Community center tile. Placed in the middle cell of LandingGrid.
+// Uses the identity headline as the page's h1 (a11y: only h1 on the landing).
+// The body contains RESILIENCE as a <strong>, rendered via <Resilience/>.
+// Body text is split so we can insert the <Resilience/> component
+// exactly where the source has the word.
+const bodyBefore = 'We train physical and vocal readiness, how to recognize new contexts, and ways to nurture ';
+const bodyAfter = ' that will keep you learning in unexpected and challenging situations.';
+---
+
+<article class="bg-clay-500 text-ivory-50 rounded-[var(--radius-card)] p-8 shadow-[var(--shadow-soft)] md:p-10">
+  <h1 class="font-display m-0 text-3xl md:text-4xl">
+    {COMMUNITY_CENTER.headline}
+  </h1>
+  <p class="text-clay-50/90 mt-4 text-lg font-medium">
+    {COMMUNITY_CENTER.keepExploring}
+  </p>
+  <p class="text-clay-50/90 mt-2 text-base leading-relaxed">
+    {bodyBefore}<Resilience />{bodyAfter}
+  </p>
+  <div class="text-clay-50/70 mt-6 space-y-2 text-sm leading-relaxed">
+    {COMMUNITY_CENTER.extended.map((p) => <p>{p}</p>)}
+  </div>
+  <p class="mt-6">
+    <a href="/community/" class="text-ivory-50 border-ivory-50/40 hover:border-ivory-50 inline-block border-b-2 pb-0.5 font-medium no-underline">
+      Enter Community →
+    </a>
+  </p>
+</article>
