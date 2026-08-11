@@ -5,10 +5,11 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "pnpm check:concepts && astro build",
+    "build": "pnpm check:concepts && pnpm check:prohibited && astro build",
     "preview": "astro preview",
     "check": "astro check",
     "check:concepts": "node scripts/check-concept-refs.mjs",
+    "check:prohibited": "node scripts/check-prohibited-text.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
