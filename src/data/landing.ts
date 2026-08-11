@@ -276,10 +276,7 @@ export function pickIndex(bank: readonly unknown[], seed: number): number {
 // -----------------------------------------------------------------------------
 
 export const WELCOME_HEADING = `COMMUNITY — ${COMMUNITY_CENTER.headline}`;
-export const WELCOME_BODY: readonly string[] = [
-  `${COMMUNITY_CENTER.keepExploring} ${COMMUNITY_CENTER.body}`,
-  ...COMMUNITY_CENTER.extended,
-];
+export const WELCOME_BODY: readonly string[] = [COMMUNITY_CENTER.body, ...COMMUNITY_CENTER.extended];
 
 export interface SectionBox {
   key: NavKey;
