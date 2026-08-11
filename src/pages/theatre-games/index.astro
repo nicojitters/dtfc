@@ -4,6 +4,7 @@ import Button from '@/components/ui/Button.astro';
 import Concept from '@/components/concept/Concept.astro';
 import Chip from '@/components/ui/Chip.astro';
 import { COMPETENCIES, COMPETENCY_LABELS, COMPETENCY_SUBSETS } from '@/lib/types';
+import ReflectivePrompt from '@/components/section/ReflectivePrompt.astro';
 
 const audiences = [
   {
@@ -49,10 +50,17 @@ const cohesionRungs = [
   eyebrow="Welcome Players"
   description="Welcome Players to creating a world of fearless imaginative expression using DT:FC Theatre Games. Within is the information you need to play wisely and well."
 >
+  <ReflectivePrompt sectionKey="theatre-games" />
   <div class="grid gap-10 lg:grid-cols-3">
     <div class="space-y-8 lg:col-span-2">
-      <section>
-        <h2>What are <Concept id="theatre-games" />?</h2>
+      <section id="playful-empowering">
+        {/* CLIENT REVIEW: added one-sentence preface to resolve Idea Two #5
+            ("What makes learning playful and empowering?") */}
+        <p class="text-ink-500 mt-0 text-sm italic">
+          Learning becomes playful and empowering when it happens through
+          action, not lecture — that's what Theatre Games are for.
+        </p>
+        <h2 class="mt-3">What are <Concept id="theatre-games" />?</h2>
         <p class="mt-4 max-w-prose">
           Theatre games are an action-packed, performance-based method for individual and group
           development. Using entertaining dramatic techniques activates individual expression as
@@ -78,8 +86,14 @@ const cohesionRungs = [
         </ul>
       </section>
 
-      <section>
+      <section id="vocal-expression">
         <h2>The five competencies</h2>
+        {/* CLIENT REVIEW: added mapping line to resolve Idea Two #7
+            ("Which competency trains Elocution, Memorization, Declamation, Presentation?") */}
+        <p class="text-ink-500 mt-3 max-w-prose text-sm">
+          Elocution, Memorization, Declamation, and Presentation all train under the
+          <strong>Vocal Expression</strong> competency below.
+        </p>
         <div class="mt-4 grid gap-4 md:grid-cols-2">
           {
             COMPETENCIES.map((c) => (
@@ -115,6 +129,19 @@ const cohesionRungs = [
             ))
           }
         </div>
+      </section>
+
+      <section id="resignation-resilience">
+        <h2>Resignation vs. Resilience</h2>
+        {/* CLIENT REVIEW: added to resolve Idea Two #6
+            ("What's the difference between resignation and resilience?") */}
+        <p class="mt-4 max-w-prose">
+          Resignation says "there's nothing I can do — the situation has decided for me."
+          Resilience says "the situation has changed, and so can I." Theatre Games train the
+          second reflex: players rehearse noticing what's shifted, adjusting on the fly, and
+          re-entering the moment without freezing. Every game in the Resilience competency
+          strengthens that switch.
+        </p>
       </section>
 
       <section>
