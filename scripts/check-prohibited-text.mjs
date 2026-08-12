@@ -53,36 +53,12 @@ export const PATTERNS = [
  * remove it from this list so the new content is checked.
  */
 export const CURLY_APOSTROPHE_ALLOWLIST = [
-  // Cycle 3 Shakespeare verse
+  // Cycle 3 Shakespeare verse files intentionally use straight apostrophes
+  // for Elizabethan contractions ('tis, 'twere, Environ'd, perfect'st).
+  // Do not add other files to this list without controller review.
   'src/content/scripts/juliet-romeo-and-juliet-act-iv-scene-iii.mdx',
   'src/content/scripts/lady-macbeth-macbeth-act-i-scene-v.mdx',
   'src/content/scripts/mechanicals-scenes-a-midsummer-nights-dream.mdx',
-  // Cycles 1-4 shipped-content debt — deferred cleanup
-  'src/components/childrens/WayfarersJourneyWheel.astro',
-  'src/components/landing/CommunityCenter.astro',
-  'src/components/landing/Resilience.astro',
-  'src/content/colloquial/one-uddah-midsummah.mdx',
-  'src/content/concepts/archetype.mdx',
-  'src/content/concepts/cohesion.mdx',
-  'src/content/concepts/facilitation.mdx',
-  'src/content/concepts/fearless-creativity.mdx',
-  'src/content/concepts/icons.mdx',
-  'src/content/concepts/magic-toolbox.mdx',
-  'src/content/concepts/players.mdx',
-  'src/content/concepts/resilience.mdx',
-  'src/content/concepts/warmup.mdx',
-  'src/content/games/changing-person-activity.mdx',
-  'src/content/games/jabberwocky.mdx',
-  'src/content/games/mirrors.mdx',
-  'src/content/games/outrageous-roll-call.mdx',
-  'src/content/games/puppets-marionettes.mdx',
-  'src/content/games/self-talk.mdx',
-  'src/content/games/walking-across-the-ice.mdx',
-  'src/content/games/whats-missing.mdx',
-  'src/pages/index.astro',
-  'src/pages/styles-preview.astro',
-  'src/pages/theatre-games/index.astro',
-  'src/pages/workshops/index.astro',
 ];
 
 /**

@@ -1,6 +1,6 @@
 ---
 /**
- * The Wayfarer's Journey Wheel — 8 stations arranged clockwise on a circle.
+ * The Wayfarer’s Journey Wheel — 8 stations arranged clockwise on a circle.
  * Referenced in spec §4.4 item 4, embedded on
  * /childrens-theatre/how-to/archetype-of-one-story/.
  *
@@ -23,7 +23,7 @@ const STATIONS = [
 const CENTER = 200;
 const RADIUS = 140;
 
-// Angles: 12 o'clock start (-90°), 45° increments clockwise
+// Angles: 12 o’clock start (-90°), 45° increments clockwise
 const points = STATIONS.map((label, i) => {
   const angleDeg = -90 + i * 45;
   const angleRad = (angleDeg * Math.PI) / 180;
