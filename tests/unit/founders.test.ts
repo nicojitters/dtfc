@@ -6,8 +6,8 @@ import { fileURLToPath } from 'node:url';
 const publicDir = fileURLToPath(new URL('../../public/', import.meta.url));
 
 describe('FOUNDERS data', () => {
-  it('has 9 founders per spec §4.5 item 4', () => {
-    expect(FOUNDERS.length).toBe(9);
+  it('has 11 entries after Cycle 9 vision-spec expansion (Melinda Scott + Marta Barnard added per vision-spec §3 Doc #3)', () => {
+    expect(FOUNDERS.length).toBe(11);
   });
 
   it('every founder slug is unique', () => {
@@ -33,7 +33,7 @@ describe('FOUNDERS data', () => {
     expect(bock!.unconfirmed).toBe(true);
   });
 
-  it('all 9 spec-required founders are present', () => {
+  it('all 11 vision-spec-required founders/contributors are present', () => {
     const slugs = new Set(FOUNDERS.map((f) => f.slug));
     for (const s of [
       'richard-knaub',
@@ -45,8 +45,24 @@ describe('FOUNDERS data', () => {
       'judith-bock',
       'daniel-sp-yang',
       'nils-petersen',
+      'melinda-scott',
+      'marta-barnard',
     ]) {
       expect(slugs.has(s), `FOUNDERS missing ${s}`).toBe(true);
     }
+  });
+
+  it('category enum groups founders correctly for /legacy/founders/ page layout', () => {
+    const byCategory = (cat: string) => FOUNDERS.filter((f) => f.category === cat).map((f) => f.slug);
+    expect(byCategory('founder').sort()).toEqual(
+      ['chuck-wilcox', 'lola-wilcox', 'martin-cobin', 'richard-knaub'].sort(),
+    );
+    expect(byCategory('origin-witness').sort()).toEqual(
+      ['cherie-karo-schwartz', 'laurie-obrien'].sort(),
+    );
+    expect(byCategory('faculty').sort()).toEqual(['daniel-sp-yang', 'nils-petersen'].sort());
+    expect(byCategory('contributor').sort()).toEqual(
+      ['judith-bock', 'marta-barnard', 'melinda-scott'].sort(),
+    );
   });
 });
