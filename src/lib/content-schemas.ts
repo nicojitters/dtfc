@@ -124,3 +124,12 @@ export const essaysSchema = z.object({
   excerpt: z.string().max(200),
   sample: z.boolean().default(false),
 });
+
+export const newslettersSchema = z.object({
+  title: z.string(),
+  issueNumber: z.number().int().positive(),
+  publishDate: z.string(),
+  excerpt: z.string().max(200),
+  sample: z.boolean().default(false),
+});
+export type NewsletterEntry = z.infer<typeof newslettersSchema>;

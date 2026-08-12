@@ -1,0 +1,40 @@
+---
+import CommunityLayout from '@/layouts/CommunityLayout.astro';
+import NewsletterCard from '@/components/community/NewsletterCard.astro';
+import NewsletterSignup from '@/components/ui/NewsletterSignup.astro';
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('newsletters')).sort((a, b) => {
+  return b.data.publishDate.localeCompare(a.data.publishDate); // most recent first
+});
+---
+
+<CommunityLayout
+  title="Newsletters"
+  subPage="newsletters"
+  eyebrow="Monthly DT:FC news, new games, new plays"
+  description="Sign up below and browse past issues."
+>
+  <section class="max-w-2xl">
+    <NewsletterSignup source="newsletters-page" heading="Get monthly DT:FC news in your inbox." />
+  </section>
+
+  <section class="mt-14">
+    <h2 class="font-display text-2xl">Past issues</h2>
+    {
+      entries.length === 0 ? (
+        <p class="text-ink-500 mt-4 italic">
+          Signup form only &mdash; our archive begins with the next issue.
+        </p>
+      ) : (
+        <ul class="mt-6 grid list-none gap-6 md:grid-cols-2">
+          {entries.map((entry) => (
+            <li>
+              <NewsletterCard entry={entry} />
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+</CommunityLayout>

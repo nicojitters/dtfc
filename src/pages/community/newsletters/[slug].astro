@@ -1,0 +1,27 @@
+---
+import { getCollection, render } from 'astro:content';
+import CommunityLayout from '@/layouts/CommunityLayout.astro';
+import NewsletterDetail from '@/components/community/NewsletterDetail.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('newsletters');
+  return entries.map((entry) => ({
+    params: { slug: entry.id.replace(/\.mdx?$/, '') },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<CommunityLayout
+  title={entry.data.title}
+  subPage="newsletters"
+  eyebrow={`Issue #${entry.data.issueNumber} · ${entry.data.publishDate}`}
+  description={entry.data.excerpt}
+>
+  <NewsletterDetail entry={entry}>
+    <Content />
+  </NewsletterDetail>
+</CommunityLayout>

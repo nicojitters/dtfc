@@ -1,21 +1,19 @@
 ---
 import { formActionFor } from '@/lib/form-action';
 
-const { action, fallbackMode } = formActionFor('askShakespeare');
+const { action, fallbackMode } = formActionFor('testimonial');
 ---
-
-{/* CLIENT REVIEW: responses currently route to the Formspree dashboard; email destination pending client decision. */}
 
 {
   fallbackMode ? (
     <div class="border-mustard-400/40 bg-mustard-200/20 rounded-[var(--radius-card)] border p-6">
-      <h2 class="font-display text-ink-900 text-xl">Submit a question</h2>
+      <h2 class="font-display text-ink-900 text-xl">Share your story</h2>
       <p class="text-ink-700 mt-2 text-sm">
-        This form is not yet configured. In the meantime, please email your question to{' '}
+        This form is not yet configured. In the meantime, please email your testimonial to{' '}
         <a href="mailto:hello@dtfc.example" class="hover:text-clay-500 underline">
           hello@dtfc.example
         </a>{' '}
-        and we&rsquo;ll get back to you.
+        and we&rsquo;ll add it to the site.
       </p>
     </div>
   ) : (
@@ -23,26 +21,48 @@ const { action, fallbackMode } = formActionFor('askShakespeare');
       class="border-teal-600/25 bg-teal-600/5 rounded-[var(--radius-card)] border p-6"
       action={action}
       method="POST"
-      data-ask-shakespeare-form
+      data-testimonial-form
     >
-      <h2 class="font-display text-ink-900 text-xl">Submit a question</h2>
+      <h2 class="font-display text-ink-900 text-xl">Share your story</h2>
       <p class="text-ink-500 mt-1 text-sm">
-        Ask &ldquo;Shakespeare&rdquo; a question about a line, a character, a choice, or your own
-        moment of stage fright.
+        Tell us how DT:FC has shaped your work, your Players, or your creative life. With your
+        permission we may share it here.
       </p>
 
       <div class="mt-4 grid gap-4 md:grid-cols-2">
         <label class="flex flex-col gap-1">
-          <span class="text-ink-700 text-sm font-medium">Your name (optional)</span>
+          <span class="text-ink-700 text-sm font-medium">Your name</span>
           <input
             type="text"
-            name="name"
+            name="attribution"
+            required
             autocomplete="name"
             class="border-ink-500/30 focus:border-teal-600 focus:ring-teal-600 rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
           />
         </label>
         <label class="flex flex-col gap-1">
-          <span class="text-ink-700 text-sm font-medium">Email (optional)</span>
+          <span class="text-ink-700 text-sm font-medium">Your role (optional)</span>
+          <input
+            type="text"
+            name="role"
+            placeholder="Facilitator, Player, parent, &hellip;"
+            class="border-ink-500/30 focus:border-teal-600 focus:ring-teal-600 rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
+          />
+        </label>
+      </div>
+
+      <div class="mt-4 grid gap-4 md:grid-cols-2">
+        <label class="flex flex-col gap-1">
+          <span class="text-ink-700 text-sm font-medium">Your location (optional)</span>
+          <input
+            type="text"
+            name="location"
+            placeholder="City, State"
+            class="border-ink-500/30 focus:border-teal-600 focus:ring-teal-600 rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
+          />
+        </label>
+        <label class="flex flex-col gap-1">
+          <span class="text-ink-700 text-sm font-medium">Your email (optional)</span>
           <input
             type="email"
             name="email"
@@ -53,33 +73,34 @@ const { action, fallbackMode } = formActionFor('askShakespeare');
       </div>
 
       <label class="mt-4 flex flex-col gap-1">
-        <span class="text-ink-700 text-sm font-medium">Your question</span>
+        <span class="text-ink-700 text-sm font-medium">Your story</span>
         <textarea
-          name="question"
+          name="body"
           required
-          rows="4"
+          minlength="40"
+          rows="5"
           class="border-ink-500/30 focus:border-teal-600 focus:ring-teal-600 rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
         />
       </label>
 
-      <input type="hidden" name="_subject" value="Ask Shakespeare submission" />
+      <input type="hidden" name="_subject" value="DT:FC testimonial submission" />
 
       <button
         type="submit"
         class="bg-clay-500 hover:bg-clay-700 text-ivory-50 focus-visible:ring-clay-500 mt-4 rounded px-4 py-2 text-sm font-medium transition focus-visible:ring-2 focus-visible:ring-offset-2"
       >
-        Send to Shakespeare
+        Share your story
       </button>
     </form>
   )
 }
 
 <script is:inline>
-  (function initAskShakespeare() {
-    if (window.__dtfcAskShakespeareInit) return;
-    window.__dtfcAskShakespeareInit = true;
+  (function initTestimonialForm() {
+    if (window.__dtfcTestimonialInit) return;
+    window.__dtfcTestimonialInit = true;
     const attach = () => {
-      const forms = document.querySelectorAll('form[data-ask-shakespeare-form]');
+      const forms = document.querySelectorAll('form[data-testimonial-form]');
       forms.forEach((form) => {
         form.addEventListener('submit', async (ev) => {
           ev.preventDefault();
@@ -93,7 +114,7 @@ const { action, fallbackMode } = formActionFor('askShakespeare');
               form.reset();
               form.insertAdjacentHTML(
                 'afterend',
-                '<p role="status" class="mt-2 text-sm text-teal-600">Thanks &mdash; Shakespeare will consider your question.</p>',
+                '<p role="status" class="mt-2 text-sm text-teal-600">Thanks &mdash; we&rsquo;ll be in touch before publishing.</p>',
               );
             } else {
               form.insertAdjacentHTML(

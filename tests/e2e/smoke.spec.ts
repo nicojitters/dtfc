@@ -106,11 +106,16 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   await firstColloquial.click();
   await expect(page).toHaveURL(/\/shakespeare\/colloquial\/[^/]+\/?/);
 
-  // Ask Shakespeare index has the form
+  // Ask Shakespeare index has the form (or fallback text if .env is unset)
   await page.goto('/shakespeare/ask-shakespeare/');
   await expect(page.getByRole('heading', { level: 1, name: 'Ask Shakespeare' })).toBeVisible();
-  await expect(page.getByRole('textbox', { name: /Your question/i })).toBeVisible();
-  await expect(page.getByRole('button', { name: /Send to Shakespeare/i })).toBeVisible();
+  // When .env is unset, fallback text appears instead of the form
+  const hasForm = await page.getByRole('textbox', { name: /Your question/i }).isVisible();
+  if (hasForm) {
+    await expect(page.getByRole('button', { name: /Send to Shakespeare/i })).toBeVisible();
+  } else {
+    await expect(page.getByText(/This form is not yet configured/i)).toBeVisible();
+  }
 
   // Children's Theatre section — landing, sub-nav, how-to guide with wheel, library, script detail
   await page.goto('/childrens-theatre/');
@@ -136,6 +141,30 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   await firstCard.click();
   await expect(page).toHaveURL(/\/childrens-theatre\/scripts\/[^/]+\/?/);
   await expect(page.getByRole('button', { name: /Print this script/i })).toBeVisible();
+
+  // Community section — landing (h1 + sub-nav + #membership anchor), companion theatres grid,
+  // newsletters index, testimonials form (fallback mode expected in test env — no .env populated)
+  await page.goto('/community/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Community' })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: /Community section/i })).toBeVisible();
+  // Anchor preserved for Cycles 2 + 5 cross-links
+  await expect(page.locator('#membership')).toBeVisible();
+
+  // Companion theatres — grid renders ≥3 cards
+  await page.goto('/community/companion-theatres/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Companion Theatres' })).toBeVisible();
+  const theatreCards = page.locator('main ul li article');
+  await expect(theatreCards.first()).toBeVisible();
+  expect(await theatreCards.count()).toBeGreaterThanOrEqual(3);
+
+  // Newsletters — index page renders (empty-state or entries)
+  await page.goto('/community/newsletters/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Newsletters' })).toBeVisible();
+
+  // Testimonials — page renders + fallback text appears (no .env populated in CI)
+  await page.goto('/community/testimonials/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Testimonials' })).toBeVisible();
+  await expect(page.getByText(/This form is not yet configured/i)).toBeVisible();
 
   // No unexpected console errors
   const errors: string[] = [];

@@ -14,6 +14,8 @@
 - Preact for the single interactive island (Game Finder)
 - Native Popover API for the Concept popovers (no framework)
 - **Legacy content model:** `essays` MDX collection + `FOUNDERS` structured data file (`src/data/founders.ts`) + `timeline.json` (`src/data/timeline.json`) driven by a validating loader (`src/lib/timeline.ts`).
+- **Community content model:** `newsletters` MDX collection + `COMPANION_THEATRES` structured data file (`src/data/companion-theatres.ts`) + `TESTIMONIALS` structured data file (`src/data/testimonials.ts`).
+- **Forms gateway:** Formspree via `src/lib/form-action.ts` `formActionFor(key)` helper. `.env.example` documents the three `PUBLIC_FORMSPREE_*` env vars; `.env` is git-ignored. Forms fall back to a "not yet configured" mailto: state when envs are unset — see the Formspree conventions block below.
 - pnpm; Vitest for unit tests; Playwright for one smoke test
 
 ## Key conventions
@@ -21,6 +23,14 @@
 **Vocabulary.** Use "Players" (never "actors"), "Facilitator" (never "leader"), and the full name "Players Resource Center" in UI copy. Voice: warm, playful, encouraging, exclamation-friendly.
 
 **Nav order.** Community, Theatre Games, Shakespeare, Children's Theatre, Legacy, Players Resource Center, Workshops — defined in `src/lib/nav.ts`.
+
+**Community sub-nav** (`src/lib/community-nav.ts`) drives the persistent sub-nav rendered by `src/layouts/CommunityLayout.astro` on every `/community/*` page. 7 items: About / How We&rsquo;re Organized / Membership / Donate / Newsletters / Companion Theatres / Testimonials.
+
+**Formspree conventions.** Every form component reads `formActionFor(key)` from `@/lib/form-action` at render time. When `PUBLIC_FORMSPREE_<KEY>_ID` is set to a real value in `.env`, forms POST to `https://formspree.io/f/<id>` via fetch. When unset/empty/still `xxxxxxxx`, they render a "Form not yet configured" note + `mailto:` fallback link. The fallback UI ensures the site ships and merges cleanly before the client provides real Formspree IDs; forms activate the moment `.env` is populated and the site rebuilds. Each form's submit handler is inline `<script is:inline>` with a `window.__dtfc<Name>Init` idempotency guard + DOMContentLoaded wait (per Cycle 5 T18 lesson).
+
+**Companion theatres data.** `src/data/companion-theatres.ts` — inline Zod validation on import, slug uniqueness enforced. Fields: `slug, name, city, state, website?, contactName?, contactEmail?, blurb (≤300), sample, unconfirmed`. FOUNDERS pattern (add explicit `sample: false/true` + `unconfirmed: false/true` on every entry — TypeScript strict rejects otherwise per the Cycle 5 T7 lesson).
+
+**Testimonials data.** `src/data/testimonials.ts` — ships empty at Cycle 6 launch. New testimonials arrive via dev commits (append to the array, run tests, commit). Fields: `slug, attribution, role?, location?, body (≤600), sample`. Empty state renders on `/community/testimonials/` above the share-your-story form.
 
 **Concept references.** Inline concept mentions use `<Concept id="slug" />`. In .astro files, import `Concept` from `@/components/concept/Concept.astro`. In MDX bodies, pass it via `<Content components={{ Concept }} />` in the layout that renders the MDX (see `src/pages/theatre-games/[slug].astro`).
 
@@ -57,6 +67,12 @@ Body sections `## Production Notes` / `## Script` / `## Facilitator Notes`.
 **`scriptHref` helper** (`src/lib/script-href.ts`) is the canonical source of truth for a script entry's detail URL — routes Shakespeare libraries to `/shakespeare/scripts/`, Children's Theatre libraries to `/childrens-theatre/scripts/`. Always import; never hardcode.
 
 **Adding a game.** Drop `src/content/games/<slug>.mdx` with the frontmatter in `src/content.config.ts`. Body has H2s for `## Preparation`, `## Facilitation`, `## Evaluation`. Set `sample: true` for placeholders; `false` for real client content.
+
+**Adding a newsletter.** Drop `src/content/newsletters/<slug>.mdx` with `title`, `issueNumber` (int positive), `publishDate` (ISO YYYY-MM-DD), `excerpt` (≤200), `sample: false`. Body sections: `## In this issue` / `## Highlights` / `## Announcements` (or adapt to the issue). Use `&rsquo;` for prose apostrophes.
+
+**Adding a companion theatre.** Append to `COMPANION_THEATRES` in `src/data/companion-theatres.ts` with unique kebab-case `slug`, `name`, `city`, `state`. Optional: `website`, `contactName`, `contactEmail`, `blurb` (≤300 chars), `sample: true` if placeholder, `unconfirmed: true` if pending confirmation. Explicit `sample: false, unconfirmed: false` required when unset (TypeScript strict).
+
+**Adding a testimonial.** Append to `TESTIMONIALS` in `src/data/testimonials.ts` with unique kebab-case `slug`, `attribution` (name + role), `body` (the quote, ≤600). Optional: `role`, `location`, `sample: true` if placeholder. Runs through review before publishing.
 
 **Adding a children's play.** Drop `src/content/scripts/<slug>.mdx` with `library` set to `childrens-plays` (or `teaching-modules`). Optional frontmatter: `series` for grouping (Aesop's Fables / Conquering the Sun); `sourceMaterials`, `authorIntentions`, `whatToWatch` for facilitator metadata; `imagery` array for children's drawings (each item needs `src` and `alt`). Body sections `## Production Notes` / `## Script` / `## Facilitator Notes`.
 
@@ -102,10 +118,12 @@ component and the Vitest existence test both prepend `/audio/`). Body uses
 
 ## Deferred / TODO markers
 
-- `TODO(esp)` in `src/components/ui/NewsletterSignup.astro` — the form submits to console; wire to the client's chosen ESP when picked.
-- `TODO(esp)` in `src/components/landing/NewsletterTile.astro` — inherits the same ESP integration TODO as the footer signup.
-- `TODO(esp)` in `src/components/shakespeare/AskShakespeareForm.astro` — inherits the same ESP TODO as `NewsletterTile` and the footer signup.
-- Donate link in `src/components/layout/Footer.astro` — currently points to `/community/`; replace with Zeffy URL when client provides.
+- `PUBLIC_FORMSPREE_*` env vars in `.env.example` — placeholders. Replace with real Formspree endpoint IDs when Formspree accounts are set up; forms activate automatically.
+- Zeffy donation URL — `/community/donate/` currently shows a "coming soon" chip + mailto: fallback CTA. Replace with real Zeffy embed/link when client provides.
+- Ask Shakespeare destination email — submissions currently route to the Formspree dashboard. When client provides an inbox, either configure the Formspree endpoint's destination or migrate to a service that emails directly.
+- Membership tiers + pricing — `/community/membership/` currently ships as pre-release interest form. Flip the chip + expand the page with real tier content when finalized.
+- Testimonials moderation policy — currently dev-committed. If a CMS-style backend is picked, migrate.
+- Fallback `hello@dtfc.example` mailto: address — placeholder throughout the form components + Donate CTA. Replace with the client's real inbound email address.
 - Placeholder icons in `public/icons/` — replace when Desirae delivers.
 - `public/DTFC-logo.png` — placeholder; replace with client asset.
 - `pairChildren` helper removed in Cycle 4 (was unused; SideBySideText composition works via CSS grid auto-flow).

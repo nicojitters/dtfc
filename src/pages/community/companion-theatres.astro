@@ -1,0 +1,28 @@
+---
+import CommunityLayout from '@/layouts/CommunityLayout.astro';
+import CompanionTheatreCard from '@/components/community/CompanionTheatreCard.astro';
+import { COMPANION_THEATRES } from '@/data/companion-theatres';
+---
+
+<CommunityLayout
+  title="Companion Theatres"
+  subPage="companion-theatres"
+  eyebrow="The DT:FC network"
+  description="Theatres and educators who share the DT:FC practice."
+>
+  <div class="max-w-2xl">
+    <p class="text-ink-700 text-base">
+      DT:FC is a network. These are the theatres and educators actively working with our plays,
+      games, and pedagogy &mdash; every one of them a way to see the practice in action or find
+      a workshop near you.
+    </p>
+  </div>
+
+  <ul class="mt-10 grid list-none gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {COMPANION_THEATRES.map((t) => (
+      <li>
+        <CompanionTheatreCard theatre={t} />
+      </li>
+    ))}
+  </ul>
+</CommunityLayout>

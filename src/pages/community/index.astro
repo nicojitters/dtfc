@@ -1,38 +1,91 @@
 ---
-import SectionLayout from '@/layouts/SectionLayout.astro';
+import CommunityLayout from '@/layouts/CommunityLayout.astro';
 import ReflectivePrompt from '@/components/section/ReflectivePrompt.astro';
+
+const directoryCards = [
+  {
+    label: 'About',
+    href: '/community/about/',
+    description: 'Purpose, value proposition, and the five competencies that make DT:FC what it is.',
+  },
+  {
+    label: 'How We&rsquo;re Organized',
+    href: '/community/how-were-organized/',
+    description: 'Distributed leadership, Coordinating Council, and our fiscal sponsor.',
+  },
+  {
+    label: 'Membership',
+    href: '/community/membership/',
+    description: 'Join the DT:FC community. Tiers and details arriving in our next content release.',
+  },
+  {
+    label: 'Donate',
+    href: '/community/donate/',
+    description: 'Support DT:FC through our fiscal sponsor, We Tell Stories.',
+  },
+  {
+    label: 'Newsletters',
+    href: '/community/newsletters/',
+    description: 'Monthly DT:FC news, new games, and new plays. Sign up + read past issues.',
+  },
+  {
+    label: 'Companion Theatres',
+    href: '/community/companion-theatres/',
+    description: 'The theatres and educators in the DT:FC network.',
+  },
+  {
+    label: 'Testimonials',
+    href: '/community/testimonials/',
+    description: 'How DT:FC has shaped work, Players, and creative lives. Share your own.',
+  },
+];
 ---
 
-<SectionLayout
+<CommunityLayout
   title="Community"
-  section="community"
   eyebrow="Be Fearlessly Creative!"
-  description="Who we are, how we're organized, and how you can be part of Developmental Theatre: Fearless Creativity."
+  description="The people, principles, and practices behind DT:FC — and the ways to join in."
 >
   <ReflectivePrompt sectionKey="community" />
 
-  <div class="max-w-2xl space-y-4 pt-8">
-    {/* CLIENT REVIEW: drafted this paragraph for Cycle 2 to resolve Idea Two #13
-        ("How do I become part of this Legacy?") from Legacy → Community. Confirm
-        wording before launch. */}
+  <div class="mt-8 max-w-2xl space-y-6">
+    {/* CLIENT REVIEW: Membership anchor preserved from Cycles 2/5 IDEA_TWO cross-links; deep detail lives at /community/membership/. */}
     <section id="membership">
-      <h2>Become part of this Legacy</h2>
+      <h2>Become a member</h2>
       <p>
-        Everyone who explores this site is already part of DT:FC's living community. If you'd like
-        to go further — receive our monthly notes, be invited to open sessions, or offer your own
-        work as part of the archive — start with the newsletter below. Full membership tiers and a
-        direct-sponsorship path are landing in the next content release.
+        DT:FC membership is opening in our next content release. In the meantime, sign up for the
+        newsletter (footer) to get an update the moment tiers are live.
+        <a href="/community/membership/" class="hover:text-clay-500">Read the interim details &rarr;</a>
       </p>
     </section>
 
     <section>
       <h2>What is DT:FC?</h2>
       <p>
-        Developmental Theatre: Fearless Creativity is a fiscally sponsored nonprofit that trains
-        physical and vocal readiness, teaches how to recognize new contexts, and nurtures the
-        resilience players carry into every kind of learning. We do it through Theatre Games,
-        Shakespeare, children's plays, and the practitioner tools in the Players Resource Center.
+        DT:FC (Developmental Theatre: Fearless Creativity) is a fifty-year lineage of practices
+        that use theatre to build the five competencies underneath every creative act: attention,
+        composition, oral expression, physical expression, and context awareness.
+        <a href="/community/about/" class="hover:text-clay-500">Read the full About &rarr;</a>
       </p>
     </section>
   </div>
-</SectionLayout>
+
+  <section class="mt-14">
+    <h2 class="font-display text-2xl">Explore the section</h2>
+    <ul class="mt-6 grid list-none gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {
+        directoryCards.map((card) => (
+          <li>
+            <a
+              href={card.href}
+              class="border-ivory-200 bg-ivory-50 hover:border-clay-500/60 block h-full rounded-[var(--radius-card)] border p-5 no-underline transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]"
+            >
+              <h3 class="font-display text-ink-900 text-xl" set:html={card.label} />
+              <p class="text-ink-700 mt-1 text-sm" set:html={card.description} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</CommunityLayout>

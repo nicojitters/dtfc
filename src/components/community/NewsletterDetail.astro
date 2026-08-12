@@ -1,0 +1,42 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'newsletters'>;
+}
+const { entry } = Astro.props;
+const g = entry.data;
+---
+
+<article class="mx-auto max-w-3xl">
+  <p class="text-ink-500 text-sm">
+    <a href="/community/">Community</a> &middot; <a href="/community/newsletters/">Newsletters</a>
+  </p>
+
+  <p class="text-ink-500 mt-3 text-xs uppercase tracking-widest">
+    Issue #{g.issueNumber} &middot; {g.publishDate}
+  </p>
+  <h1 class="mt-2" set:html={g.title} />
+
+  {
+    g.sample && (
+      <p class="border-mustard-400 bg-mustard-200/40 text-ink-700 mt-4 rounded-[var(--radius-card)] border-l-4 p-3 text-sm">
+        <strong>Sample content.</strong> The final text of this newsletter issue is pending.
+      </p>
+    )
+  }
+
+  <div class="mt-4" data-print-hide>
+    <button
+      type="button"
+      onclick="window.print()"
+      class="border-ink-900 rounded border px-3 py-1.5 text-sm"
+    >
+      Print this issue
+    </button>
+  </div>
+
+  <div class="prose prose-neutral mt-8 max-w-none">
+    <slot />
+  </div>
+</article>

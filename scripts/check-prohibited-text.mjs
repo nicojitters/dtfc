@@ -60,9 +60,7 @@ export const CURLY_APOSTROPHE_ALLOWLIST = [
   // Cycles 1-4 shipped-content debt — deferred cleanup
   'src/components/childrens/WayfarersJourneyWheel.astro',
   'src/components/landing/CommunityCenter.astro',
-  'src/components/landing/NewsletterTile.astro',
   'src/components/landing/Resilience.astro',
-  'src/components/ui/NewsletterSignup.astro',
   'src/content/colloquial/one-uddah-midsummah.mdx',
   'src/content/concepts/archetype.mdx',
   'src/content/concepts/cohesion.mdx',
@@ -81,7 +79,6 @@ export const CURLY_APOSTROPHE_ALLOWLIST = [
   'src/content/games/self-talk.mdx',
   'src/content/games/walking-across-the-ice.mdx',
   'src/content/games/whats-missing.mdx',
-  'src/pages/community/index.astro',
   'src/pages/index.astro',
   'src/pages/styles-preview.astro',
   'src/pages/theatre-games/index.astro',

@@ -1,0 +1,36 @@
+---
+import CommunityLayout from '@/layouts/CommunityLayout.astro';
+import TestimonialCard from '@/components/community/TestimonialCard.astro';
+import TestimonialForm from '@/components/community/TestimonialForm.astro';
+import { TESTIMONIALS } from '@/data/testimonials';
+---
+
+<CommunityLayout
+  title="Testimonials"
+  subPage="testimonials"
+  eyebrow="How DT:FC has shaped work, Players, and creative lives"
+  description="Read what others have shared — and share your own story."
+>
+  <section class="max-w-2xl">
+    <TestimonialForm />
+  </section>
+
+  <section class="mt-14">
+    <h2 class="font-display text-2xl">Stories from the DT:FC community</h2>
+    {
+      TESTIMONIALS.length === 0 ? (
+        <p class="text-ink-500 mt-4 italic">
+          Testimonials arriving soon — share your story above to be one of the first.
+        </p>
+      ) : (
+        <ul class="mt-6 grid list-none gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {TESTIMONIALS.map((t) => (
+            <li>
+              <TestimonialCard testimonial={t} />
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+</CommunityLayout>
