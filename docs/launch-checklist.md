@@ -10,7 +10,7 @@ Pre-flight ops document. Walk through each section top-to-bottom before flipping
 ## Content (client-dependent)
 
 - [ ] Real support email decided. Update `SITE_CONFIG.fallbackContactEmail` in `src/lib/site-config.ts`.
-- [ ] Real production domain decided (e.g. `https://dtfc.org`). Update `SITE_CONFIG.canonicalHost` and `public/robots.txt` sitemap URL.
+- [ ] Real production domain decided (e.g. `https://dtfc.org`). Set `PUBLIC_SITE_URL` in the Vercel dashboard — this single env var now drives canonical, og:url, og:image, sitemap URL, and robots.txt simultaneously.
 - [ ] Real Zeffy donation URL provided. Swap the mailto: CTA in `src/pages/community/donate.astro` to the Zeffy link. Remove the "coming soon" chip.
 - [ ] Ask Shakespeare destination email configured — either populate the Formspree endpoint's dashboard destination OR (if migrating off Formspree) swap the form action URL. Remove the CLIENT REVIEW comment from `src/components/shakespeare/AskShakespeareForm.astro`.
 - [ ] Membership tiers + pricing content finalized. Expand `src/pages/community/membership.astro` with real tier content. Remove the pre-release chip.
@@ -25,7 +25,7 @@ Pre-flight ops document. Walk through each section top-to-bottom before flipping
 - [ ] `PUBLIC_FORMSPREE_ASK_SHAKESPEARE_ID` set.
 - [ ] `PUBLIC_FORMSPREE_TESTIMONIAL_ID` set.
 - [ ] `PUBLIC_VERCEL_ANALYTICS_ENABLED` set to `true`.
-- [ ] `PUBLIC_SITE_URL` set to the real production domain.
+- [ ] `PUBLIC_SITE_URL` set to the real production domain. This single env var drives canonical URL, og:url, og:image absolute URL, sitemap URL, and robots.txt — one change flips all five.
 
 ## SEO + meta
 
@@ -37,6 +37,7 @@ Pre-flight ops document. Walk through each section top-to-bottom before flipping
 - [ ] `<title>` renders correctly on every route.
 - [ ] Twitter Card preview looks right: paste a page URL into https://cards-dev.twitter.com/validator.
 - [ ] Facebook / OG preview looks right: paste into https://developers.facebook.com/tools/debug.
+- [ ] Canonical URL host matches production domain on a spot-checked page (open browser DevTools on a production page, verify `<link rel="canonical">`, `<meta property="og:url">`, and `<meta property="og:image">` all resolve to the real production hostname — no lingering `dtfc.example` placeholder).
 
 ## Forms (all 4 site forms POST successfully)
 

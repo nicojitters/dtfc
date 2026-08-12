@@ -22,7 +22,6 @@ const analyticsEnabled = import.meta.env.PUBLIC_VERCEL_ANALYTICS_ENABLED === 'tr
 const resolvedCanonical = canonical ?? Astro.url.href;
 const resolvedOgImage = ogImage ?? SITE_CONFIG.ogDefaults.image;
 const resolvedOgTitle = `${title} — DT:FC`;
-const resolvedDescription = description ?? '';
 ---
 
 <!doctype html>

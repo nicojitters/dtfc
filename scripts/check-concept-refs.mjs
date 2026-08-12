@@ -27,7 +27,6 @@ for (const file of await fg('src/content/concepts/**/*.{md,mdx}')) {
 for (const file of await fg(['src/**/*.astro', 'src/**/*.mdx'])) {
   const src = readFileSync(file, 'utf8');
   let match;
-  const lines = src.split('\n');
   while ((match = CONCEPT_REF.exec(src)) !== null) {
     const id = match[1] ?? match[2];
     const beforeMatch = src.slice(0, match.index);

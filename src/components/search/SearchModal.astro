@@ -63,6 +63,12 @@ import '@pagefind/default-ui/css/ui.css';
         uiLoaded = true;
         try {
           const { PagefindUI } = await import('@pagefind/default-ui');
+          // Note (dev mode): the module import above succeeds in both dev and
+          // prod; however, in `pnpm dev`, PagefindUI fetches /pagefind/pagefind.js
+          // at runtime which returns 404 (the index only exists in dist/). In that
+          // case PagefindUI silently renders its own "no results" state — this
+          // catch block does not trigger. The fallback message below covers
+          // genuine construction-time failures (e.g. missing module in CI).
           new PagefindUI({
             element: '#dtfc-search-container',
             showSubResults: true,
