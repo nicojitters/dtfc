@@ -1,5 +1,6 @@
 ---
 import { formActionFor } from '@/lib/form-action';
+import { SITE_CONFIG } from '@/lib/site-config';
 
 const { action, fallbackMode } = formActionFor('askShakespeare');
 ---
@@ -12,8 +13,8 @@ const { action, fallbackMode } = formActionFor('askShakespeare');
       <h2 class="font-display text-ink-900 text-xl">Submit a question</h2>
       <p class="text-ink-700 mt-2 text-sm">
         This form is not yet configured. In the meantime, please email your question to{' '}
-        <a href="mailto:hello@dtfc.example" class="hover:text-clay-500 underline">
-          hello@dtfc.example
+        <a href={`mailto:${SITE_CONFIG.fallbackContactEmail}`} class="hover:text-clay-500 underline">
+          {SITE_CONFIG.fallbackContactEmail}
         </a>{' '}
         and we&rsquo;ll get back to you.
       </p>
@@ -24,6 +25,7 @@ const { action, fallbackMode } = formActionFor('askShakespeare');
       action={action}
       method="POST"
       data-ask-shakespeare-form
+      data-fallback-email={SITE_CONFIG.fallbackContactEmail}
     >
       <h2 class="font-display text-ink-900 text-xl">Submit a question</h2>
       <p class="text-ink-500 mt-1 text-sm">
@@ -83,6 +85,7 @@ const { action, fallbackMode } = formActionFor('askShakespeare');
       forms.forEach((form) => {
         form.addEventListener('submit', async (ev) => {
           ev.preventDefault();
+          const email = form.dataset.fallbackEmail ?? '';
           try {
             const res = await fetch(form.action, {
               method: 'POST',
@@ -98,13 +101,13 @@ const { action, fallbackMode } = formActionFor('askShakespeare');
             } else {
               form.insertAdjacentHTML(
                 'afterend',
-                '<p role="alert" class="mt-2 text-sm text-clay-700">Something went wrong. Please email us at <a href="mailto:hello@dtfc.example" class="underline">hello@dtfc.example</a>.</p>',
+                `<p role="alert" class="mt-2 text-sm text-clay-700">Something went wrong. Please email us at <a href="mailto:${email}" class="underline">${email}</a>.</p>`,
               );
             }
           } catch {
             form.insertAdjacentHTML(
               'afterend',
-              '<p role="alert" class="mt-2 text-sm text-clay-700">Network error. Please email us at <a href="mailto:hello@dtfc.example" class="underline">hello@dtfc.example</a>.</p>',
+              `<p role="alert" class="mt-2 text-sm text-clay-700">Network error. Please email us at <a href="mailto:${email}" class="underline">${email}</a>.</p>`,
             );
           }
         });

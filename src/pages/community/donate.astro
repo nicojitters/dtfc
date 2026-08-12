@@ -1,5 +1,6 @@
 ---
 import CommunityLayout from '@/layouts/CommunityLayout.astro';
+import { SITE_CONFIG } from '@/lib/site-config';
 ---
 
 <CommunityLayout
@@ -29,7 +30,7 @@ import CommunityLayout from '@/layouts/CommunityLayout.astro';
 
     <p>
       <a
-        href="mailto:hello@dtfc.example?subject=DT%3AFC%20donation%20inquiry"
+        href={`mailto:${SITE_CONFIG.fallbackContactEmail}?subject=DT%3AFC%20donation%20inquiry`}
         class="bg-clay-500 text-ivory-50 hover:bg-clay-700 focus-visible:ring-clay-500 inline-block rounded px-5 py-2 text-base font-medium transition focus-visible:ring-2 focus-visible:ring-offset-2 no-underline"
       >
         Email us about donating →

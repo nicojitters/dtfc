@@ -1,5 +1,6 @@
 ---
 import { formActionFor } from '@/lib/form-action';
+import { SITE_CONFIG } from '@/lib/site-config';
 
 interface Props {
   source?: string;
@@ -20,8 +21,8 @@ const formId = `newsletter-${source}`;
       </p>
       <p class="text-ink-500 mt-2 text-xs">
         Newsletter signup is not yet configured. Please email us at{' '}
-        <a href="mailto:hello@dtfc.example" class="hover:text-clay-500 underline">
-          hello@dtfc.example
+        <a href={`mailto:${SITE_CONFIG.fallbackContactEmail}`} class="hover:text-clay-500 underline">
+          {SITE_CONFIG.fallbackContactEmail}
         </a>{' '}
         to be added to the list.
       </p>
@@ -35,6 +36,7 @@ const formId = `newsletter-${source}`;
         method="POST"
         data-newsletter-form
         data-source={source}
+        data-fallback-email={SITE_CONFIG.fallbackContactEmail}
       >
         <label class="flex-1">
           <span class="text-ink-700 block text-sm font-medium">{heading}</span>
@@ -69,6 +71,7 @@ const formId = `newsletter-${source}`;
       forms.forEach((form) => {
         form.addEventListener('submit', async (ev) => {
           ev.preventDefault();
+          const email = form.dataset.fallbackEmail ?? '';
           try {
             const res = await fetch(form.action, {
               method: 'POST',
@@ -84,13 +87,13 @@ const formId = `newsletter-${source}`;
             } else {
               form.insertAdjacentHTML(
                 'afterend',
-                '<p role="alert" class="mt-2 text-sm text-clay-700">Something went wrong. Please email us at <a href="mailto:hello@dtfc.example" class="underline">hello@dtfc.example</a>.</p>',
+                `<p role="alert" class="mt-2 text-sm text-clay-700">Something went wrong. Please email us at <a href="mailto:${email}" class="underline">${email}</a>.</p>`,
               );
             }
           } catch {
             form.insertAdjacentHTML(
               'afterend',
-              '<p role="alert" class="mt-2 text-sm text-clay-700">Network error. Please email us at <a href="mailto:hello@dtfc.example" class="underline">hello@dtfc.example</a>.</p>',
+              `<p role="alert" class="mt-2 text-sm text-clay-700">Network error. Please email us at <a href="mailto:${email}" class="underline">${email}</a>.</p>`,
             );
           }
         });
