@@ -1,5 +1,6 @@
 ---
 import LegacyLayout from '@/layouts/LegacyLayout.astro';
+import FoundationalReading from '@/components/legacy/FoundationalReading.astro';
 import { SITE_CONFIG } from '@/lib/site-config';
 ---
 
@@ -82,12 +83,14 @@ import { SITE_CONFIG } from '@/lib/site-config';
       </ul>
     </section>
 
-    {/* T3 (Cycle 9) lands FoundationalReading component + data file and mounts it here. */}
     <section>
       <h2>Foundational reading</h2>
-      <p class="text-ink-500 text-sm italic">
-        Bibliography component pending &mdash; ships in Cycle 9 T3.
+      <p>
+        The theoretical and practical texts the Caravan&rsquo;s founders drew on as
+        they built the practice. The list is short by design &mdash; these six works
+        anchor most of Developmental Theatre&rsquo;s vocabulary.
       </p>
+      <FoundationalReading />
     </section>
 
     <section>
