@@ -1,0 +1,52 @@
+---
+import { TIMELINE_EVENTS, groupByDecade } from '@/lib/timeline';
+import TimelineLegend from './TimelineLegend.astro';
+
+const groups = groupByDecade(TIMELINE_EVENTS);
+
+const ORG_TO_CSS_VAR: Record<string, string> = {
+  ALL: '--color-timeline-all',
+  CC: '--color-timeline-cc',
+  'C&C': '--color-timeline-cnc',
+  CSF: '--color-timeline-csf',
+  TEF: '--color-timeline-tef',
+  OSC: '--color-timeline-osc',
+};
+---
+
+<TimelineLegend />
+
+{
+  groups.length === 0 ? (
+    <p class="text-ink-500 mt-8 italic">
+      Timeline entries are being populated &mdash; check back soon.
+    </p>
+  ) : (
+    <ol class="mt-8 space-y-10" data-timeline-grid>
+      {groups.map((group) => (
+        <li>
+          <h2 class="text-ink-900 font-display text-2xl">{group.decade}s</h2>
+          <ul class="border-ink-500/20 mt-4 space-y-4 border-l-2 pl-6">
+            {group.events.map((e) => (
+              <li
+                data-event-org={e.organization}
+                class="relative"
+              >
+                <span
+                  class="border-ivory-50 absolute -left-[calc(0.75rem+2px)] top-2 h-3 w-3 rounded-full border-2"
+                  style={`background: var(${ORG_TO_CSS_VAR[e.organization]});`}
+                  aria-hidden="true"
+                ></span>
+                <p class="text-ink-500 text-xs uppercase tracking-widest">{e.date}</p>
+                <p class="text-ink-900 mt-1 text-base" set:html={e.event}></p>
+                {e.participants && <p class="text-ink-700 mt-1 text-sm" set:html={`Participants: ${e.participants}`}></p>}
+                {e.presentation && <p class="text-ink-700 mt-1 text-sm" set:html={`Presentation: ${e.presentation}`}></p>}
+                {e.additionalInfo && <p class="text-ink-500 mt-1 text-xs italic" set:html={e.additionalInfo}></p>}
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ol>
+  )
+}
