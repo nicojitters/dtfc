@@ -1,4 +1,31 @@
 import { test, expect } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+
+async function runAxe(page: import('@playwright/test').Page, testName: string) {
+  const results = await new AxeBuilder({ page }).analyze();
+  const critical = results.violations.filter((v) => v.impact === 'critical');
+  const serious = results.violations.filter((v) => v.impact === 'serious');
+  const moderate = results.violations.filter((v) => v.impact === 'moderate');
+  const minor = results.violations.filter((v) => v.impact === 'minor');
+
+  if (moderate.length > 0 || minor.length > 0) {
+    console.info(
+      `[axe] ${testName}: ${moderate.length} moderate, ${minor.length} minor — deferred as follow-ups`,
+    );
+    for (const v of [...moderate, ...minor]) {
+      console.info(`  ${v.impact}: ${v.id} — ${v.help}`);
+    }
+  }
+
+  if (critical.length > 0 || serious.length > 0) {
+    const summary = [...critical, ...serious]
+      .map((v) => `  ${v.impact}: ${v.id} — ${v.help} (${v.nodes.length} node(s))`)
+      .join('\n');
+    throw new Error(
+      `[axe] ${testName}: ${critical.length} critical + ${serious.length} serious violations:\n${summary}`,
+    );
+  }
+}
 
 test('smoke: landing → PRC → games finder → concept popover', async ({ page }) => {
   // Landing page — identity + grid + rotating teaser + no prohibited text
@@ -19,16 +46,19 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   await expect(visibleTeasers.first()).toBeVisible();
   // RESILIENCE must render inside <strong>, never as raw uppercase text.
   await expect(page.locator('strong', { hasText: 'RESILIENCE' }).first()).toBeVisible();
+  await runAxe(page, 'home landing');
 
   // Navigate to PRC
   await page.getByRole('link', { name: 'Players Resource Center' }).first().click();
   await expect(page).toHaveURL(/\/resource-center\/?$/);
   await expect(page.getByText('What are the ICONS')).toBeVisible();
+  await runAxe(page, 'resource center');
 
   // Navigate to Theatre Games landing
   await page.getByRole('link', { name: 'Theatre Games' }).first().click();
   await expect(page).toHaveURL(/\/theatre-games\/?$/);
   await expect(page.getByRole('heading', { name: 'The five competencies' })).toBeVisible();
+  await runAxe(page, 'theatre-games landing');
 
   // Open the Concept popover (Cohesion)
   const cohesionButton = page.getByRole('button', { name: /Cohesion/i }).first();
@@ -54,6 +84,12 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   await physicalBtn.click();
   await expect(countText).not.toHaveText(before ?? '', { timeout: 10_000 });
   await expect(page).toHaveURL(/competency=physical-expression/);
+  await runAxe(page, 'game finder');
+
+  // Navigate to a game detail page
+  await page.goto('/theatre-games/puppets-marionettes/');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await runAxe(page, 'game detail');
 
   // Legacy section — landing, sub-nav, timeline (URL-driven filter path), essay detail
   await page.goto('/legacy/');
@@ -76,6 +112,7 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   const legend = page.getByRole('navigation', { name: /Timeline organization filter/i });
   const ccChip = legend.getByRole('button', { name: /Colorado Caravan/i });
   await expect(ccChip).toHaveAttribute('aria-pressed', 'true');
+  await runAxe(page, 'legacy timeline');
 
   // Essays: index + one detail with print button.
   await page.goto('/legacy/essays/');
@@ -91,6 +128,7 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   const subNav = page.getByRole('navigation', { name: 'Shakespeare section' });
   await expect(subNav).toBeVisible();
   await expect(subNav.getByRole('link', { name: 'Alternatives' })).toBeVisible();
+  await runAxe(page, 'shakespeare landing');
 
   // Follow a directory-grid link into the Scenes library
   await page.getByRole('link', { name: 'Script Libraries' }).click();
@@ -120,11 +158,13 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   } else {
     await expect(page.getByText(/This form is not yet configured/i)).toBeVisible();
   }
+  await runAxe(page, 'ask shakespeare / form fallback');
 
   // Children's Theatre section — landing, sub-nav, how-to guide with wheel, library, script detail
   await page.goto('/childrens-theatre/');
   await expect(page.getByRole('heading', { level: 1 })).toContainText("Children");
   await expect(page.getByRole('navigation', { name: /Children.*Theatre section/i })).toBeVisible();
+  await runAxe(page, 'childrens-theatre landing');
 
   // Navigate to Archetype of One Story (via direct URL)
   await page.goto('/childrens-theatre/how-to/archetype-of-one-story/');
@@ -135,6 +175,7 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   const wheel = page.locator('svg[role="img"][aria-labelledby*="wjw"]');
   await expect(wheel).toBeVisible();
   await expect(wheel.locator('title')).toContainText(/Wayfarer/i);
+  await runAxe(page, 'childrens-theatre how-to + wayfarer wheel');
 
   // Navigate to Plays library
   await page.goto('/childrens-theatre/plays/');
@@ -153,6 +194,7 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   await expect(page.getByRole('navigation', { name: /Community section/i })).toBeVisible();
   // Anchor preserved for Cycles 2 + 5 cross-links
   await expect(page.locator('#membership')).toBeVisible();
+  await runAxe(page, 'community landing');
 
   // Companion theatres — grid renders ≥3 cards
   await page.goto('/community/companion-theatres/');
@@ -164,11 +206,13 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   // Newsletters — index page renders (empty-state or entries)
   await page.goto('/community/newsletters/');
   await expect(page.getByRole('heading', { level: 1, name: 'Newsletters' })).toBeVisible();
+  await runAxe(page, 'community newsletters index');
 
   // Testimonials — page renders + fallback text appears (no .env populated in CI)
   await page.goto('/community/testimonials/');
   await expect(page.getByRole('heading', { level: 1, name: 'Testimonials' })).toBeVisible();
   await expect(page.getByText(/This form is not yet configured/i)).toBeVisible();
+  await runAxe(page, 'community testimonials form');
 
   // Search — verify Pagefind bundle loads and returns results
   // Note: requires `pnpm build` to have produced dist/pagefind/ before this

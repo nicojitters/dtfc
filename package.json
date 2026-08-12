@@ -32,8 +32,10 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.62.1",
     "@tailwindcss/typography": "^0.5.20",
+    "axe-core": "^4.13.0",
     "fast-glob": "^3.3.3",
     "pagefind": "^1.5.2",
     "prettier": "^3.3.0",
