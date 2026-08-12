@@ -1,0 +1,40 @@
+---
+import LegacyLayout from '@/layouts/LegacyLayout.astro';
+import EssayCard from '@/components/legacy/EssayCard.astro';
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('essays')).sort((a, b) => {
+  const ay = a.data.year ?? Infinity;
+  const by = b.data.year ?? Infinity;
+  return ay - by;
+});
+---
+
+<LegacyLayout
+  title="Essays"
+  subPage="essays"
+  eyebrow="The written record"
+  description="The founding manifestos and the writings that carry the practice forward."
+>
+  <div class="max-w-2xl">
+    <p class="text-ink-700 text-base">
+      The written record of DT:FC&rsquo;s methods, from the founders and Laurie O&rsquo;Brien.
+    </p>
+  </div>
+
+  {
+    entries.length === 0 ? (
+      <p class="text-ink-500 mt-8 italic">
+        Essays are being populated &mdash; check back soon.
+      </p>
+    ) : (
+      <ul class="mt-10 grid list-none gap-6 md:grid-cols-2">
+        {entries.map((entry) => (
+          <li>
+            <EssayCard entry={entry} />
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</LegacyLayout>
