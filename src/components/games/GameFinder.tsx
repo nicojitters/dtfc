@@ -71,7 +71,7 @@ export default function GameFinder({ games }: Props) {
                 <h3 class="font-display mt-3 text-xl">{game.name}</h3>
                 <p class="text-ink-500 mt-1 text-sm">{game.intent}</p>
                 {game.sample && (
-                  <p class="text-ink-300 mt-2 text-xs">Sample — pending final import</p>
+                  <p class="text-ink-500 mt-2 text-xs">Sample — pending final import</p>
                 )}
               </a>
             </li>
