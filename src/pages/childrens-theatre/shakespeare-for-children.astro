@@ -1,0 +1,45 @@
+---
+import ChildrensLayout from '@/layouts/ChildrensLayout.astro';
+import { getCollection } from 'astro:content';
+import ScriptCard from '@/components/scripts/ScriptCard.astro';
+
+const entries = (await getCollection('scripts'))
+  .filter((e) => e.data.library === 'childrens-shakespeare')
+  .sort((a, b) => a.data.title.localeCompare(b.data.title));
+---
+
+<ChildrensLayout
+  title="Shakespeare for Children"
+  subPage="shakespeare-for-children"
+  eyebrow="Cross-section"
+  description="Shakespeare adaptations chosen and shaped for young Players &mdash; the same discipline as the rest of Children&rsquo;s Theatre applied to the canon."
+>
+  <div class="max-w-2xl">
+    <p class="text-ink-700 text-base leading-relaxed">
+      DT:FC&rsquo;s children&rsquo;s Shakespeare uses the same conventions as the other plays in
+      this section: bare stage, versatile casting, spoken language before written. The adaptations
+      themselves live in the Shakespeare section, where each script has full production notes,
+      staging, and cutting choices.
+    </p>
+    <p class="text-ink-500 mt-4 text-sm">
+      Prefer to browse from the Shakespeare side?
+      <a href="/shakespeare/childrens-shakespeare/" class="hover:text-clay-500">
+        Go to the Shakespeare section&rsquo;s Children&rsquo;s library &rarr;
+      </a>
+    </p>
+  </div>
+
+  {
+    entries.length === 0 ? (
+      <p class="text-ink-500 mt-8 italic">No children&rsquo;s Shakespeare adaptations available yet.</p>
+    ) : (
+      <ul class="mt-8 grid list-none gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {entries.map((entry) => (
+          <li>
+            <ScriptCard entry={entry} />
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</ChildrensLayout>
