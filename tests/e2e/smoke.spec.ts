@@ -5,6 +5,10 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1, name: 'Be Fearlessly Creative!' })).toBeVisible();
   await expect(page.getByText("nurture", { exact: false }).first()).toBeVisible();
+  // Analytics gate — with PUBLIC_VERCEL_ANALYTICS_ENABLED unset in test env,
+  // Vercel scripts must NOT be present. Ensures the env gate works.
+  const analyticsScripts = await page.locator('script[src*="_vercel/insights"]').count();
+  expect(analyticsScripts).toBe(0);
   const grid = page.getByRole('region', { name: 'Explore DT:FC' });
   await expect(grid).toBeVisible();
   await expect(grid.getByRole('link', { name: 'Theatre Games' }).first()).toBeVisible();
