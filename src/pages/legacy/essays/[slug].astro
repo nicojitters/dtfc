@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import LegacyLayout from '@/layouts/LegacyLayout.astro';
 import EssayDetail from '@/components/legacy/EssayDetail.astro';
+import InfluencesChart from '@/components/legacy/InfluencesChart.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('essays');
@@ -22,6 +23,6 @@ const { Content } = await render(entry);
   description={entry.data.excerpt}
 >
   <EssayDetail entry={entry}>
-    <Content />
+    <Content components={{ InfluencesChart }} />
   </EssayDetail>
 </LegacyLayout>
