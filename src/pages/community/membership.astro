@@ -1,0 +1,81 @@
+---
+import CommunityLayout from '@/layouts/CommunityLayout.astro';
+import { formActionFor } from '@/lib/form-action';
+
+const { action, fallbackMode } = formActionFor('newsletter');
+---
+
+<CommunityLayout
+  title="Membership"
+  subPage="membership"
+  eyebrow="Join the DT:FC community"
+  description="Membership tiers and pricing are landing with our next content release. Sign up below to be notified."
+>
+  {/* CLIENT REVIEW: membership tiers, pricing, and tax-deductibility model pending client decision per source spec §8. */}
+  <p class="mb-6">
+    <span class="text-mustard-600 bg-mustard-200/40 rounded-[var(--radius-chip)] px-2 py-0.5 text-xs font-medium uppercase tracking-widest">
+      Pre-release &mdash; membership details coming with our next content release
+    </span>
+  </p>
+
+  <div class="max-w-2xl space-y-6">
+    <p class="text-ink-700 text-base">
+      DT:FC membership tiers, pricing, and benefits are being finalized. In the meantime, you can
+      express interest below &mdash; we&rsquo;ll add you to the newsletter list and reach out the
+      moment tiers go live.
+    </p>
+
+    <p class="text-ink-500 text-sm">
+      Contributions today can flow through our fiscal sponsor, We Tell Stories, Inc. &mdash; see
+      <a href="/community/donate/" class="hover:text-clay-500">the Donate page &rarr;</a>
+    </p>
+  </div>
+
+  <section class="mt-10 max-w-2xl">
+    <h2>Express interest in membership</h2>
+    {
+      fallbackMode ? (
+        <div class="border-mustard-400/40 bg-mustard-200/20 mt-4 rounded-[var(--radius-card)] border p-4">
+          <p class="text-ink-700 text-sm">
+            Interest form is not yet configured. Please email us at{' '}
+            <a href="mailto:hello@dtfc.example" class="hover:text-clay-500 underline">
+              hello@dtfc.example
+            </a>{' '}
+            to be added to the list.
+          </p>
+        </div>
+      ) : (
+        <form
+          class="mt-4 flex flex-col gap-2 sm:flex-row sm:items-end"
+          action={action}
+          method="POST"
+          data-newsletter-form
+          data-source="membership-interest"
+        >
+          <label class="flex-1">
+            <span class="text-ink-700 block text-sm font-medium">Your email</span>
+            <input
+              type="email"
+              required
+              name="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+              class="border-ivory-200 mt-1 w-full rounded border bg-white px-3 py-2 text-base"
+            />
+          </label>
+          <input type="hidden" name="interest" value="membership" />
+          <input type="hidden" name="_subject" value="Membership interest (interim form)" />
+          <button
+            type="submit"
+            class="bg-clay-500 text-ivory-50 hover:bg-clay-700 rounded px-4 py-2 font-medium"
+          >
+            Notify me
+          </button>
+        </form>
+      )
+    }
+    <p class="text-ink-500 mt-2 text-xs">
+      We&rsquo;ll only use your email to send the membership announcement and monthly DT:FC news.
+    </p>
+  </section>
+</CommunityLayout>
