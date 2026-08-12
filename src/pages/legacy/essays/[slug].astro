@@ -1,0 +1,27 @@
+---
+import { getCollection, render } from 'astro:content';
+import LegacyLayout from '@/layouts/LegacyLayout.astro';
+import EssayDetail from '@/components/legacy/EssayDetail.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('essays');
+  return entries.map((entry) => ({
+    params: { slug: entry.id.replace(/\.mdx?$/, '') },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<LegacyLayout
+  title={entry.data.title}
+  subPage="essays"
+  eyebrow="Essay"
+  description={entry.data.excerpt}
+>
+  <EssayDetail entry={entry}>
+    <Content />
+  </EssayDetail>
+</LegacyLayout>
