@@ -155,7 +155,7 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   await expect(page.getByRole('heading', { level: 1, name: 'Companion Theatres' })).toBeVisible();
   const theatreCards = page.locator('main ul li article');
   await expect(theatreCards.first()).toBeVisible();
-  await expect(await theatreCards.count()).toBeGreaterThanOrEqual(3);
+  expect(await theatreCards.count()).toBeGreaterThanOrEqual(3);
 
   // Newsletters — index page renders (empty-state or entries)
   await page.goto('/community/newsletters/');
