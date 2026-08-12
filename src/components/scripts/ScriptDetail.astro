@@ -14,8 +14,8 @@ const LIBRARY_LABELS: Record<typeof g.library, string> = {
   scenes: 'Scenes',
   themes: 'Scenes Around a Theme',
   cuttings: 'Cuttings',
-  'childrens-shakespeare': "Children's Shakespeare",
-  'childrens-plays': "Children's Plays",
+  'childrens-shakespeare': "Children’s Shakespeare",
+  'childrens-plays': "Children’s Plays",
   'teaching-modules': 'Teaching Modules',
 };
 
@@ -29,7 +29,7 @@ const librarySectionHref = isChildrens
       : '/childrens-theatre/plays/'
   : `/shakespeare/${g.library}/`;
 const sectionHomeHref = isChildrens ? '/childrens-theatre/' : '/shakespeare/';
-const sectionHomeLabel = isChildrens ? "Children's Theatre" : 'Shakespeare';
+const sectionHomeLabel = isChildrens ? "Children’s Theatre" : 'Shakespeare';
 ---
 
 <article class="mx-auto max-w-3xl">
