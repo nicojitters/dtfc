@@ -1,0 +1,117 @@
+---
+// SearchModal is a native <dialog> that lazily loads PagefindUI on first
+// open. The Pagefind index is built at deploy time by `pagefind --site
+// dist` (see package.json build script).
+//
+// CSS is imported statically so Astro extracts it into a stylesheet at
+// build time. The JS module is dynamically imported at runtime inside a
+// bundled <script> block (NOT is:inline — inline scripts cannot resolve
+// bare-specifier imports in the browser — see T5 implementation notes).
+//
+// Trigger: header search icon (data-search-trigger) OR keyboard shortcut
+// (⌘K / Ctrl+K). Close: Escape (native <dialog> behavior) OR click
+// outside the modal panel OR the close button.
+
+import '@pagefind/default-ui/css/ui.css';
+---
+
+<dialog
+  id="dtfc-search-modal"
+  class="border-ivory-200 bg-ivory-50 mx-auto mt-16 w-full max-w-2xl rounded-[var(--radius-card)] border p-6 backdrop:bg-ink-900/40"
+  aria-labelledby="dtfc-search-title"
+  data-pagefind-ignore
+>
+  <div class="flex items-center justify-between">
+    <h2 id="dtfc-search-title" class="font-display text-ink-900 text-xl">Search DT:FC</h2>
+    <button
+      type="button"
+      data-search-close
+      class="text-ink-500 hover:text-ink-900 rounded p-1 text-sm"
+      aria-label="Close search"
+    >
+      <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+        <path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" />
+      </svg>
+    </button>
+  </div>
+
+  <div id="dtfc-search-container" class="mt-4"></div>
+
+  <p class="text-ink-500 mt-4 text-xs">
+    Prefer a full-page view?{' '}
+    <a href="/search/" class="hover:text-clay-500 underline" data-search-close>Open full search</a>.
+  </p>
+</dialog>
+
+<script>
+  // Bundled by Astro/Vite. The dynamic import() at runtime resolves to a
+  // code-split chunk of @pagefind/default-ui — no cost until first open.
+  if (!(window as any).__dtfcSearchModalInit) {
+    (window as any).__dtfcSearchModalInit = true;
+
+    const attach = () => {
+      const modal = document.getElementById('dtfc-search-modal') as HTMLDialogElement | null;
+      const container = document.getElementById('dtfc-search-container');
+      const triggers = document.querySelectorAll<HTMLButtonElement>('[data-search-trigger]');
+      const closes = document.querySelectorAll<HTMLElement>('[data-search-close]');
+      if (!modal || !container) return;
+
+      let uiLoaded = false;
+
+      const loadUi = async () => {
+        if (uiLoaded) return;
+        uiLoaded = true;
+        try {
+          const { PagefindUI } = await import('@pagefind/default-ui');
+          new PagefindUI({
+            element: '#dtfc-search-container',
+            showSubResults: true,
+            pageSize: 10,
+          });
+        } catch {
+          container.innerHTML =
+            '<p class="text-ink-500 text-sm">Search index not available. Try again after the next deploy.</p>';
+        }
+      };
+
+      const openModal = async () => {
+        await loadUi();
+        if (typeof modal.showModal === 'function') {
+          modal.showModal();
+        } else {
+          modal.setAttribute('open', '');
+        }
+      };
+
+      const closeModal = () => {
+        if (typeof modal.close === 'function') {
+          modal.close();
+        } else {
+          modal.removeAttribute('open');
+        }
+      };
+
+      triggers.forEach((btn) => btn.addEventListener('click', openModal));
+      closes.forEach((btn) => btn.addEventListener('click', closeModal));
+
+      // Click backdrop to close (native <dialog> pattern)
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      // Keyboard shortcut: ⌘K on macOS, Ctrl+K elsewhere
+      document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+          e.preventDefault();
+          openModal();
+        }
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', attach);
+    } else {
+      attach();
+    }
+  }
+</script>

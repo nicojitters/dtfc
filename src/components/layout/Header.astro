@@ -1,6 +1,7 @@
 ---
 import Container from './Container.astro';
 import Nav from './Nav.astro';
+import SearchModal from '@/components/search/SearchModal.astro';
 import type { NavKey } from '@/lib/nav';
 interface Props {
   section?: NavKey;
@@ -15,21 +16,33 @@ const { section } = Astro.props;
       <span class="font-display text-xl">DT:FC</span>
     </a>
 
-    <button
-      type="button"
-      class="border-ivory-200 col-start-3 justify-self-end rounded border px-3 py-2 text-sm lg:hidden"
-      aria-expanded="false"
-      aria-controls="mobile-nav"
-      data-mobile-toggle
-    >
-      Menu
-    </button>
+    <div class="col-start-3 flex items-center gap-2 justify-self-end">
+      <button
+        type="button"
+        data-search-trigger
+        class="text-ink-700 hover:text-clay-500 rounded p-2"
+        aria-label="Search"
+        title="Search (⌘K)"
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+          <circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="2" fill="none" />
+          <path d="M14 14l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="border-ivory-200 rounded border px-3 py-2 text-sm lg:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        data-mobile-toggle
+      >
+        Menu
+      </button>
+    </div>
 
     <nav aria-label="Primary" class="col-start-2 hidden justify-self-center lg:block">
       <Nav section={section} />
     </nav>
-
-    <div class="hidden lg:block" aria-hidden="true"></div>
   </div>
 
   <div id="mobile-nav" hidden class="border-ivory-200 bg-ivory-50 border-t lg:hidden">
@@ -38,6 +51,8 @@ const { section } = Astro.props;
     </Container>
   </div>
 </header>
+
+<SearchModal />
 
 <script>
   const toggle = document.querySelector<HTMLButtonElement>('[data-mobile-toggle]');
