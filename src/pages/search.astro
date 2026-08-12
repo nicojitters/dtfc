@@ -1,0 +1,54 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/layout/Container.astro';
+import '@pagefind/default-ui/css/ui.css';
+---
+
+<BaseLayout
+  title="Search"
+  description="Search across all DT:FC games, plays, essays, and timeline entries."
+>
+  <Container class="mx-auto max-w-3xl py-14">
+    <p class="text-ink-500 text-sm uppercase tracking-widest">Search</p>
+    <h1 class="mt-2">Search DT:FC</h1>
+    <p class="text-ink-700 mt-4 text-base">
+      Find games by name, plays by title, essays by author, timeline events, or any word from the
+      site&rsquo;s prose. Use the search box in the header (or press <kbd>⌘K</kbd>) to open the
+      quick search modal from any page.
+    </p>
+
+    <div id="dtfc-search-page" class="mt-10" data-pagefind-ignore></div>
+  </Container>
+</BaseLayout>
+
+<script>
+  // Bundled by Astro/Vite so the dynamic import() resolves cleanly to a
+  // code-split chunk. SearchModal already loads PagefindUI via the same
+  // chunk when the user opens the modal — visiting /search/ separately
+  // hydrates its own container the same way.
+  if (!(window as any).__dtfcFullSearchInit) {
+    (window as any).__dtfcFullSearchInit = true;
+
+    const attach = async () => {
+      const container = document.getElementById('dtfc-search-page');
+      if (!container) return;
+      try {
+        const { PagefindUI } = await import('@pagefind/default-ui');
+        new PagefindUI({
+          element: '#dtfc-search-page',
+          showSubResults: true,
+          pageSize: 20,
+        });
+      } catch {
+        container.innerHTML =
+          '<p class="text-ink-500 text-sm">Search index not available. Try again after the next deploy.</p>';
+      }
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', attach);
+    } else {
+      attach();
+    }
+  }
+</script>

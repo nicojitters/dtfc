@@ -24,7 +24,7 @@ const ORG_INFO: OrgInfo[] = [
       type="button"
       data-org=""
       aria-pressed="true"
-      class="border-ink-500/30 aria-[pressed=true]:border-clay-500 aria-[pressed=true]:bg-clay-500 aria-[pressed=true]:text-ivory-50 text-ink-700 rounded-[var(--radius-chip)] border px-3 py-1 text-xs font-medium"
+      class="border-ink-500/30 aria-[pressed=true]:border-clay-500 aria-[pressed=true]:bg-clay-500 aria-[pressed=true]:text-ivory-50 text-ink-700 rounded-[var(--radius-chip)] border px-3 py-1 text-xs font-medium transition-colors motion-reduce:transition-none focus-visible:ring-2 focus-visible:ring-clay-500 focus-visible:ring-offset-2"
     >
       All
     </button>
@@ -34,7 +34,7 @@ const ORG_INFO: OrgInfo[] = [
           type="button"
           data-org={info.key}
           aria-pressed="false"
-          class="border-ink-500/30 aria-[pressed=true]:border-clay-500 aria-[pressed=true]:bg-clay-500 aria-[pressed=true]:text-ivory-50 text-ink-700 rounded-[var(--radius-chip)] border px-3 py-1 text-xs font-medium"
+          class="border-ink-500/30 aria-[pressed=true]:border-clay-500 aria-[pressed=true]:bg-clay-500 aria-[pressed=true]:text-ivory-50 text-ink-700 rounded-[var(--radius-chip)] border px-3 py-1 text-xs font-medium transition-colors motion-reduce:transition-none focus-visible:ring-2 focus-visible:ring-clay-500 focus-visible:ring-offset-2"
           style={`--org-color: var(${info.cssVar});`}
         >
           <span class="mr-2 inline-block h-3 w-3 rounded-full align-middle" style={`background: var(${info.cssVar});`} aria-hidden="true"></span>

@@ -1,6 +1,7 @@
 ---
 import CommunityLayout from '@/layouts/CommunityLayout.astro';
 import { formActionFor } from '@/lib/form-action';
+import { SITE_CONFIG } from '@/lib/site-config';
 
 const { action, fallbackMode } = formActionFor('newsletter');
 ---
@@ -13,7 +14,7 @@ const { action, fallbackMode } = formActionFor('newsletter');
 >
   {/* CLIENT REVIEW: membership tiers, pricing, and tax-deductibility model pending client decision per source spec §8. */}
   <p class="mb-6">
-    <span class="text-mustard-600 bg-mustard-200/40 rounded-[var(--radius-chip)] px-2 py-0.5 text-xs font-medium uppercase tracking-widest">
+    <span class="text-mustard-800 bg-mustard-200/40 rounded-[var(--radius-chip)] px-2 py-0.5 text-xs font-medium uppercase tracking-widest">
       Pre-release &mdash; membership details coming with our next content release
     </span>
   </p>
@@ -38,8 +39,8 @@ const { action, fallbackMode } = formActionFor('newsletter');
         <div class="border-mustard-400/40 bg-mustard-200/20 mt-4 rounded-[var(--radius-card)] border p-4">
           <p class="text-ink-700 text-sm">
             Interest form is not yet configured. Please email us at{' '}
-            <a href="mailto:hello@dtfc.example" class="hover:text-clay-500 underline">
-              hello@dtfc.example
+            <a href={`mailto:${SITE_CONFIG.fallbackContactEmail}`} class="hover:text-clay-500 underline">
+              {SITE_CONFIG.fallbackContactEmail}
             </a>{' '}
             to be added to the list.
           </p>
@@ -51,6 +52,7 @@ const { action, fallbackMode } = formActionFor('newsletter');
           method="POST"
           data-newsletter-form
           data-source="membership-interest"
+          data-fallback-email={SITE_CONFIG.fallbackContactEmail}
         >
           <label class="flex-1">
             <span class="text-ink-700 block text-sm font-medium">Your email</span>

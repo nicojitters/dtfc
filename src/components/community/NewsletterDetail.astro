@@ -13,10 +13,6 @@ const g = entry.data;
     <a href="/community/">Community</a> &middot; <a href="/community/newsletters/">Newsletters</a>
   </p>
 
-  <p class="text-ink-500 mt-3 text-xs uppercase tracking-widest">
-    Issue #{g.issueNumber} &middot; {g.publishDate}
-  </p>
-  <h1 class="mt-2" set:html={g.title} />
 
   {
     g.sample && (

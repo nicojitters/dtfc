@@ -1,0 +1,49 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/layout/Container.astro';
+import { NAV_ITEMS } from '@/lib/nav';
+---
+
+<BaseLayout title="Page not found" description="The page you&rsquo;re looking for doesn&rsquo;t exist on the DT:FC site.">
+  <Container class="mx-auto max-w-2xl py-20">
+    <p class="text-ink-500 text-sm uppercase tracking-widest">404</p>
+    <h1 class="mt-2">Page not found</h1>
+    <p class="text-ink-700 mt-4 text-base">
+      The page you&rsquo;re looking for doesn&rsquo;t exist — or it may have moved as the site
+      grows. Try one of these paths, or use the search box in the header.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a
+        href="/"
+        class="bg-clay-500 text-ivory-50 hover:bg-clay-700 focus-visible:ring-clay-500 rounded px-4 py-2 text-sm font-medium transition focus-visible:ring-2 focus-visible:ring-offset-2 no-underline"
+      >
+        Back to home
+      </a>
+      <a
+        href="/search/"
+        class="border-ink-500/30 text-ink-700 hover:border-clay-500 rounded border px-4 py-2 text-sm font-medium transition no-underline"
+      >
+        Search the site
+      </a>
+    </div>
+
+    <nav aria-label="Section directory" class="mt-14">
+      <h2 class="font-display text-2xl">Or jump to a section</h2>
+      <ul class="mt-6 grid list-none gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {
+          NAV_ITEMS.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="border-ivory-200 bg-ivory-50 hover:border-clay-500/60 block rounded-[var(--radius-card)] border p-4 no-underline"
+              >
+                <span class="font-display text-ink-900 text-lg">{item.label}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </Container>
+</BaseLayout>

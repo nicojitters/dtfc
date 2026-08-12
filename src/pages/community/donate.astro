@@ -1,5 +1,6 @@
 ---
 import CommunityLayout from '@/layouts/CommunityLayout.astro';
+import { SITE_CONFIG } from '@/lib/site-config';
 ---
 
 <CommunityLayout
@@ -10,7 +11,7 @@ import CommunityLayout from '@/layouts/CommunityLayout.astro';
 >
   {/* CLIENT REVIEW: Zeffy donation URL pending from client per source spec §5. Replace the mailto: CTA below with the real Zeffy link when it arrives. */}
   <p class="mb-6">
-    <span class="text-mustard-600 bg-mustard-200/40 rounded-[var(--radius-chip)] px-2 py-0.5 text-xs font-medium uppercase tracking-widest">
+    <span class="text-mustard-800 bg-mustard-200/40 rounded-[var(--radius-chip)] px-2 py-0.5 text-xs font-medium uppercase tracking-widest">
       Coming soon — secure donation form arriving with our next content release
     </span>
   </p>
@@ -29,7 +30,7 @@ import CommunityLayout from '@/layouts/CommunityLayout.astro';
 
     <p>
       <a
-        href="mailto:hello@dtfc.example?subject=DT%3AFC%20donation%20inquiry"
+        href={`mailto:${SITE_CONFIG.fallbackContactEmail}?subject=DT%3AFC%20donation%20inquiry`}
         class="bg-clay-500 text-ivory-50 hover:bg-clay-700 focus-visible:ring-clay-500 inline-block rounded px-5 py-2 text-base font-medium transition focus-visible:ring-2 focus-visible:ring-offset-2 no-underline"
       >
         Email us about donating →
