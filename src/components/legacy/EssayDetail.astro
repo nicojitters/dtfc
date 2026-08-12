@@ -13,8 +13,6 @@ const g = entry.data;
     <a href="/legacy/">Legacy</a> &middot; <a href="/legacy/essays/">Essays</a>
   </p>
 
-  <h1 class="mt-3" set:html={g.title}></h1>
-
   <p class="text-ink-500 mt-2 text-sm" set:html={`${g.author}${g.year ? ` · ${g.year}` : ''}${g.publishedIn ? ` · ${g.publishedIn}` : ''}`}></p>
 
   {
