@@ -1,55 +1,119 @@
 ---
-// Ask Shakespeare submission form. Submit is stubbed to a placeholder
-// handler (console.log with a TODO(esp) marker) matching the newsletter
-// signup pattern. Cycle 6 wires this to the chosen form provider.
-// TODO(esp): wire to real provider when the client picks one; see CLAUDE.md.
+import { formActionFor } from '@/lib/form-action';
+
+const { action, fallbackMode } = formActionFor('askShakespeare');
 ---
 
-<form
-  class="border-teal-600/25 bg-teal-600/5 rounded-[var(--radius-card)] border p-6"
-  data-ask-shakespeare
-  onsubmit="event.preventDefault(); console.log('[TODO(esp)] ask-shakespeare submit', Object.fromEntries(new FormData(event.target)));"
->
-  <h2 class="font-display text-ink-900 text-xl">Submit a question</h2>
-  <p class="text-ink-500 mt-1 text-sm">
-    Ask "Shakespeare" a question about a line, a character, a choice, or your own moment of stage fright.
-  </p>
+{/* CLIENT REVIEW: responses currently route to the Formspree dashboard; email destination pending client decision. */}
 
-  <div class="mt-4 grid gap-4 md:grid-cols-2">
-    <label class="flex flex-col gap-1">
-      <span class="text-ink-700 text-sm font-medium">Your name (optional)</span>
-      <input
-        type="text"
-        name="name"
-        autocomplete="name"
-        class="border-ink-500/30 focus:border-teal-600 focus:ring-teal-600 rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
-      />
-    </label>
-    <label class="flex flex-col gap-1">
-      <span class="text-ink-700 text-sm font-medium">Email (optional)</span>
-      <input
-        type="email"
-        name="email"
-        autocomplete="email"
-        class="border-ink-500/30 focus:border-teal-600 focus:ring-teal-600 rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
-      />
-    </label>
-  </div>
+{
+  fallbackMode ? (
+    <div class="border-mustard-400/40 bg-mustard-200/20 rounded-[var(--radius-card)] border p-6">
+      <h2 class="font-display text-ink-900 text-xl">Submit a question</h2>
+      <p class="text-ink-700 mt-2 text-sm">
+        This form is not yet configured. In the meantime, please email your question to{' '}
+        <a href="mailto:hello@dtfc.example" class="hover:text-clay-500 underline">
+          hello@dtfc.example
+        </a>{' '}
+        and we&rsquo;ll get back to you.
+      </p>
+    </div>
+  ) : (
+    <form
+      class="border-teal-600/25 bg-teal-600/5 rounded-[var(--radius-card)] border p-6"
+      action={action}
+      method="POST"
+      data-ask-shakespeare-form
+    >
+      <h2 class="font-display text-ink-900 text-xl">Submit a question</h2>
+      <p class="text-ink-500 mt-1 text-sm">
+        Ask &ldquo;Shakespeare&rdquo; a question about a line, a character, a choice, or your own
+        moment of stage fright.
+      </p>
 
-  <label class="mt-4 flex flex-col gap-1">
-    <span class="text-ink-700 text-sm font-medium">Your question</span>
-    <textarea
-      name="question"
-      required
-      rows="4"
-      class="border-ink-500/30 focus:border-teal-600 focus:ring-teal-600 rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
-    ></textarea>
-  </label>
+      <div class="mt-4 grid gap-4 md:grid-cols-2">
+        <label class="flex flex-col gap-1">
+          <span class="text-ink-700 text-sm font-medium">Your name (optional)</span>
+          <input
+            type="text"
+            name="name"
+            autocomplete="name"
+            class="border-ink-500/30 focus:border-teal-600 focus:ring-teal-600 rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
+          />
+        </label>
+        <label class="flex flex-col gap-1">
+          <span class="text-ink-700 text-sm font-medium">Email (optional)</span>
+          <input
+            type="email"
+            name="email"
+            autocomplete="email"
+            class="border-ink-500/30 focus:border-teal-600 focus:ring-teal-600 rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
+          />
+        </label>
+      </div>
 
-  <button
-    type="submit"
-    class="bg-clay-500 hover:bg-clay-700 text-ivory-50 focus-visible:ring-clay-500 mt-4 rounded px-4 py-2 text-sm font-medium transition focus-visible:ring-2 focus-visible:ring-offset-2"
-  >
-    Send to Shakespeare
-  </button>
-</form>
+      <label class="mt-4 flex flex-col gap-1">
+        <span class="text-ink-700 text-sm font-medium">Your question</span>
+        <textarea
+          name="question"
+          required
+          rows="4"
+          class="border-ink-500/30 focus:border-teal-600 focus:ring-teal-600 rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
+        />
+      </label>
+
+      <input type="hidden" name="_subject" value="Ask Shakespeare submission" />
+
+      <button
+        type="submit"
+        class="bg-clay-500 hover:bg-clay-700 text-ivory-50 focus-visible:ring-clay-500 mt-4 rounded px-4 py-2 text-sm font-medium transition focus-visible:ring-2 focus-visible:ring-offset-2"
+      >
+        Send to Shakespeare
+      </button>
+    </form>
+  )
+}
+
+<script is:inline>
+  (function initAskShakespeare() {
+    if (window.__dtfcAskShakespeareInit) return;
+    window.__dtfcAskShakespeareInit = true;
+    const attach = () => {
+      const forms = document.querySelectorAll('form[data-ask-shakespeare-form]');
+      forms.forEach((form) => {
+        form.addEventListener('submit', async (ev) => {
+          ev.preventDefault();
+          try {
+            const res = await fetch(form.action, {
+              method: 'POST',
+              body: new FormData(form),
+              headers: { Accept: 'application/json' },
+            });
+            if (res.ok) {
+              form.reset();
+              form.insertAdjacentHTML(
+                'afterend',
+                '<p role="status" class="mt-2 text-sm text-teal-600">Thanks &mdash; Shakespeare will consider your question.</p>',
+              );
+            } else {
+              form.insertAdjacentHTML(
+                'afterend',
+                '<p role="alert" class="mt-2 text-sm text-clay-700">Something went wrong. Please email us at <a href="mailto:hello@dtfc.example" class="underline">hello@dtfc.example</a>.</p>',
+              );
+            }
+          } catch {
+            form.insertAdjacentHTML(
+              'afterend',
+              '<p role="alert" class="mt-2 text-sm text-clay-700">Network error. Please email us at <a href="mailto:hello@dtfc.example" class="underline">hello@dtfc.example</a>.</p>',
+            );
+          }
+        });
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', attach);
+    } else {
+      attach();
+    }
+  })();
+</script>
