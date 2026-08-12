@@ -1,0 +1,14 @@
+---
+interface Props {
+  year?: number | string;
+}
+const { year } = Astro.props;
+const label = year ? `From the Archive · ${year}` : 'From the Archive';
+---
+
+<span
+  class="border-ink-500/40 text-ink-700 font-display inline-flex items-center rounded-[var(--radius-chip)] border bg-transparent px-3 py-1 text-xs italic"
+  aria-label={year ? `Archival document from ${year}` : 'Archival document'}
+>
+  {label}
+</span>

@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import EssayArchivalBadge from './EssayArchivalBadge.astro';
 
 interface Props {
   entry: CollectionEntry<'essays'>;
@@ -12,6 +13,14 @@ const g = entry.data;
   <p class="text-ink-500 text-sm">
     <a href="/legacy/">Legacy</a> &middot; <a href="/legacy/essays/">Essays</a>
   </p>
+
+  {
+    g.archival && (
+      <div class="mt-3">
+        <EssayArchivalBadge year={g.year} />
+      </div>
+    )
+  }
 
   <p class="text-ink-500 mt-2 text-sm" set:html={`${g.author}${g.year ? ` · ${g.year}` : ''}${g.publishedIn ? ` · ${g.publishedIn}` : ''}`}></p>
 
