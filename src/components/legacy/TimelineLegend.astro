@@ -49,34 +49,46 @@ const ORG_INFO: OrgInfo[] = [
   (function initTimelineFilter() {
     if (window.__dtfcTimelineInit) return;
     window.__dtfcTimelineInit = true;
-    const chipContainer = document.querySelector('[data-org-chips]');
-    const grid = document.querySelector('[data-timeline-grid]');
-    if (!chipContainer || !grid) return;
-    const chips = Array.from(chipContainer.querySelectorAll('button[data-org]'));
-    const items = Array.from(grid.querySelectorAll('li[data-event-org]'));
 
-    const applyFilter = (selected) => {
-      chips.forEach((c) => {
-        c.setAttribute('aria-pressed', c.getAttribute('data-org') === selected ? 'true' : 'false');
-      });
-      items.forEach((li) => {
-        const o = li.getAttribute('data-event-org') || '';
-        li.hidden = selected !== '' && o !== selected;
+    const tryInit = () => {
+      const chipContainer = document.querySelector('[data-org-chips]');
+      const grid = document.querySelector('[data-timeline-grid]');
+      if (!chipContainer || !grid) {
+        setTimeout(tryInit, 50);
+        return;
+      }
+      const chips = Array.from(chipContainer.querySelectorAll('button[data-org]'));
+      const items = Array.from(grid.querySelectorAll('li[data-event-org]'));
+
+      const applyFilter = (selected) => {
+        chips.forEach((c) => {
+          c.setAttribute('aria-pressed', c.getAttribute('data-org') === selected ? 'true' : 'false');
+        });
+        items.forEach((li) => {
+          const o = li.getAttribute('data-event-org') || '';
+          li.hidden = selected !== '' && o !== selected;
+        });
+      };
+
+      const initial = new URLSearchParams(window.location.search).get('org') || '';
+      applyFilter(initial);
+
+      chips.forEach((chip) => {
+        chip.addEventListener('click', () => {
+          const org = chip.getAttribute('data-org') || '';
+          applyFilter(org);
+          const url = new URL(window.location.href);
+          if (org) url.searchParams.set('org', org);
+          else url.searchParams.delete('org');
+          history.replaceState(null, '', url.toString());
+        });
       });
     };
 
-    const initial = new URLSearchParams(window.location.search).get('org') || '';
-    applyFilter(initial);
-
-    chips.forEach((chip) => {
-      chip.addEventListener('click', () => {
-        const org = chip.getAttribute('data-org') || '';
-        applyFilter(org);
-        const url = new URL(window.location.href);
-        if (org) url.searchParams.set('org', org);
-        else url.searchParams.delete('org');
-        history.replaceState(null, '', url.toString());
-      });
-    });
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', tryInit);
+    } else {
+      tryInit();
+    }
   })();
 </script>

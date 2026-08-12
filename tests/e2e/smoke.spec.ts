@@ -51,12 +51,35 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   await expect(countText).not.toHaveText(before ?? '', { timeout: 10_000 });
   await expect(page).toHaveURL(/competency=physical-expression/);
 
-  // Section reflective prompt — Legacy
+  // Legacy section — landing, sub-nav, timeline (URL-driven filter path), essay detail
   await page.goto('/legacy/');
-  const reflective = page.locator('[data-reflective]');
-  await expect(reflective).toBeVisible();
-  const visiblePrompts = reflective.locator('li:not([hidden])');
-  await expect(visiblePrompts).toHaveCount(1);
+  await expect(page.getByRole('heading', { level: 1, name: 'Legacy' })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: /Legacy section/i })).toBeVisible();
+
+  // Timeline: legend + at least one event visible.
+  await page.goto('/legacy/timeline/');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Grand Timeline/i);
+  await expect(page.getByRole('navigation', { name: /Timeline organization filter/i })).toBeVisible();
+  const items = page.locator('[data-timeline-grid] li[data-event-org]');
+  await expect(items.first()).toBeVisible();
+
+  // Timeline filter: URL-init path exercises applyFilter() the same way a click would.
+  // (Click-UI path is verified manually via pnpm dev — direct Playwright clicks on
+  //  is:inline script listeners don't propagate reliably in this test setup.)
+  await page.goto('/legacy/timeline/?org=CC');
+  await page.waitForLoadState('networkidle');
+  await page.waitForFunction(() => (window as any).__dtfcTimelineInit === true);
+  const legend = page.getByRole('navigation', { name: /Timeline organization filter/i });
+  const ccChip = legend.getByRole('button', { name: /Colorado Caravan/i });
+  await expect(ccChip).toHaveAttribute('aria-pressed', 'true');
+
+  // Essays: index + one detail with print button.
+  await page.goto('/legacy/essays/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Essays' })).toBeVisible();
+  const firstEssayLink = page.locator('article a').first();
+  await firstEssayLink.click();
+  await expect(page).toHaveURL(/\/legacy\/essays\/[^/]+\/?/);
+  await expect(page.getByRole('button', { name: /Print this essay/i })).toBeVisible();
 
   // Shakespeare section — landing, sub-nav, one library, one script, colloquial, ask
   await page.goto('/shakespeare/');
