@@ -1,0 +1,140 @@
+---
+import { formActionFor } from '@/lib/form-action';
+
+const { action, fallbackMode } = formActionFor('testimonial');
+---
+
+{
+  fallbackMode ? (
+    <div class="border-mustard-400/40 bg-mustard-200/20 rounded-[var(--radius-card)] border p-6">
+      <h2 class="font-display text-ink-900 text-xl">Share your story</h2>
+      <p class="text-ink-700 mt-2 text-sm">
+        This form is not yet configured. In the meantime, please email your testimonial to{' '}
+        <a href="mailto:hello@dtfc.example" class="hover:text-clay-500 underline">
+          hello@dtfc.example
+        </a>{' '}
+        and we&rsquo;ll add it to the site.
+      </p>
+    </div>
+  ) : (
+    <form
+      class="border-teal-600/25 bg-teal-600/5 rounded-[var(--radius-card)] border p-6"
+      action={action}
+      method="POST"
+      data-testimonial-form
+    >
+      <h2 class="font-display text-ink-900 text-xl">Share your story</h2>
+      <p class="text-ink-500 mt-1 text-sm">
+        Tell us how DT:FC has shaped your work, your Players, or your creative life. With your
+        permission we may share it here.
+      </p>
+
+      <div class="mt-4 grid gap-4 md:grid-cols-2">
+        <label class="flex flex-col gap-1">
+          <span class="text-ink-700 text-sm font-medium">Your name</span>
+          <input
+            type="text"
+            name="attribution"
+            required
+            autocomplete="name"
+            class="border-ink-500/30 focus:border-teal-600 focus:ring-teal-600 rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
+          />
+        </label>
+        <label class="flex flex-col gap-1">
+          <span class="text-ink-700 text-sm font-medium">Your role (optional)</span>
+          <input
+            type="text"
+            name="role"
+            placeholder="Facilitator, Player, parent, &hellip;"
+            class="border-ink-500/30 focus:border-teal-600 focus:ring-teal-600 rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
+          />
+        </label>
+      </div>
+
+      <div class="mt-4 grid gap-4 md:grid-cols-2">
+        <label class="flex flex-col gap-1">
+          <span class="text-ink-700 text-sm font-medium">Your location (optional)</span>
+          <input
+            type="text"
+            name="location"
+            placeholder="City, State"
+            class="border-ink-500/30 focus:border-teal-600 focus:ring-teal-600 rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
+          />
+        </label>
+        <label class="flex flex-col gap-1">
+          <span class="text-ink-700 text-sm font-medium">Your email (optional)</span>
+          <input
+            type="email"
+            name="email"
+            autocomplete="email"
+            class="border-ink-500/30 focus:border-teal-600 focus:ring-teal-600 rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
+          />
+        </label>
+      </div>
+
+      <label class="mt-4 flex flex-col gap-1">
+        <span class="text-ink-700 text-sm font-medium">Your story</span>
+        <textarea
+          name="body"
+          required
+          minlength="40"
+          rows="5"
+          class="border-ink-500/30 focus:border-teal-600 focus:ring-teal-600 rounded border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
+        />
+      </label>
+
+      <input type="hidden" name="_subject" value="DT:FC testimonial submission" />
+
+      <button
+        type="submit"
+        class="bg-clay-500 hover:bg-clay-700 text-ivory-50 focus-visible:ring-clay-500 mt-4 rounded px-4 py-2 text-sm font-medium transition focus-visible:ring-2 focus-visible:ring-offset-2"
+      >
+        Share your story
+      </button>
+    </form>
+  )
+}
+
+<script is:inline>
+  (function initTestimonialForm() {
+    if (window.__dtfcTestimonialInit) return;
+    window.__dtfcTestimonialInit = true;
+    const attach = () => {
+      const forms = document.querySelectorAll('form[data-testimonial-form]');
+      forms.forEach((form) => {
+        form.addEventListener('submit', async (ev) => {
+          ev.preventDefault();
+          try {
+            const res = await fetch(form.action, {
+              method: 'POST',
+              body: new FormData(form),
+              headers: { Accept: 'application/json' },
+            });
+            if (res.ok) {
+              form.reset();
+              form.insertAdjacentHTML(
+                'afterend',
+                '<p role="status" class="mt-2 text-sm text-teal-600">Thanks &mdash; we&rsquo;ll be in touch before publishing.</p>',
+              );
+            } else {
+              form.insertAdjacentHTML(
+                'afterend',
+                '<p role="alert" class="mt-2 text-sm text-clay-700">Something went wrong. Please email us at <a href="mailto:hello@dtfc.example" class="underline">hello@dtfc.example</a>.</p>',
+              );
+            }
+          } catch {
+            form.insertAdjacentHTML(
+              'afterend',
+              '<p role="alert" class="mt-2 text-sm text-clay-700">Network error. Please email us at <a href="mailto:hello@dtfc.example" class="underline">hello@dtfc.example</a>.</p>',
+            );
+          }
+        });
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', attach);
+    } else {
+      attach();
+    }
+  })();
+</script>
