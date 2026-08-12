@@ -3,14 +3,22 @@ import '@/styles/global.css';
 import Header from '@/components/layout/Header.astro';
 import Footer from '@/components/layout/Footer.astro';
 import SkipLink from '@/components/layout/SkipLink.astro';
+import { SITE_CONFIG } from '@/lib/site-config';
 import type { NavKey } from '@/lib/nav';
 
 interface Props {
   title: string;
   description?: string;
   section?: NavKey;
+  ogImage?: string;
+  canonical?: string;
 }
-const { title, description, section } = Astro.props;
+const { title, description, section, ogImage, canonical } = Astro.props;
+
+const resolvedCanonical = canonical ?? Astro.url.href;
+const resolvedOgImage = ogImage ?? SITE_CONFIG.ogDefaults.image;
+const resolvedOgTitle = `${title} — DT:FC`;
+const resolvedDescription = description ?? '';
 ---
 
 <!doctype html>
@@ -18,8 +26,24 @@ const { title, description, section } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title} — DT:FC</title>
+    <title>{resolvedOgTitle}</title>
     {description && <meta name="description" content={description} />}
+
+    <link rel="canonical" href={resolvedCanonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={resolvedOgTitle} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={resolvedCanonical} />
+    <meta property="og:image" content={new URL(resolvedOgImage, SITE_CONFIG.canonicalHost).href} />
+    <meta property="og:image:alt" content={SITE_CONFIG.ogDefaults.imageAlt} />
+    <meta property="og:image:width" content={String(SITE_CONFIG.ogDefaults.imageWidth)} />
+    <meta property="og:image:height" content={String(SITE_CONFIG.ogDefaults.imageHeight)} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={resolvedOgTitle} />
+    {description && <meta name="twitter:description" content={description} />}
+    <meta name="twitter:image" content={new URL(resolvedOgImage, SITE_CONFIG.canonicalHost).href} />
   </head>
   <body class="bg-ivory-50 text-ink-900 min-h-screen">
     <SkipLink />
