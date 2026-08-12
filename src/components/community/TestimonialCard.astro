@@ -1,0 +1,30 @@
+---
+import type { Testimonial } from '@/data/testimonials';
+
+interface Props {
+  testimonial: Testimonial;
+}
+const { testimonial } = Astro.props;
+
+const attributionLine = [testimonial.attribution, testimonial.role, testimonial.location]
+  .filter(Boolean)
+  .join(' &middot; ');
+---
+
+<article class="border-ivory-200 bg-ivory-50 rounded-[var(--radius-card)] border p-5">
+  <blockquote class="text-ink-700 text-base leading-relaxed">
+    <span aria-hidden="true" class="font-display text-clay-500 text-2xl leading-none">&ldquo;</span>
+    <span set:html={testimonial.body} />
+    <span aria-hidden="true" class="font-display text-clay-500 text-2xl leading-none">&rdquo;</span>
+  </blockquote>
+  <p class="text-ink-500 mt-3 text-sm" set:html={`&mdash; ${attributionLine}`} />
+  {
+    testimonial.sample && (
+      <div class="mt-3">
+        <span class="bg-ivory-200 text-ink-500 rounded-[var(--radius-chip)] px-2 py-0.5 text-xs font-medium">
+          Sample
+        </span>
+      </div>
+    )
+  }
+</article>
