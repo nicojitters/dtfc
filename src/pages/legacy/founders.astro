@@ -1,0 +1,29 @@
+---
+import LegacyLayout from '@/layouts/LegacyLayout.astro';
+import FounderCard from '@/components/legacy/FounderCard.astro';
+import { FOUNDERS } from '@/data/founders';
+---
+
+<LegacyLayout
+  title="Founders"
+  subPage="founders"
+  eyebrow="The people who built the Legacy"
+  description="Nine founders and contributing faculty whose work shaped Developmental Theatre."
+>
+  <div class="max-w-2xl">
+    <p class="text-ink-700 text-base">
+      Developmental Theatre was invented at the University of Colorado in the 1970s. Below are the
+      four founders and the five contributing faculty whose work carried the practice into its
+      next generation. For the full lineage, see
+      <a href="/legacy/history/" class="hover:text-clay-500">the one-page history &rarr;</a>
+    </p>
+  </div>
+
+  <ul class="mt-10 grid list-none gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {FOUNDERS.map((f) => (
+      <li>
+        <FounderCard founder={f} />
+      </li>
+    ))}
+  </ul>
+</LegacyLayout>
