@@ -1,0 +1,33 @@
+---
+import { getCollection, render } from 'astro:content';
+import ChildrensLayout from '@/layouts/ChildrensLayout.astro';
+import ScriptDetail from '@/components/scripts/ScriptDetail.astro';
+
+export async function getStaticPaths() {
+  const CHILDRENS_LIBRARIES = new Set(['childrens-plays', 'teaching-modules']);
+  const entries = await getCollection('scripts');
+  return entries
+    .filter((entry) => CHILDRENS_LIBRARIES.has(entry.data.library))
+    .map((entry) => ({
+      params: { slug: entry.id.replace(/\.mdx?$/, '') },
+      props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+// Map library to sub-nav key so the primary sub-nav highlights correctly
+const subPage = entry.data.library === 'teaching-modules' ? 'teaching-modules' : 'plays';
+---
+
+<ChildrensLayout
+  title={entry.data.title}
+  subPage={subPage}
+  eyebrow={entry.data.play}
+  description={entry.data.title}
+>
+  <ScriptDetail entry={entry}>
+    <Content />
+  </ScriptDetail>
+</ChildrensLayout>
