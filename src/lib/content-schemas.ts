@@ -112,6 +112,8 @@ export const timelineEventSchema = z.object({
   organization: z.enum(TIMELINE_ORGS),
 });
 
+export type TimelineEvent = z.infer<typeof timelineEventSchema>;
+
 export const timelineSchema = z.array(timelineEventSchema);
 
 export const essaysSchema = z.object({
