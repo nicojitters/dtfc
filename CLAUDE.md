@@ -13,6 +13,7 @@
 - MDX-with-components pattern is used for Colloquial pairings — `<SideBySide>` / `<Original>` / `<Colloquial>` (see `src/components/shakespeare/`).
 - Preact for the single interactive island (Game Finder)
 - Native Popover API for the Concept popovers (no framework)
+- **Legacy content model:** `essays` MDX collection + `FOUNDERS` structured data file (`src/data/founders.ts`) + `timeline.json` (`src/data/timeline.json`) driven by a validating loader (`src/lib/timeline.ts`).
 - pnpm; Vitest for unit tests; Playwright for one smoke test
 
 ## Key conventions
@@ -69,11 +70,25 @@ audio is provided, place the file at `/public/audio/<filename>.mp4` and set
 component and the Vitest existence test both prepend `/audio/`). Body uses
 `<SideBySide>` blocks with alternating `<Original>` / `<Colloquial>` children.
 
+**Adding an essay.** Drop `src/content/essays/<slug>.mdx` with `title`, `author`, `year?`, `publishedIn?`, `excerpt` (≤ 200 chars), `sample: false`. Body sections `## About this essay` / `## Full text`. Use `&rsquo;` for apostrophes.
+
+**Adding a founder.** Append to `FOUNDERS` in `src/data/founders.ts` with a unique kebab-case `slug`, `name`, `role`, `shortBio` (2–4 sentences using `'` unicode escapes for possessives). Optional: `years`, `photoSrc` (path under `/public/images/legacy/founders/`), `unconfirmed: true` for pending confirmations.
+
+**Adding a timeline event.** Append to `src/data/timeline.json` with `date`, `event`, `organization` (one of `TIMELINE_ORGS`). Optional: `participants`, `presentation`, `additionalInfo`.
+
 **Design tokens.** All colors, fonts, and spacing come from `src/styles/tokens.css`. Do not hardcode hex codes in components. The unlisted `/styles-preview` page is the design-system reference (share the URL with Desirae).
 
 **Landing page data.** All landing-page copy — Community center text, section tiles, reflective banks, and the Idea Two answer map — lives in `src/data/landing.ts`, Zod-validated at import. The single line `export const LANDING_MODE: BoxMode = 'hybrid'` toggles every section tile's render mode (`list` | `questions` | `hybrid`). Per-box overrides go on the tile's `mode` field.
 
 **Component directories.** Landing components live under `src/components/landing/`; the shared reflective prompt component lives under `src/components/section/`. Script card, detail, and library-index components (refactored in Cycle 4) live under `src/components/scripts/`. Children's Theatre–specific components (Wayfarer's Journey Wheel, play cards) live under `src/components/childrens/`.
+
+**Legacy sub-nav** (`src/lib/legacy-nav.ts`) drives the persistent sub-nav rendered by `src/layouts/LegacyLayout.astro` on every `/legacy/*` page. 5 items: History / Founders / Timeline / Essays / Honoring Our Guides.
+
+**Timeline data model.** Events live at `src/data/timeline.json` as a flat array. Validated by `timelineSchema` at import (`src/lib/timeline.ts` throws on drift). Grouped by decade via `groupByDecade()`. Organization enum `TIMELINE_ORGS` has 6 values (ALL / CC / C&C / CSF / TEF / OSC), each with a `--color-timeline-*` CSS variable in tokens.css.
+
+**Founder photos** live at `/public/images/legacy/founders/<slug>.<ext>` (ASCII kebab-case). FounderCard renders a placeholder circle with initials when `photoSrc` is unset.
+
+**Curly-apostrophe guardrail.** `scripts/check-prohibited-text.mjs` detects straight U+0027 apostrophes between word characters across `.astro` / `.mdx` / `.md` files. Runs in `pnpm build`. Whitelist: Cycle 3 Shakespeare verse files (juliet, lady-macbeth, mechanicals) where straight apostrophes are standard modernized editorial practice. To add a legitimate straight-apostrophe file to the whitelist, edit `CURLY_APOSTROPHE_ALLOWLIST` in the script.
 
 ## Commands
 
@@ -94,6 +109,10 @@ component and the Vitest existence test both prepend `/audio/`). Body uses
 - Placeholder icons in `public/icons/` — replace when Desirae delivers.
 - `public/DTFC-logo.png` — placeholder; replace with client asset.
 - `pairChildren` helper removed in Cycle 4 (was unused; SideBySideText composition works via CSS grid auto-flow).
+- Web 2.0 careers/successor-theatres slot in Legacy — Cycle N per spec §5.
+- Timeline canonical version pending Steve Smith (spec §8 item 3) — pre-release chip on `/legacy/timeline/`.
+- Workshop Manual TEXT MISSING (spec §8 item 2) — essay ships as sample: true placeholder.
+- Judith Bock unconfirmed founder (spec §4.5 item 4) — card renders with unconfirmed chip.
 
 ## Blockers for future cycles
 
