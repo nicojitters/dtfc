@@ -100,3 +100,25 @@ export const colloquialSchema = z.object({
   sourcePlay: z.string(),
   sample: z.boolean().default(false),
 });
+
+export const TIMELINE_ORGS = ['ALL', 'CC', 'C&C', 'CSF', 'TEF', 'OSC'] as const;
+
+export const timelineEventSchema = z.object({
+  date: z.string(),
+  event: z.string(),
+  participants: z.string().optional(),
+  presentation: z.string().optional(),
+  additionalInfo: z.string().optional(),
+  organization: z.enum(TIMELINE_ORGS),
+});
+
+export const timelineSchema = z.array(timelineEventSchema);
+
+export const essaysSchema = z.object({
+  title: z.string(),
+  author: z.string(),
+  year: z.number().int().positive().optional(),
+  publishedIn: z.string().optional(),
+  excerpt: z.string().max(200),
+  sample: z.boolean().default(false),
+});

@@ -18,6 +18,7 @@ import {
   scriptsSchema,
   askShakespeareSchema,
   colloquialSchema,
+  essaysSchema,
 } from '@/lib/content-schemas';
 
 interface CollectionEntry<T = any> {
@@ -56,6 +57,9 @@ async function loadCollection(name: string): Promise<CollectionEntry[]> {
       break;
     case 'colloquial':
       schema = colloquialSchema;
+      break;
+    case 'essays':
+      schema = essaysSchema;
       break;
     default:
       throw new Error(`Unknown collection: ${name}`);

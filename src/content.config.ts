@@ -6,6 +6,7 @@ import {
   scriptsSchema,
   askShakespeareSchema,
   colloquialSchema,
+  essaysSchema,
 } from '@/lib/content-schemas';
 
 const games = defineCollection({
@@ -33,4 +34,9 @@ const colloquial = defineCollection({
   schema: colloquialSchema,
 });
 
-export const collections = { games, concepts, scripts, askShakespeare, colloquial };
+const essays = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/essays' }),
+  schema: essaysSchema,
+});
+
+export const collections = { games, concepts, scripts, askShakespeare, colloquial, essays };
