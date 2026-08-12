@@ -19,6 +19,14 @@
   --color-ivory-100: #f4ecdd;
   --color-ivory-200: #e9dfc9;
 
+  /* Timeline organization colors (Cycle 5 §4.5) */
+  --color-timeline-all: #f7f3ea;
+  --color-timeline-cc: #4a6ea9;
+  --color-timeline-cnc: #7a4a9a;
+  --color-timeline-csf: #d97a2d;
+  --color-timeline-tef: #4a8a5a;
+  --color-timeline-osc: #7a5a3a;
+
   --color-ink-900: #1b1b1b;
   --color-ink-700: #3a3733;
   --color-ink-500: #5c544a;
