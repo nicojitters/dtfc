@@ -25,7 +25,9 @@ const ORG_TO_CSS_VAR: Record<string, string> = {
     <ol class="mt-8 space-y-10" data-timeline-grid>
       {groups.map((group) => (
         <li>
-          <h2 class="text-ink-900 font-display text-2xl">{group.decade}s</h2>
+          <h2 class="text-ink-900 font-display text-2xl">
+            {group.decade === null ? 'Undated / Approximate' : `${group.decade}s`}
+          </h2>
           <ul class="border-ink-500/20 mt-4 space-y-4 border-l-2 pl-6">
             {group.events.map((e) => (
               <li
@@ -50,3 +52,12 @@ const ORG_TO_CSS_VAR: Record<string, string> = {
     </ol>
   )
 }
+
+<footer class="border-ivory-200 mt-12 border-t pt-6">
+  <p class="text-ink-700 text-sm">
+    About the people who appear in this timeline &mdash;{' '}
+    <a href="/legacy/founders/" class="hover:text-clay-500">
+      meet the founders and contributors &rarr;
+    </a>
+  </p>
+</footer>
