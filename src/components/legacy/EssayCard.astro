@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'essays'>;
+}
+const { entry } = Astro.props;
+const slug = entry.id.replace(/\.mdx?$/, '');
+const href = `/legacy/essays/${slug}/`;
+---
+
+<article class="border-ivory-200 bg-ivory-50 hover:border-clay-500/60 rounded-[var(--radius-card)] border p-5 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]">
+  <h3 class="font-display text-ink-900 text-xl">
+    <a href={href} class="hover:text-clay-500 no-underline" set:html={entry.data.title}></a>
+  </h3>
+  <p class="text-ink-500 mt-1 text-sm" set:html={`${entry.data.author}${entry.data.year ? ` · ${entry.data.year}` : ''}`}></p>
+  {entry.data.publishedIn && <p class="text-ink-500 text-xs" set:html={entry.data.publishedIn}></p>}
+  <p class="text-ink-700 mt-3 text-sm" set:html={entry.data.excerpt}></p>
+  {
+    entry.data.sample && (
+      <div class="mt-3">
+        <span class="bg-ivory-200 text-ink-500 rounded-[var(--radius-chip)] px-2 py-0.5 text-xs font-medium">
+          Sample &mdash; pending final import
+        </span>
+      </div>
+    )
+  }
+</article>
