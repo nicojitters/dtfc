@@ -37,6 +37,68 @@ export const PATTERNS = [
     regex: /\bTHIS\s+\(crazy\)\s+time\b/gi,
     reason: 'Explicitly rejected by Pua',
   },
+  // Legacy vision spec §6 — editorial working notes that must not ship.
+  // See /Users/cnote/Downloads/dtfc-legacy-vision-spec.md §6 for source.
+  {
+    phrase: 'Lola: I think the customers',
+    regex: /Lola: I think the customers/g,
+    reason: 'Legacy §6: audience analysis editorial note from Doc #2',
+  },
+  {
+    phrase: 'Desirae is considering',
+    regex: /Desirae is considering/gi,
+    reason: 'Legacy §6: designer working note',
+  },
+  {
+    phrase: 'record them here',
+    regex: /record them here/gi,
+    reason: 'Legacy §6: working-note phrase from Doc #2',
+  },
+  {
+    phrase: 'Steve Smith needs to confirm',
+    regex: /Steve Smith needs to confirm/gi,
+    reason: 'Legacy §6: timeline blocker note from Doc #1',
+  },
+  {
+    phrase: '(pic?)',
+    regex: /\(pic\?\)/gi,
+    reason: 'Legacy §6: photo request marker from Doc #4',
+  },
+  {
+    phrase: 'For Bud Coleman',
+    regex: /For Bud Coleman/gi,
+    reason: 'Legacy §6: research abstract working header from Doc #10',
+  },
+  {
+    phrase: 'VERSION #2',
+    regex: /VERSION #2/gi,
+    reason: 'Legacy §6: draft version marker from Doc #10',
+  },
+  {
+    phrase: 'JPJ notes',
+    regex: /JPJ notes/gi,
+    reason: 'Legacy §6: draft version marker from Doc #10',
+  },
+  {
+    phrase: "I WASN'T THERE",
+    regex: /I WASN'T THERE/g,
+    reason: 'Legacy §6: Doc #11 collaborator-question marker',
+  },
+  {
+    phrase: 'TEXT MISSING',
+    regex: /TEXT MISSING/g,
+    reason: 'Legacy §6: missing-content marker (rephrase to "text pending" or similar)',
+  },
+  {
+    phrase: 'LOLA CC ARTICLE',
+    regex: /LOLA CC ARTICLE/g,
+    reason: 'Legacy §6: content-list working note from Doc #1',
+  },
+  {
+    phrase: 'raw google.com/search URL',
+    regex: /google\.com\/search\?/gi,
+    reason: 'Legacy §6: raw Google-search URL (replace with a clean reference link)',
+  },
 ];
 
 /**
