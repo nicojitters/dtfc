@@ -9,6 +9,7 @@
 - Astro 5, Tailwind CSS v4 (`@theme` in `src/styles/tokens.css`, no `tailwind.config.js`)
 - TypeScript strict; path alias `@/*` → `src/*`
 - MDX for game / concept bodies via content collections + Zod schemas (`src/content.config.ts`)
+- Children's Theatre scripts extend the shared `scripts` collection (Cycle 4) with two additional library enum values and six optional frontmatter fields.
 - MDX-with-components pattern is used for Colloquial pairings — `<SideBySide>` / `<Original>` / `<Colloquial>` (see `src/components/shakespeare/`).
 - Preact for the single interactive island (Game Finder)
 - Native Popover API for the Concept popovers (no framework)
@@ -46,7 +47,17 @@ create the route.
 `library` set to one of the five values. Themes entries must also set `theme`.
 Body sections `## Production Notes` / `## Script` / `## Facilitator Notes`.
 
+**Children's Theatre content.** `scripts` collection library enum now includes `childrens-plays` and `teaching-modules`. Six optional frontmatter fields are Children's-Theatre-scoped: `sourceMaterials`, `authorIntentions`, `whatToWatch`, `imagery` (array of `{src, alt, credit?}`), `aiPrompt` (for AI-cowritten plays like The Treasure Inside), `series` (grouping for chip filter — e.g., "Aesop's Fables", "Conquering the Sun"). Shakespeare entries leave these undefined and render unchanged.
+
+**Imagery files** live at `/public/images/childrens-theatre/<slug>/` with ASCII kebab-case filenames. Frontmatter `imagery[i].src` is the full path starting with `/images/`.
+
+**Children's Theatre sub-nav** (`src/lib/childrens-nav.ts`) drives the persistent sub-nav rendered by `src/layouts/ChildrensLayout.astro` on every `/childrens-theatre/*` page.
+
+**`scriptHref` helper** (`src/lib/script-href.ts`) is the canonical source of truth for a script entry's detail URL — routes Shakespeare libraries to `/shakespeare/scripts/`, Children's Theatre libraries to `/childrens-theatre/scripts/`. Always import; never hardcode.
+
 **Adding a game.** Drop `src/content/games/<slug>.mdx` with the frontmatter in `src/content.config.ts`. Body has H2s for `## Preparation`, `## Facilitation`, `## Evaluation`. Set `sample: true` for placeholders; `false` for real client content.
+
+**Adding a children's play.** Drop `src/content/scripts/<slug>.mdx` with `library` set to `childrens-plays` (or `teaching-modules`). Optional frontmatter: `series` for grouping (Aesop's Fables / Conquering the Sun); `sourceMaterials`, `authorIntentions`, `whatToWatch` for facilitator metadata; `imagery` array for children's drawings (each item needs `src` and `alt`). Body sections `## Production Notes` / `## Script` / `## Facilitator Notes`.
 
 **Adding an Ask Shakespeare column.** Drop `src/content/ask-shakespeare/<slug>.mdx`
 with a unique `columnNumber` and an `excerpt` ≤ 200 chars. Body sections
@@ -62,7 +73,7 @@ component and the Vitest existence test both prepend `/audio/`). Body uses
 
 **Landing page data.** All landing-page copy — Community center text, section tiles, reflective banks, and the Idea Two answer map — lives in `src/data/landing.ts`, Zod-validated at import. The single line `export const LANDING_MODE: BoxMode = 'hybrid'` toggles every section tile's render mode (`list` | `questions` | `hybrid`). Per-box overrides go on the tile's `mode` field.
 
-**Component directories.** Landing components live under `src/components/landing/`; the shared reflective prompt component lives under `src/components/section/`.
+**Component directories.** Landing components live under `src/components/landing/`; the shared reflective prompt component lives under `src/components/section/`. Script card, detail, and library-index components (refactored in Cycle 4) live under `src/components/scripts/`. Children's Theatre–specific components (Wayfarer's Journey Wheel, play cards) live under `src/components/childrens/`.
 
 ## Commands
 
@@ -82,6 +93,7 @@ component and the Vitest existence test both prepend `/audio/`). Body uses
 - Donate link in `src/components/layout/Footer.astro` — currently points to `/community/`; replace with Zeffy URL when client provides.
 - Placeholder icons in `public/icons/` — replace when Desirae delivers.
 - `public/DTFC-logo.png` — placeholder; replace with client asset.
+- `pairChildren` helper removed in Cycle 4 (was unused; SideBySideText composition works via CSS grid auto-flow).
 
 ## Blockers for future cycles
 

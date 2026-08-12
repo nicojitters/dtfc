@@ -1,0 +1,144 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Chip from '@/components/ui/Chip.astro';
+import PlayImagery from './PlayImagery.astro';
+
+interface Props {
+  entry: CollectionEntry<'scripts'>;
+}
+const { entry } = Astro.props;
+const g = entry.data;
+
+const LIBRARY_LABELS: Record<typeof g.library, string> = {
+  soliloquies: 'Soliloquies & Solo Speeches',
+  scenes: 'Scenes',
+  themes: 'Scenes Around a Theme',
+  cuttings: 'Cuttings',
+  'childrens-shakespeare': "Children’s Shakespeare",
+  'childrens-plays': "Children’s Plays",
+  'teaching-modules': 'Teaching Modules',
+};
+
+const CHILDRENS_LIBRARIES = new Set(['childrens-plays', 'teaching-modules', 'childrens-shakespeare']);
+const isChildrens = CHILDRENS_LIBRARIES.has(g.library);
+const librarySectionHref = isChildrens
+  ? g.library === 'childrens-shakespeare'
+    ? '/shakespeare/childrens-shakespeare/'
+    : g.library === 'teaching-modules'
+      ? '/childrens-theatre/teaching-modules/'
+      : '/childrens-theatre/plays/'
+  : `/shakespeare/${g.library}/`;
+const sectionHomeHref = isChildrens ? '/childrens-theatre/' : '/shakespeare/';
+const sectionHomeLabel = isChildrens ? "Children’s Theatre" : 'Shakespeare';
+---
+
+<article class="mx-auto max-w-3xl">
+  <p class="text-ink-500 text-sm">
+    <a href={sectionHomeHref}>{sectionHomeLabel}</a> ·
+    <a href={librarySectionHref}>{LIBRARY_LABELS[g.library]}</a>
+  </p>
+
+  <div class="mt-4 flex flex-wrap items-center gap-2">
+    <Chip tone="clay">{LIBRARY_LABELS[g.library]}</Chip>
+    <Chip tone="teal">{g.play}</Chip>
+    {g.minutes && <Chip tone="mustard">{g.minutes} min</Chip>}
+    {g.theme && <Chip tone="clay">{g.theme}</Chip>}
+    {g.series && <Chip tone="teal">{g.series}</Chip>}
+    {g.sample && <Chip tone="neutral">Sample — pending final import</Chip>}
+  </div>
+
+  <h1 class="mt-3">{g.title}</h1>
+
+  {
+    g.authors.length > 0 && (
+      <p class="text-ink-500 mt-2 text-sm">Adapters: {g.authors.join(', ')}</p>
+    )
+  }
+  {g.copyright && <p class="text-ink-500 mt-1 text-sm">{g.copyright}</p>}
+
+  {
+    g.characters.length > 0 && (
+      <section class="mt-6">
+        <h2 class="text-lg">Characters</h2>
+        <ul class="text-ink-700 mt-2 list-disc pl-6 text-sm">
+          {g.characters.map((c) => (
+            <li>
+              <strong>{c.name}</strong>
+              {c.description && <span> — {c.description}</span>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {g.doubling && <p class="text-ink-700 mt-4 text-sm"><strong>Doubling:</strong> {g.doubling}</p>}
+  {g.stagingNotes && <p class="text-ink-700 mt-2 text-sm"><strong>Staging:</strong> {g.stagingNotes}</p>}
+
+  <div class="mt-4" data-print-hide>
+    <button
+      type="button"
+      onclick="window.print()"
+      class="border-ink-900 rounded border px-3 py-1.5 text-sm"
+    >
+      Print this script
+    </button>
+  </div>
+
+  <div class="prose prose-neutral mt-8 max-w-none">
+    <slot />
+  </div>
+
+  {
+    g.sourceMaterials && (
+      <section class="mt-10">
+        <h2>Source Materials</h2>
+        <p class="text-ink-700 mt-2">{g.sourceMaterials}</p>
+      </section>
+    )
+  }
+
+  {
+    g.authorIntentions && (
+      <section class="mt-8">
+        <h2>Author&rsquo;s Intentions</h2>
+        <p class="text-ink-700 mt-2">{g.authorIntentions}</p>
+      </section>
+    )
+  }
+
+  {
+    g.whatToWatch && (
+      <section class="mt-8">
+        <h2>What to Watch</h2>
+        <p class="text-ink-700 mt-2">{g.whatToWatch}</p>
+      </section>
+    )
+  }
+
+  {
+    g.imagery && g.imagery.length > 0 && (
+      <section class="mt-10">
+        <h2>Imagery</h2>
+        <div class="imagery-grid mt-4 grid gap-4 sm:grid-cols-2">
+          {g.imagery.map((img) => (
+            <PlayImagery src={img.src} alt={img.alt} credit={img.credit} />
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  {
+    g.aiPrompt && (
+      <section class="mt-10">
+        <h2>The Prompt Used</h2>
+        <p class="text-ink-700 mt-2">
+          This play was co-written with Claude AI. Below is the prompt used, as a model for
+          teachers wanting to try the same approach.
+        </p>
+        <pre class="bg-ivory-100 mt-4 overflow-x-auto rounded-[var(--radius-card)] p-4 text-sm leading-relaxed whitespace-pre-wrap">{g.aiPrompt}</pre>
+      </section>
+    )
+  }
+</article>

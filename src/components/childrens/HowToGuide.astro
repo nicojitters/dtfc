@@ -1,0 +1,56 @@
+---
+import ChildrensLayout from '@/layouts/ChildrensLayout.astro';
+
+interface Props {
+  title: string;
+  currentGuide: 'create-a-script' | 'golden-goose' | 'key-elements' | 'archetype-of-one-story';
+}
+const { title, currentGuide } = Astro.props;
+
+const GUIDES = [
+  { key: 'create-a-script', label: 'Create a Script', href: '/childrens-theatre/how-to/create-a-script/' },
+  { key: 'golden-goose', label: 'Golden Goose', href: '/childrens-theatre/how-to/golden-goose/' },
+  { key: 'key-elements', label: 'Key Elements', href: '/childrens-theatre/how-to/key-elements/' },
+  { key: 'archetype-of-one-story', label: 'Archetype of One Story', href: '/childrens-theatre/how-to/archetype-of-one-story/' },
+] as const;
+---
+
+<ChildrensLayout title={title} subPage="how-to" eyebrow="How-To Guides">
+<article class="mx-auto max-w-3xl">
+  <nav aria-label="How-To Guides" class="border-ivory-200 mt-6 border-y py-3" data-print-hide>
+    <ul class="flex flex-wrap gap-x-5 gap-y-2">
+      {
+        GUIDES.map((g) => (
+          <li>
+            <a
+              href={g.href}
+              class={`text-ink-700 hover:text-clay-500 inline-block py-1 text-sm no-underline ${
+                currentGuide === g.key
+                  ? 'border-clay-500 text-ink-900 border-b-2 font-medium'
+                  : ''
+              }`}
+              aria-current={currentGuide === g.key ? 'page' : undefined}
+            >
+              {g.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <div class="mt-6" data-print-hide>
+    <button
+      type="button"
+      onclick="window.print()"
+      class="border-ink-900 rounded border px-3 py-1.5 text-sm"
+    >
+      Print this guide
+    </button>
+  </div>
+
+  <div class="prose prose-neutral mt-8 max-w-none">
+    <slot />
+  </div>
+</article>
+</ChildrensLayout>

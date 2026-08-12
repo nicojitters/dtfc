@@ -1,13 +1,13 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import Chip from '@/components/ui/Chip.astro';
+import { scriptHref } from '@/lib/script-href';
 
 interface Props {
   entry: CollectionEntry<'scripts'>;
 }
 const { entry } = Astro.props;
-const slug = entry.id.replace(/\.mdx?$/, '');
-const href = `/shakespeare/scripts/${slug}/`;
+const href = scriptHref(entry);
 const characterCount = entry.data.characters.length;
 ---
 
@@ -22,6 +22,7 @@ const characterCount = entry.data.characters.length;
     {entry.data.minutes && <Chip tone="teal">{entry.data.minutes} min</Chip>}
     {characterCount > 0 && <Chip tone="mustard">{characterCount} character{characterCount === 1 ? '' : 's'}</Chip>}
     {entry.data.theme && <Chip tone="clay">{entry.data.theme}</Chip>}
+    {entry.data.series && <Chip tone="teal">{entry.data.series}</Chip>}
     {entry.data.sample && <Chip tone="neutral">Sample — pending final import</Chip>}
   </div>
 </article>

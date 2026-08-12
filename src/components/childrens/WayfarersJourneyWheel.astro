@@ -1,0 +1,128 @@
+---
+/**
+ * The Wayfarer's Journey Wheel — 8 stations arranged clockwise on a circle.
+ * Referenced in spec §4.4 item 4, embedded on
+ * /childrens-theatre/how-to/archetype-of-one-story/.
+ *
+ * Colors sourced from tokens (var(--color-*)) — no hex.
+ * Accessibility: SVG <title> + <desc>; <figcaption> below lists all stations
+ * for screen readers and print output.
+ */
+
+const STATIONS = [
+  'Home',
+  'Call',
+  'Gate In',
+  'Road of Trials',
+  'Nigredo',
+  'Road of Trials II',
+  'Gate Out',
+  'Return',
+];
+
+const CENTER = 200;
+const RADIUS = 140;
+
+// Angles: 12 o'clock start (-90°), 45° increments clockwise
+const points = STATIONS.map((label, i) => {
+  const angleDeg = -90 + i * 45;
+  const angleRad = (angleDeg * Math.PI) / 180;
+  return {
+    label,
+    x: CENTER + RADIUS * Math.cos(angleRad),
+    y: CENTER + RADIUS * Math.sin(angleRad),
+    // For label placement offset from the circle
+    labelX: CENTER + (RADIUS + 30) * Math.cos(angleRad),
+    labelY: CENTER + (RADIUS + 30) * Math.sin(angleRad),
+    // Text-anchor: 'middle' at top/bottom, 'start' on right, 'end' on left
+    anchor:
+      i === 0 || i === 4 ? 'middle' : i > 0 && i < 4 ? 'start' : 'end',
+    // Baseline for legibility
+    baseline: i === 0 ? 'baseline' : i === 4 ? 'hanging' : 'middle',
+  };
+});
+
+// Arc paths between consecutive stations (approximate clockwise arcs)
+const arcs = points.map((_, i) => {
+  const from = points[i];
+  const to = points[(i + 1) % points.length];
+  // Small arc, clockwise (sweep-flag=1)
+  return `M ${from.x.toFixed(1)} ${from.y.toFixed(1)} A ${RADIUS} ${RADIUS} 0 0 1 ${to.x.toFixed(1)} ${to.y.toFixed(1)}`;
+});
+---
+
+<figure class="my-8 flex flex-col items-center">
+  <svg
+    viewBox="0 0 400 400"
+    role="img"
+    aria-labelledby="wjw-title wjw-desc"
+    class="text-clay-500 h-auto w-full max-w-md"
+    style="color: var(--color-clay-500);"
+  >
+    <title id="wjw-title">The Wayfarer&rsquo;s Journey</title>
+    <desc id="wjw-desc">
+      Eight stations arranged clockwise on a circle: Home, Call, Gate In, Road of Trials,
+      Nigredo, Road of Trials II, Gate Out, Return &mdash; closing back to Home.
+    </desc>
+
+    <defs>
+      <marker
+        id="wjw-arrow"
+        viewBox="0 0 10 10"
+        refX="8"
+        refY="5"
+        markerWidth="6"
+        markerHeight="6"
+        orient="auto-start-reverse"
+        fill="currentColor"
+      >
+        <path d="M 0 0 L 10 5 L 0 10 z"></path>
+      </marker>
+    </defs>
+
+    {/* Center reference circle (very faint) */}
+    <circle cx={CENTER} cy={CENTER} r={RADIUS} fill="none" stroke="currentColor" stroke-opacity="0.15" stroke-width="1"></circle>
+
+    {/* Clockwise arcs with arrowheads */}
+    {arcs.map((d) => (
+      <path d={d} fill="none" stroke="currentColor" stroke-width="1.5" marker-end="url(#wjw-arrow)"></path>
+    ))}
+
+    {/* Station dots */}
+    {points.map((p) => (
+      <circle cx={p.x} cy={p.y} r="5" fill="currentColor"></circle>
+    ))}
+
+    {/* Station labels */}
+    {points.map((p) => (
+      <text
+        x={p.labelX}
+        y={p.labelY}
+        text-anchor={p.anchor}
+        dominant-baseline={p.baseline}
+        fill="var(--color-ink-900)"
+        style="font-family: var(--font-body); font-size: 12px;"
+      >
+        {p.label}
+      </text>
+    ))}
+
+    {/* Center label */}
+    <text
+      x={CENTER}
+      y={CENTER}
+      text-anchor="middle"
+      dominant-baseline="middle"
+      fill="var(--color-ink-900)"
+      style="font-family: var(--font-display); font-size: 14px; font-style: italic;"
+    >
+      The Wayfarer&rsquo;s Journey
+    </text>
+  </svg>
+
+  <figcaption class="text-ink-500 mt-4 max-w-md text-center text-sm leading-relaxed">
+    The eight stations of the Wayfarer&rsquo;s Journey, in clockwise order:
+    <strong>Home</strong>, Call, Gate In, Road of Trials, Nigredo, Road of Trials II,
+    Gate Out, Return &mdash; returning to Home.
+  </figcaption>
+</figure>

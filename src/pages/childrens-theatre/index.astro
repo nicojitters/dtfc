@@ -1,36 +1,88 @@
 ---
-import SectionLayout from '@/layouts/SectionLayout.astro';
+import ChildrensLayout from '@/layouts/ChildrensLayout.astro';
 import ReflectivePrompt from '@/components/section/ReflectivePrompt.astro';
+
+const directoryCards = [
+  {
+    label: 'Why These Plays Work',
+    href: '/childrens-theatre/why-these-plays-work/',
+    description: 'The section&rsquo;s manifesto: bare stage, oral tradition, seven levels of truth, archetypes.',
+  },
+  {
+    label: 'Plays',
+    href: '/childrens-theatre/plays/',
+    description: 'Water of Life, One Seed Child, The Treasure Inside, Aesop&rsquo;s Fables, Conquering the Sun.',
+  },
+  {
+    label: 'Teaching Modules',
+    href: '/childrens-theatre/teaching-modules/',
+    description: 'Plays prepared as full teaching units with framing, discussion, and extensions.',
+  },
+  {
+    label: 'Shakespeare for Children',
+    href: '/childrens-theatre/shakespeare-for-children/',
+    description: 'Shakespeare adaptations shaped for young Players &mdash; cross-linked with the Shakespeare section.',
+  },
+  {
+    label: 'How-To Guides',
+    href: '/childrens-theatre/how-to/create-a-script/',
+    description: 'Four guides: creating a script, Golden Goose method, Key Elements, and Archetype of One Story.',
+  },
+  {
+    label: 'Honoring Our Guides',
+    href: '/childrens-theatre/honoring-our-guides/',
+    description: 'Oral-tradition ancestors, Fred Rogers, the Wilcoxes, teachers, and the children themselves.',
+  },
+];
 ---
 
-<SectionLayout
-  title="Children's Theatre"
-  section="childrens-theatre"
-  eyebrow="Coming soon"
-  description="Plays, teaching modules, and storytelling — myth-driven, minimalist, and designed so that every child in the room has a real part to play."
+<ChildrensLayout
+  title="Children&rsquo;s Theatre"
+  eyebrow="Plays &mdash; Theatre Teaching Units &mdash; Storytelling"
+  description="Myth-driven, minimalist plays where every child in the room has a real part to play."
 >
   <ReflectivePrompt sectionKey="childrens-theatre" />
 
-  <div class="max-w-2xl space-y-6 pt-8">
-    {/* CLIENT REVIEW: drafted the two answer paragraphs below for Cycle 2. */}
+  <div class="mt-8 max-w-2xl space-y-6">
+    {/* CLIENT REVIEW: Cycle 4 rewrites — each teaser now links to its destination. */}
     <section id="imagination">
       <h2>Imagination provides everything</h2>
       <p>
-        Our plays are written for the bare stage: no built sets, no elaborate props. A cloak
-        becomes a castle wall, a chair becomes a throne, a broom becomes a horse. Children step
-        into that convention immediately — and once they have, the whole imaginative apparatus of
-        the play becomes theirs, not the production designer's.
+        Our plays are written for the bare stage: a cloak becomes a castle wall, a chair becomes
+        a throne, a broom becomes a horse. Children step into that convention immediately &mdash;
+        and once they have, the whole imaginative apparatus of the play becomes theirs, not the
+        production designer&rsquo;s.
+        <a href="/childrens-theatre/why-these-plays-work/" class="hover:text-clay-500">Read Why These Plays Work &rarr;</a>
       </p>
     </section>
 
     <section id="every-person">
       <h2>A part for every player</h2>
       <p>
-        Each script is written with <strong>versatile casting</strong> — every role can be split,
-        shared, or doubled so no child sits out. Rehearsal isn't a competition for the leads;
-        it's an ensemble that grows every player's confidence at the same time. See the
-        Players Resource Center's casting entry for the full principle.
+        Each script is written with <strong>versatile casting</strong> &mdash; every role can be
+        split, shared, or doubled so no child sits out. Rehearsal isn&rsquo;t a competition for the
+        leads; it&rsquo;s an ensemble that grows every Player&rsquo;s confidence at once.
+        <a href="/childrens-theatre/plays/" class="hover:text-clay-500">Browse the plays &rarr;</a>
       </p>
     </section>
   </div>
-</SectionLayout>
+
+  <section class="mt-14">
+    <h2 class="font-display text-2xl">Explore the section</h2>
+    <ul class="mt-6 grid list-none gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {
+        directoryCards.map((card) => (
+          <li>
+            <a
+              href={card.href}
+              class="border-ivory-200 bg-ivory-50 hover:border-clay-500/60 block h-full rounded-[var(--radius-card)] border p-5 no-underline transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]"
+            >
+              <h3 class="font-display text-ink-900 text-xl" set:html={card.label}></h3>
+              <p class="text-ink-700 mt-1 text-sm" set:html={card.description}></p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</ChildrensLayout>

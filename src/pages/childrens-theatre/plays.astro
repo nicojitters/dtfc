@@ -1,0 +1,113 @@
+---
+import ChildrensLayout from '@/layouts/ChildrensLayout.astro';
+import { getCollection } from 'astro:content';
+import ScriptCard from '@/components/scripts/ScriptCard.astro';
+
+const entries = (await getCollection('scripts'))
+  .filter((e) => e.data.library === 'childrens-plays')
+  .sort((a, b) => a.data.title.localeCompare(b.data.title));
+
+// Unique series values found in the collection (drops undefined)
+const seriesValues = Array.from(
+  new Set(entries.map((e) => e.data.series).filter((s): s is string => !!s)),
+).sort();
+
+const seriesSlug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+---
+
+<ChildrensLayout
+  title="Plays"
+  subPage="plays"
+  eyebrow="Script library"
+  description="Water of Life, One Seed Child, The Treasure Inside, Aesop&rsquo;s Fables, Conquering the Sun."
+>
+  <section class="max-w-2xl">
+    <h2 class="font-display text-2xl">Children&rsquo;s plays</h2>
+    <p class="text-ink-700 mt-2 text-sm leading-relaxed">
+      Standalone plays and series &mdash; bare stage, versatile casting, myth-driven. Filter by
+      series below.
+    </p>
+  </section>
+
+  {
+    seriesValues.length > 0 && (
+      <div class="mt-6 flex flex-wrap gap-2" data-series-chips>
+        <button
+          type="button"
+          data-series=""
+          class="inline-flex items-center rounded-[var(--radius-chip)] bg-ivory-200 text-ink-700 aria-[pressed=true]:bg-clay-500 aria-[pressed=true]:text-ivory-50 px-3 py-0.5 text-xs font-medium"
+          aria-pressed="true"
+        >
+          All
+        </button>
+        <button
+          type="button"
+          data-series="standalone"
+          class="inline-flex items-center rounded-[var(--radius-chip)] bg-mustard-200 text-ink-700 aria-[pressed=true]:bg-clay-500 aria-[pressed=true]:text-ivory-50 px-3 py-0.5 text-xs font-medium"
+          aria-pressed="false"
+        >
+          Standalone
+        </button>
+        {seriesValues.map((s) => (
+          <button
+            type="button"
+            data-series={seriesSlug(s)}
+            data-series-label={s}
+            class="inline-flex items-center rounded-[var(--radius-chip)] bg-mustard-200 text-ink-700 aria-[pressed=true]:bg-clay-500 aria-[pressed=true]:text-ivory-50 px-3 py-0.5 text-xs font-medium"
+            aria-pressed="false"
+          >
+            {s}
+          </button>
+        ))}
+      </div>
+    )
+  }
+
+  {
+    entries.length === 0 ? (
+      <p class="text-ink-500 mt-8 italic">This library is being populated &mdash; check back soon.</p>
+    ) : (
+      <ul class="mt-8 grid list-none gap-4 md:grid-cols-2 lg:grid-cols-3" data-series-grid>
+        {entries.map((entry) => (
+          <li data-entry-series={entry.data.series ? seriesSlug(entry.data.series) : 'standalone'}>
+            <ScriptCard entry={entry} />
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</ChildrensLayout>
+
+<script is:inline>
+  (function initSeriesFilter() {
+    const chipContainer = document.querySelector('[data-series-chips]');
+    const grid = document.querySelector('[data-series-grid]');
+    if (!chipContainer || !grid) return;
+    const chips = Array.from(chipContainer.querySelectorAll('button[data-series]'));
+    const items = Array.from(grid.querySelectorAll('li[data-entry-series]'));
+
+    const applyFilter = (selected) => {
+      chips.forEach((c) => {
+        c.setAttribute('aria-pressed', c.getAttribute('data-series') === selected ? 'true' : 'false');
+      });
+      items.forEach((li) => {
+        const s = li.getAttribute('data-entry-series') || '';
+        li.hidden = selected !== '' && s !== selected;
+      });
+    };
+
+    const initial = new URLSearchParams(window.location.search).get('series') || '';
+    applyFilter(initial);
+
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const series = chip.getAttribute('data-series') || '';
+        applyFilter(series);
+        const url = new URL(window.location.href);
+        if (series) url.searchParams.set('series', series);
+        else url.searchParams.delete('series');
+        history.replaceState(null, '', url.toString());
+      });
+    });
+  })();
+</script>
