@@ -97,6 +97,8 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   // Navigate to Archetype of One Story (via direct URL)
   await page.goto('/childrens-theatre/how-to/archetype-of-one-story/');
   await expect(page.getByRole('heading', { level: 1, name: /Archetype of One Story/i })).toBeVisible();
+  // Regression guard: how-to pages must carry the Children's Theatre sub-nav.
+  await expect(page.getByRole('navigation', { name: /Children.*Theatre section/i }).first()).toBeVisible();
   // Wheel SVG present
   const wheel = page.locator('svg[role="img"][aria-labelledby*="wjw"]');
   await expect(wheel).toBeVisible();
