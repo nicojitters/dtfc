@@ -13,16 +13,15 @@ const LIBRARY_LABELS: Record<typeof g.library, string> = {
   scenes: 'Scenes',
   themes: 'Scenes Around a Theme',
   cuttings: 'Cuttings',
-  'childrens-shakespeare': 'Children\'s Shakespeare',
-  'childrens-plays': 'Children\'s Plays',
-  'teaching-modules': 'Teaching Modules',
+  'childrens-shakespeare': "Children’s Shakespeare",
 };
+const libraryHref = `/shakespeare/${g.library}/`;
 ---
 
 <article class="mx-auto max-w-3xl">
   <p class="text-ink-500 text-sm">
     <a href="/shakespeare/">Shakespeare</a> ·
-    <span>{LIBRARY_LABELS[g.library]}</span>
+    <a href={libraryHref}>{LIBRARY_LABELS[g.library]}</a>
   </p>
 
   <div class="mt-4 flex flex-wrap items-center gap-2">
