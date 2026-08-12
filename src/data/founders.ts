@@ -19,6 +19,7 @@ export const FOUNDERS: Founder[] = [
     role: 'Co-founder, Colorado Caravan',
     shortBio:
       'One of the four founding faculty at the University of Colorado who shaped the Colorado Caravan under NEA Title III grants in the 1970s. Placeholder bio — real content arrives with the Drive import.',
+    unconfirmed: false,
     sample: true,
   },
   {
@@ -27,6 +28,7 @@ export const FOUNDERS: Founder[] = [
     role: 'Co-founder, playwright, and pedagogue',
     shortBio:
       'Wrote the Colorado Caravan’s founding manifesto and many of the children’s plays still in the DT:FC library. Placeholder bio — real content arrives with the Drive import.',
+    unconfirmed: false,
     sample: true,
   },
   {
@@ -35,6 +37,7 @@ export const FOUNDERS: Founder[] = [
     role: 'Co-founder, director, and educator',
     shortBio:
       'Lola shaped the Caravan’s repertoire and led generations of teachers into the discipline. Placeholder bio — real content arrives with the Drive import.',
+    unconfirmed: false,
     sample: true,
   },
   {
@@ -43,6 +46,7 @@ export const FOUNDERS: Founder[] = [
     role: 'Co-founder, scholar of Developmental Drama',
     shortBio:
       'Authored the field’s foundational articulation of Developmental Drama. Placeholder bio — real content arrives with the Drive import.',
+    unconfirmed: false,
     sample: true,
   },
   {
@@ -51,6 +55,7 @@ export const FOUNDERS: Founder[] = [
     role: 'Facilitator, Workshop Manual author',
     shortBio:
       'Carries the facilitation practice forward through workshops and the Workshop Manual. Placeholder bio — real content arrives with the Drive import.',
+    unconfirmed: false,
     sample: true,
   },
   {
@@ -59,6 +64,7 @@ export const FOUNDERS: Founder[] = [
     role: 'Storyteller, editor, contributor',
     shortBio:
       'Storyteller and editor whose work shaped DT:FC’s children’s repertoire. Placeholder bio — real content arrives with the Drive import.',
+    unconfirmed: false,
     sample: true,
   },
   {
@@ -76,6 +82,7 @@ export const FOUNDERS: Founder[] = [
     role: 'Contributing faculty; Shakespeare translator (Chinese)',
     shortBio:
       'CU faculty and translator whose decades of work opened Shakespeare to Chinese audiences and shaped DT:FC’s Shakespeare pedagogy. Placeholder bio — real content arrives with the Drive import.',
+    unconfirmed: false,
     sample: true,
   },
   {
@@ -84,6 +91,7 @@ export const FOUNDERS: Founder[] = [
     role: 'Contributing faculty',
     shortBio:
       'CU faculty whose contributions helped shape the Caravan’s early work. Placeholder bio — real content arrives with the Drive import.',
+    unconfirmed: false,
     sample: true,
   },
 ];
