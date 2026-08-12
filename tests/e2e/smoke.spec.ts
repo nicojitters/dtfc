@@ -166,6 +166,22 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   await expect(page.getByRole('heading', { level: 1, name: 'Testimonials' })).toBeVisible();
   await expect(page.getByText(/This form is not yet configured/i)).toBeVisible();
 
+  // Search — verify Pagefind bundle loads and returns results
+  // Note: requires `pnpm build` to have produced dist/pagefind/ before this
+  // test runs. Playwright starts its own server via `pnpm build && pnpm preview`
+  // per playwright.config, so the bundle is present.
+  await page.goto('/search/');
+  await expect(page.getByRole('heading', { level: 1, name: /^Search DT:FC$/i })).toBeVisible();
+
+  // Wait for PagefindUI to hydrate — it renders an input inside #dtfc-search-page
+  const searchInput = page.locator('#dtfc-search-page input[type="text"]').first();
+  await expect(searchInput).toBeVisible({ timeout: 10000 });
+  await searchInput.fill('shakespeare');
+
+  // Results should populate within a few hundred ms of typing
+  const firstResult = page.locator('#dtfc-search-page .pagefind-ui__result-link').first();
+  await expect(firstResult).toBeVisible({ timeout: 5000 });
+
   // No unexpected console errors
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
