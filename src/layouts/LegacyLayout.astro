@@ -1,0 +1,36 @@
+---
+import SectionLayout from './SectionLayout.astro';
+import { LEGACY_NAV } from '@/lib/legacy-nav';
+
+interface Props {
+  title: string;
+  description?: string;
+  eyebrow?: string;
+  subPage?: string;
+}
+const { title, description, eyebrow, subPage } = Astro.props;
+---
+
+<SectionLayout title={title} description={description} section="legacy" eyebrow={eyebrow}>
+  <nav aria-label="Legacy section" class="border-ivory-200 mb-8 border-b pb-3">
+    <ul class="flex flex-wrap gap-x-5 gap-y-2">
+      {
+        LEGACY_NAV.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class={`text-ink-700 hover:text-clay-500 inline-block py-1 text-sm no-underline ${
+                subPage === item.key ? 'border-clay-500 text-ink-900 border-b-2 font-medium' : ''
+              }`}
+              aria-current={subPage === item.key ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <slot />
+</SectionLayout>

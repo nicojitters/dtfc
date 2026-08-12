@@ -1,0 +1,60 @@
+---
+import type { Founder } from '@/data/founders';
+
+interface Props {
+  founder: Founder;
+}
+const { founder } = Astro.props;
+
+// Placeholder initials: first letter of name + first letter of last-name-ish token.
+function initials(name: string): string {
+  const parts = name.split(/\s+/);
+  const first = parts[0]?.[0] ?? '';
+  const last = parts[parts.length - 1]?.[0] ?? '';
+  return (first + last).toUpperCase();
+}
+---
+
+<article class="border-ivory-200 bg-ivory-50 rounded-[var(--radius-card)] border p-5">
+  <div class="flex items-start gap-4">
+    {
+      founder.photoSrc ? (
+        <img
+          src={founder.photoSrc}
+          alt={`Portrait of ${founder.name}`}
+          class="h-24 w-24 shrink-0 rounded-full object-cover"
+          loading="lazy"
+        />
+      ) : (
+        <div
+          class="bg-clay-500/15 text-clay-700 flex h-24 w-24 shrink-0 items-center justify-center rounded-full font-medium"
+          aria-hidden="true"
+        >
+          {initials(founder.name)}
+        </div>
+      )
+    }
+    <div class="flex-1">
+      <h3 class="font-display text-ink-900 text-xl">{founder.name}</h3>
+      <p class="text-ink-500 mt-1 text-sm">{founder.role}</p>
+      {founder.years && <p class="text-ink-500 text-xs">{founder.years}</p>}
+      <div class="mt-2 flex flex-wrap gap-2">
+        {
+          founder.unconfirmed && (
+            <span class="bg-mustard-200 text-ink-700 rounded-[var(--radius-chip)] px-2 py-0.5 text-xs font-medium">
+              Unconfirmed
+            </span>
+          )
+        }
+        {
+          founder.sample && (
+            <span class="bg-ivory-200 text-ink-500 rounded-[var(--radius-chip)] px-2 py-0.5 text-xs font-medium">
+              Sample &mdash; pending final import
+            </span>
+          )
+        }
+      </div>
+    </div>
+  </div>
+  <p class="text-ink-700 mt-4 text-sm leading-relaxed" set:html={founder.shortBio} />
+</article>

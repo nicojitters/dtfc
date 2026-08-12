@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'essays'>;
+}
+const { entry } = Astro.props;
+const g = entry.data;
+---
+
+<article class="mx-auto max-w-3xl">
+  <p class="text-ink-500 text-sm">
+    <a href="/legacy/">Legacy</a> &middot; <a href="/legacy/essays/">Essays</a>
+  </p>
+
+  <h1 class="mt-3" set:html={g.title}></h1>
+
+  <p class="text-ink-500 mt-2 text-sm" set:html={`${g.author}${g.year ? ` · ${g.year}` : ''}${g.publishedIn ? ` · ${g.publishedIn}` : ''}`}></p>
+
+  {
+    g.sample && (
+      <p class="border-mustard-400 bg-mustard-200/40 text-ink-700 mt-4 rounded-[var(--radius-card)] border-l-4 p-3 text-sm">
+        <strong>Sample content.</strong> The final text of this essay is pending.
+      </p>
+    )
+  }
+
+  <div class="mt-4" data-print-hide>
+    <button
+      type="button"
+      onclick="window.print()"
+      class="border-ink-900 rounded border px-3 py-1.5 text-sm"
+    >
+      Print this essay
+    </button>
+  </div>
+
+  <div class="prose prose-neutral mt-8 max-w-none">
+    <slot />
+  </div>
+</article>

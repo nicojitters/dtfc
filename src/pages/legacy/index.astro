@@ -1,53 +1,92 @@
 ---
-import SectionLayout from '@/layouts/SectionLayout.astro';
+import LegacyLayout from '@/layouts/LegacyLayout.astro';
 import ReflectivePrompt from '@/components/section/ReflectivePrompt.astro';
+
+const directoryCards = [
+  {
+    label: 'History',
+    href: '/legacy/history/',
+    description: 'The Colorado Caravan story, NEA Title III grants, and DT:FC&rsquo;s research prospectus.',
+  },
+  {
+    label: 'Founders',
+    href: '/legacy/founders/',
+    description: 'Nine people who invented Developmental Theatre and shaped its next fifty years.',
+  },
+  {
+    label: 'Timeline',
+    href: '/legacy/timeline/',
+    description: 'The Grand Timeline, 1971&ndash;present, filterable by organization.',
+  },
+  {
+    label: 'Essays',
+    href: '/legacy/essays/',
+    description: 'The founding manifestos and the writings that carry the practice forward.',
+  },
+  {
+    label: 'Honoring Our Guides',
+    href: '/legacy/honoring-our-guides/',
+    description: 'The institutions and mentors whose work made all of this possible.',
+  },
+];
 ---
 
-<SectionLayout
+<LegacyLayout
   title="Legacy"
-  section="legacy"
-  eyebrow="Coming soon"
-  description="History, foundational concepts, who — when — why, and next steps."
+  eyebrow="History &mdash; Foundational Concepts &mdash; Who / When / Why &mdash; Next Steps"
+  description="Where DT:FC came from, the people who built it, and the 50+ year timeline that&rsquo;s still unfolding."
 >
   <ReflectivePrompt sectionKey="legacy" />
 
-  <div class="max-w-2xl space-y-6 pt-8">
+  <div class="mt-8 max-w-2xl space-y-6">
+    {/* CLIENT REVIEW: rewritten in Cycle 5 to cross-link out to /legacy/history/. */}
     <section id="colorado-caravan">
       <h2>The Colorado Caravan</h2>
       <p>
-        DT:FC descends from the <strong>Colorado Caravan</strong>, a touring theatre created in
-        the 1970s by the University of Colorado Theatre Department and the Colorado Shakespeare
-        Festival under NEA Title III grants. It's the direct answer to the landing-page question:
-        what did CU create in the 1970s that led to this site?
+        DT:FC descends from the <strong>Colorado Caravan</strong>, the touring theatre invented at
+        the University of Colorado in the 1970s under NEA Title III grants.
+        <a href="/legacy/history/" class="hover:text-clay-500">Read the full one-page history &rarr;</a>
       </p>
     </section>
 
+    {/* CLIENT REVIEW: rewritten in Cycle 5 to cross-link out to /legacy/founders/. */}
     <section id="founders">
       <h2>The Founders</h2>
       <p>
         Developmental Theatre was founded by Richard Knaub, Chuck Wilcox, Lola Wilcox, and
-        Martin Cobin. That work produced an M.A. program in Developmental Theatre/Drama, successor
-        companies on three continents, and audiences totaling over six million.
+        Martin Cobin, with contributions from Laurie O&rsquo;Brien, Cherie Karo Schwartz, Judith
+        Bock, Daniel S.P. Yang, and Nils Petersen.
+        <a href="/legacy/founders/" class="hover:text-clay-500">Meet the founders &rarr;</a>
       </p>
     </section>
 
     <section>
       <h2>Become part of this Legacy</h2>
-      {/* CLIENT REVIEW: cross-link resolves Idea Two #13 to the Community
-          membership paragraph (see /community/#membership). */}
+      {/* CLIENT REVIEW: cross-link resolves Idea Two #13 to the Community membership paragraph (see /community/#membership). */}
       <p>
-        The Legacy is a working one — anyone who plays, teaches, watches, or supports the work
-        adds to it. Start on the <a href="/community/#membership">Community page</a> to learn
+        The Legacy is a working one &mdash; anyone who plays, teaches, watches, or supports the
+        work adds to it. Start on the <a href="/community/#membership">Community page</a> to learn
         how to join.
       </p>
     </section>
-
-    <section>
-      <h2>Full history — coming next</h2>
-      <p>
-        Founder profiles, essays, and an interactive 1971–present timeline are landing in an
-        upcoming release.
-      </p>
-    </section>
   </div>
-</SectionLayout>
+
+  <section class="mt-14">
+    <h2 class="font-display text-2xl">Explore the section</h2>
+    <ul class="mt-6 grid list-none gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {
+        directoryCards.map((card) => (
+          <li>
+            <a
+              href={card.href}
+              class="border-ivory-200 bg-ivory-50 hover:border-clay-500/60 block h-full rounded-[var(--radius-card)] border p-5 no-underline transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]"
+            >
+              <h3 class="font-display text-ink-900 text-xl" set:html={card.label}></h3>
+              <p class="text-ink-700 mt-1 text-sm" set:html={card.description}></p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</LegacyLayout>

@@ -1,0 +1,29 @@
+---
+import LegacyLayout from '@/layouts/LegacyLayout.astro';
+import Timeline from '@/components/legacy/Timeline.astro';
+---
+
+<LegacyLayout
+  title="The Grand Timeline, 1971–present"
+  subPage="timeline"
+  eyebrow="Developmental Theatre through five decades"
+  description="Fifty years of Developmental Theatre productions, personnel, and milestones — filterable by organization."
+>
+  {/* CLIENT REVIEW: pending Steve Smith&rsquo;s confirmation of canonical xlsx version per spec §8 item 3.
+      If a different canonical arrives later, re-run the Drive import task with the correct file. */}
+  <p class="mb-6">
+    <span class="text-mustard-600 bg-mustard-200/40 rounded-[var(--radius-chip)] px-2 py-0.5 text-xs font-medium uppercase tracking-widest">
+      Pre-release — canonical version pending
+    </span>
+  </p>
+
+  <div class="max-w-2xl">
+    <p class="text-ink-700 text-base">
+      The Grand Timeline gathers every notable Developmental Theatre production, personnel change,
+      and institutional milestone from 1971 to the present. Filter by organization above to trace
+      the arc of any one company — the URL updates so you can share the filtered view.
+    </p>
+  </div>
+
+  <Timeline />
+</LegacyLayout>

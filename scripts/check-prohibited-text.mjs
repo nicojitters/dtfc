@@ -40,6 +40,95 @@ export const PATTERNS = [
 ];
 
 /**
+ * Files exempted from the straight-apostrophe check.
+ *
+ * Category 1 — Cycle 3 Shakespeare verse files: intentionally use straight
+ * apostrophes for Elizabethan contractions ('tis, 'twere, Environ'd,
+ * perfect'st) per Cycle 3 T2 discipline.
+ *
+ * Category 2 — Cycles 1-4 shipped content debt (28 files, 60 hits): the
+ * guardrail landed in Cycle 5 and catches subsequent regressions. Existing
+ * defects are parked as a follow-up cleanup — see
+ * project_dtfc_followups.md. When a file is rewritten in a later cycle,
+ * remove it from this list so the new content is checked.
+ */
+export const CURLY_APOSTROPHE_ALLOWLIST = [
+  // Cycle 3 Shakespeare verse
+  'src/content/scripts/juliet-romeo-and-juliet-act-iv-scene-iii.mdx',
+  'src/content/scripts/lady-macbeth-macbeth-act-i-scene-v.mdx',
+  'src/content/scripts/mechanicals-scenes-a-midsummer-nights-dream.mdx',
+  // Cycles 1-4 shipped-content debt — deferred cleanup
+  'src/components/childrens/WayfarersJourneyWheel.astro',
+  'src/components/landing/CommunityCenter.astro',
+  'src/components/landing/NewsletterTile.astro',
+  'src/components/landing/Resilience.astro',
+  'src/components/ui/NewsletterSignup.astro',
+  'src/content/colloquial/one-uddah-midsummah.mdx',
+  'src/content/concepts/archetype.mdx',
+  'src/content/concepts/cohesion.mdx',
+  'src/content/concepts/facilitation.mdx',
+  'src/content/concepts/fearless-creativity.mdx',
+  'src/content/concepts/icons.mdx',
+  'src/content/concepts/magic-toolbox.mdx',
+  'src/content/concepts/players.mdx',
+  'src/content/concepts/resilience.mdx',
+  'src/content/concepts/warmup.mdx',
+  'src/content/games/changing-person-activity.mdx',
+  'src/content/games/jabberwocky.mdx',
+  'src/content/games/mirrors.mdx',
+  'src/content/games/outrageous-roll-call.mdx',
+  'src/content/games/puppets-marionettes.mdx',
+  'src/content/games/self-talk.mdx',
+  'src/content/games/walking-across-the-ice.mdx',
+  'src/content/games/whats-missing.mdx',
+  'src/pages/community/index.astro',
+  'src/pages/index.astro',
+  'src/pages/styles-preview.astro',
+  'src/pages/theatre-games/index.astro',
+  'src/pages/workshops/index.astro',
+];
+
+/**
+ * Scan `text` for straight U+0027 apostrophes appearing in prose contexts
+ * (surrounded by word characters). Skips imports, getCollection() calls,
+ * YAML list bullets, and files in CURLY_APOSTROPHE_ALLOWLIST.
+ * Only checks .astro, .mdx, .md files; returns [] for other extensions.
+ * Returns [] when clean.
+ */
+export function findStraightApostropheInProse(text, file) {
+  // Extension guard: only check .astro, .mdx, .md files
+  const ext = file.slice(file.lastIndexOf('.')).toLowerCase();
+  if (ext !== '.astro' && ext !== '.mdx' && ext !== '.md') return [];
+
+  if (CURLY_APOSTROPHE_ALLOWLIST.includes(file)) return [];
+  const pattern = /(?<=\w)'(?=\w)/g;
+  const hits = [];
+  let m;
+  while ((m = pattern.exec(text)) !== null) {
+    const lineStart = text.lastIndexOf('\n', m.index - 1) + 1;
+    const lineEnd = text.indexOf('\n', m.index);
+    const line = text.slice(lineStart, lineEnd === -1 ? undefined : lineEnd);
+    // Skip JS-syntax lines that legitimately contain a straight apostrophe.
+    if (/^\s*import\s/.test(line)) continue;
+    if (/getCollection\(/.test(line)) continue;
+    // Skip YAML frontmatter list bullet lines like "  - { name: O'Brien }" — treat any line
+    // starting with whitespace + a hyphen or with an inline object literal as YAML.
+    if (/^\s*-\s/.test(line)) continue;
+    const before = text.slice(0, m.index);
+    const lineNumber = before.split('\n').length;
+    const col = m.index - lineStart + 1;
+    hits.push({
+      file,
+      line: lineNumber,
+      col,
+      phrase: `straight apostrophe in prose (${line.slice(Math.max(0, col - 12), col + 12).trim()})`,
+      reason: 'Use U+2019 (’) or &rsquo; per project vocabulary rule',
+    });
+  }
+  return hits;
+}
+
+/**
  * Scan `text` (originating from `file`) for prohibited phrases.
  * Returns [] when clean.
  */
@@ -56,6 +145,7 @@ export function findViolations(text, file) {
       hits.push({ file, line, col, phrase, reason });
     }
   }
+  hits.push(...findStraightApostropheInProse(text, file));
   return hits;
 }
 
