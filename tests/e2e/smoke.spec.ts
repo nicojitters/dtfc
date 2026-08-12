@@ -89,6 +89,29 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   await expect(page.getByRole('textbox', { name: /Your question/i })).toBeVisible();
   await expect(page.getByRole('button', { name: /Send to Shakespeare/i })).toBeVisible();
 
+  // Children's Theatre section — landing, sub-nav, how-to guide with wheel, library, script detail
+  await page.goto('/childrens-theatre/');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText("Children");
+  await expect(page.getByRole('navigation', { name: /Children.*Theatre section/i })).toBeVisible();
+
+  // Navigate to Archetype of One Story (via direct URL)
+  await page.goto('/childrens-theatre/how-to/archetype-of-one-story/');
+  await expect(page.getByRole('heading', { level: 1, name: /Archetype of One Story/i })).toBeVisible();
+  // Wheel SVG present
+  const wheel = page.locator('svg[role="img"][aria-labelledby*="wjw"]');
+  await expect(wheel).toBeVisible();
+  await expect(wheel.locator('title')).toContainText(/Wayfarer/i);
+
+  // Navigate to Plays library
+  await page.goto('/childrens-theatre/plays/');
+  await expect(page.getByRole('heading', { level: 2, name: /Children.*plays/i })).toBeVisible();
+
+  // Follow first script card into detail
+  const firstCard = page.locator('article a').first();
+  await firstCard.click();
+  await expect(page).toHaveURL(/\/childrens-theatre\/scripts\/[^/]+\/?/);
+  await expect(page.getByRole('button', { name: /Print this script/i })).toBeVisible();
+
   // No unexpected console errors
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
