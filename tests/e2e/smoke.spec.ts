@@ -91,10 +91,36 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await runAxe(page, 'game detail');
 
-  // Legacy section — landing, sub-nav, timeline (URL-driven filter path), essay detail
+  // Legacy landing — Cycle 9 T8 rewrite: embedded Theatre Influences narrative +
+  // "You are the next heroes and heroines" recruitment callout + TOC jump strip.
   await page.goto('/legacy/');
   await expect(page.getByRole('heading', { level: 1, name: 'Legacy' })).toBeVisible();
   await expect(page.getByRole('navigation', { name: /Legacy section/i })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: /Jump to section/i })).toBeVisible();
+  // The recruitment line appears in both the essay body and the amplified callout
+  // (an intentional pattern). Scope the assertion to the callout region.
+  const recruitment = page.getByRole('region', { name: 'Recruitment' });
+  await expect(recruitment).toBeVisible();
+  await expect(recruitment).toContainText('You are the next heroes and heroines');
+  await expect(page.locator('#colorado-caravan')).toBeVisible();
+  await expect(page.locator('#founders')).toBeVisible();
+  await runAxe(page, 'legacy landing');
+
+  // Legacy Founders — Cycle 9 T7 rebuild: 10 blocks including TestimonyPullQuote
+  // (Cherie + Laurie), Contributing Faculty, Institutional Support, FoundationalReading.
+  await page.goto('/legacy/founders/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Founders' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'The four founders' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Theatre Games origins' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Foundational reading' })).toBeVisible();
+  // TestimonyPullQuote renders as figure > blockquote > figcaption > cite.
+  await expect(page.locator('figure blockquote').first()).toBeVisible();
+  // Foundational Reading list carries the 6 spec-required surnames — spot-check two.
+  await expect(page.getByText(/Spolin, Viola/)).toBeVisible();
+  await expect(page.getByText(/Way, Brian/)).toBeVisible();
+  // Cross-links tail links to Timeline.
+  await expect(page.getByRole('link', { name: /Grand Timeline/i })).toBeVisible();
+  await runAxe(page, 'legacy founders');
 
   // Timeline: legend + at least one event visible.
   await page.goto('/legacy/timeline/');
@@ -113,6 +139,19 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   const ccChip = legend.getByRole('button', { name: /Colorado Caravan/i });
   await expect(ccChip).toHaveAttribute('aria-pressed', 'true');
   await runAxe(page, 'legacy timeline');
+
+  // Legacy Research — Cycle 9 T2 + T3 new page: abstract + materials + FoundationalReading
+  // shared component + mailto contact fallback (no ContactForm yet).
+  await page.goto('/legacy/research/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Research' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Research abstract' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Foundational reading' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Get in touch/ })).toBeVisible();
+  // Contact CTA is a mailto fallback (Cycle 9 T2 chose fallback pattern over a new form).
+  await expect(page.locator('a[href^="mailto:"]').first()).toBeVisible();
+  // Foundational Reading rendered by shared component.
+  await expect(page.getByText(/Durland, Frances Caldwell/)).toBeVisible();
+  await runAxe(page, 'legacy research');
 
   // Essays: index + one detail with print button.
   await page.goto('/legacy/essays/');

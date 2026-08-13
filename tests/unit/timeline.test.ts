@@ -41,14 +41,32 @@ describe('groupByDecade', () => {
     expect(groups[3].events).toHaveLength(1); // 2020
   });
 
-  it('silently skips unparseable dates', () => {
+  it('buckets unparseable dates into a trailing decade:null group (Cycle 9 T13)', () => {
     const events = [
       { date: '1971', event: 'A', organization: 'CC' as const },
       { date: 'undated', event: 'B', organization: 'CC' as const },
+      { date: '197?', event: 'C', organization: 'CC' as const },
     ];
     const groups = groupByDecade(events);
-    expect(groups).toHaveLength(1);
+    expect(groups).toHaveLength(2);
+    expect(groups[0].decade).toBe(1970);
     expect(groups[0].events).toHaveLength(1);
+    expect(groups[1].decade).toBe(null);
+    expect(groups[1].events).toHaveLength(2);
+    // The undated bucket comes AFTER all numeric decades.
+    const decades = groups.map((g) => g.decade);
+    const lastNumericIdx = decades.findLastIndex((d) => d !== null);
+    const nullIdx = decades.indexOf(null);
+    expect(nullIdx).toBeGreaterThan(lastNumericIdx);
+  });
+
+  it('omits the null-decade bucket when all events are parseable', () => {
+    const events = [
+      { date: '1971', event: 'A', organization: 'CC' as const },
+      { date: '1985', event: 'B', organization: 'CSF' as const },
+    ];
+    const groups = groupByDecade(events);
+    expect(groups.every((g) => g.decade !== null)).toBe(true);
   });
 
   it('returns empty for empty input', () => {

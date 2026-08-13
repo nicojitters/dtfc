@@ -17,7 +17,7 @@
 - **Analytics:** Vercel Analytics + Speed Insights, cookieless. Env-gated via `PUBLIC_VERCEL_ANALYTICS_ENABLED` (default `false` locally; set `true` in Vercel production dashboard).
 - **A11y CI:** `@axe-core/playwright` runs inside the smoke test at ~11 checkpoints. Fails on critical/serious violations; logs moderate/minor as info.
 - **Cross-cutting config:** `src/lib/site-config.ts` exports `SITE_CONFIG` with `fallbackContactEmail`, `canonicalHost`, `ogDefaults`. All form components, Donate CTA, and BaseLayout meta emission route through it — Cycle 8 flip is 1-3 line edits.
-- **Legacy content model:** `essays` MDX collection + `FOUNDERS` structured data file (`src/data/founders.ts`) + `timeline.json` (`src/data/timeline.json`) driven by a validating loader (`src/lib/timeline.ts`).
+- **Legacy content model:** `essays` MDX collection (optional `archival: true` flag flips era styling per Cycle 9) + `FOUNDERS` structured data file (`src/data/founders.ts`) — 11 entries grouped by `category: 'founder' | 'origin-witness' | 'faculty' | 'contributor'` per Cycle 9 — + `timeline.json` (`src/data/timeline.json`) driven by a validating loader (`src/lib/timeline.ts`). Landing at `/legacy/` embeds Lola Wilcox's "Theatre Influences" essay inline; `/legacy/research/` is the graduate-researcher-facing page (Doc #10).
 - **Community content model:** `newsletters` MDX collection + `COMPANION_THEATRES` structured data file (`src/data/companion-theatres.ts`) + `TESTIMONIALS` structured data file (`src/data/testimonials.ts`).
 - **Forms gateway:** Formspree via `src/lib/form-action.ts` `formActionFor(key)` helper. `.env.example` documents the three `PUBLIC_FORMSPREE_*` env vars; `.env` is git-ignored. Forms fall back to a "not yet configured" mailto: state when envs are unset — see the Formspree conventions block below.
 - pnpm; Vitest for unit tests; Playwright for one smoke test
@@ -92,7 +92,9 @@ component and the Vitest existence test both prepend `/audio/`). Body uses
 
 **Adding an essay.** Drop `src/content/essays/<slug>.mdx` with `title`, `author`, `year?`, `publishedIn?`, `excerpt` (≤ 200 chars), `sample: false`. Body sections `## About this essay` / `## Full text`. Use `&rsquo;` for apostrophes.
 
-**Adding a founder.** Append to `FOUNDERS` in `src/data/founders.ts` with a unique kebab-case `slug`, `name`, `role`, `shortBio` (2–4 sentences using `'` unicode escapes for possessives). Optional: `years`, `photoSrc` (path under `/public/images/legacy/founders/`), `unconfirmed: true` for pending confirmations.
+**Archival essays.** Set `archival: true` in frontmatter (added Cycle 9 T6) to render an `EssayArchivalBadge` between breadcrumbs and byline ("From the Archive · YYYY"). Signals to the reader that they are entering a historical artifact, not modern site voice. Currently applied to `towards-a-poor-caravan.mdx` (1971) and `developmental-drama.mdx` (Cobin). The `About this essay` section should include a verbatim editorial preface plus an `_Archival note:_` explaining any missing footnote text, invented markers, or page-marker treatment choices. Per Cycle 9 §11 decision #4: source `(End Chuck P.1)`-style page-break breadcrumbs are removed globally, with a code comment documenting the choice. Run `pnpm check:links` before merging archival essay changes to catch link rot on any external URLs the essay cites.
+
+**Adding a founder.** Append to `FOUNDERS` in `src/data/founders.ts` with a unique kebab-case `slug`, `name`, `role`, `shortBio` (2–4 sentences using `'` unicode escapes for possessives). Explicit `category: 'founder' | 'origin-witness' | 'faculty' | 'contributor'` required (added Cycle 9 T7; drives which section on `/legacy/founders/` renders the entry — 4-card grid / TestimonyPullQuote / Faculty subsection / Critical Early Contributors). Optional: `years`, `photoSrc` (path under `/public/images/legacy/founders/`), `unconfirmed: true` for pending confirmations.
 
 **Adding a timeline event.** Append to `src/data/timeline.json` with `date`, `event`, `organization` (one of `TIMELINE_ORGS`). Optional: `participants`, `presentation`, `additionalInfo`.
 
@@ -100,11 +102,11 @@ component and the Vitest existence test both prepend `/audio/`). Body uses
 
 **Landing page data.** All landing-page copy — Community center text, section tiles, reflective banks, and the Idea Two answer map — lives in `src/data/landing.ts`, Zod-validated at import. The single line `export const LANDING_MODE: BoxMode = 'hybrid'` toggles every section tile's render mode (`list` | `questions` | `hybrid`). Per-box overrides go on the tile's `mode` field.
 
-**Component directories.** Landing components live under `src/components/landing/`; the shared reflective prompt component lives under `src/components/section/`. Script card, detail, and library-index components (refactored in Cycle 4) live under `src/components/scripts/`. Children's Theatre–specific components (Wayfarer's Journey Wheel, play cards) live under `src/components/childrens/`.
+**Component directories.** Landing components live under `src/components/landing/`; the shared reflective prompt component lives under `src/components/section/`. Script card, detail, and library-index components (refactored in Cycle 4) live under `src/components/scripts/`. Children's Theatre–specific components (Wayfarer's Journey Wheel, play cards) live under `src/components/childrens/`. Legacy-specific components (FounderCard, Timeline, TimelineLegend, EssayDetail, EssayCard, plus Cycle 9's `TestimonyPullQuote`, `EssayArchivalBadge`, `InfluencesChart`, `FoundationalReading`) live under `src/components/legacy/`.
 
-**Legacy sub-nav** (`src/lib/legacy-nav.ts`) drives the persistent sub-nav rendered by `src/layouts/LegacyLayout.astro` on every `/legacy/*` page. 5 items: History / Founders / Timeline / Essays / Honoring Our Guides.
+**Legacy sub-nav** (`src/lib/legacy-nav.ts`) drives the persistent sub-nav rendered by `src/layouts/LegacyLayout.astro` on every `/legacy/*` page. 6 items in vision-spec §2 order (reordered Cycle 9 T1): Honoring Our Guides / History / Founders / Timeline / Research / Essays. A commented `// Future: 'All That Came After: Theatres and Careers'` slot reserves nav space for the deferred Doc #11 page.
 
-**Timeline data model.** Events live at `src/data/timeline.json` as a flat array. Validated by `timelineSchema` at import (`src/lib/timeline.ts` throws on drift). Grouped by decade via `groupByDecade()`. Organization enum `TIMELINE_ORGS` has 6 values (ALL / CC / C&C / CSF / TEF / OSC), each with a `--color-timeline-*` CSS variable in tokens.css.
+**Timeline data model.** Events live at `src/data/timeline.json` as a flat array. Validated by `timelineSchema` at import (`src/lib/timeline.ts` throws on drift). Grouped by decade via `groupByDecade()` which returns `Array<{ decade: number | null; events }>` — events with unparseable dates ("197?", season-only entries) land in a trailing `decade: null` group rendered as "Undated / Approximate" (Cycle 9 T13; replaces silent-drop). Organization enum `TIMELINE_ORGS` has 6 values (ALL / CC / C&C / CSF / TEF / OSC), each with a `--color-timeline-*` CSS variable in tokens.css.
 
 **Founder photos** live at `/public/images/legacy/founders/<slug>.<ext>` (ASCII kebab-case). FounderCard renders a placeholder circle with initials when `photoSrc` is unset.
 
@@ -116,6 +118,10 @@ component and the Vitest existence test both prepend `/audio/`). Body uses
 
 **Curly-apostrophe guardrail.** `scripts/check-prohibited-text.mjs` detects straight U+0027 apostrophes between word characters across `.astro` / `.mdx` / `.md` files. Runs in `pnpm build`. Whitelist: Cycle 3 Shakespeare verse files (juliet, lady-macbeth, mechanicals) where straight apostrophes are standard modernized editorial practice. To add a legitimate straight-apostrophe file to the whitelist, edit `CURLY_APOSTROPHE_ALLOWLIST` in the script.
 
+**Prohibited-text guardrail — Legacy vision spec §6.** The same script's `PATTERNS` array covers 12 editorial-working-note phrases from `/Users/cnote/Downloads/dtfc-legacy-vision-spec.md` §6 (added Cycle 9 T4): "Lola: I think the customers", "Desirae is considering", "record them here", "Steve Smith needs to confirm", `(pic?)`, "For Bud Coleman", `VERSION #2`, "JPJ notes", "I WASN'T THERE", "TEXT MISSING", "LOLA CC ARTICLE", raw `google.com/search?` URLs. Even code comments in `.astro` files trigger the check — use U+2019 curly apostrophes in comment prose or reword to avoid possessives.
+
+**Cross-section contract links (Cycle 9 T12).** Bidirectional cross-links wired: Legacy Founders origin-witness testimony hyperlinks Cherie's compilation → `/theatre-games/` and Laurie's manual → `/legacy/essays/workshop-manual/`; `/theatre-games/` carries a "From the Legacy archive" aside linking to the Workshop Manual placeholder; `why-these-plays-are-successful.mdx` (Legacy) ↔ `/childrens-theatre/why-these-plays-work.astro` (practitioner) callout each way; Timeline footer links to Founders; Founders cross-links tail links to Timeline + Honoring Our Guides + Research.
+
 ## Commands
 
 - `pnpm dev` — dev server at http://localhost:4321
@@ -124,6 +130,7 @@ component and the Vitest existence test both prepend `/audio/`). Body uses
 - `pnpm test` — Vitest unit tests
 - `pnpm test:e2e` — Playwright smoke test (starts its own dev server)
 - `pnpm check:prohibited` — runs the prohibited-text guardrail (fails build on any occurrence of the vision-spec-rejected phrases; runs automatically in `pnpm build`)
+- `pnpm check:links` — on-demand link-rot check for external URLs in essays flagged `archival: true` (Cycle 9 T11). Not wired into `pnpm build` — run manually before merging archival-essay changes. Advisory-only exit 0.
 - `pnpm format` — Prettier
 
 ## Deferred / TODO markers
@@ -140,8 +147,13 @@ component and the Vitest existence test both prepend `/audio/`). Body uses
 - `pairChildren` helper removed in Cycle 4 (was unused; SideBySideText composition works via CSS grid auto-flow).
 - Web 2.0 careers/successor-theatres slot in Legacy — Cycle N per spec §5.
 - Timeline canonical version pending Steve Smith (spec §8 item 3) — pre-release chip on `/legacy/timeline/`.
-- Workshop Manual TEXT MISSING (spec §8 item 2) — essay ships as sample: true placeholder.
-- Judith Bock unconfirmed founder (spec §4.5 item 4) — card renders with unconfirmed chip.
+- Workshop Manual text pending (spec §8 item 2) — essay ships as sample: true placeholder; now cross-linked from `/theatre-games/` per Cycle 9 T12.
+- Judith Bock unconfirmed founder (spec §4.5 item 4) — card renders with unconfirmed chip, filed under `category: 'contributor'` in the Founders page rebuild.
+- Will Power article PDF hosting (Cycle 9 T7) — TODO(client) on `/legacy/founders/` CSF-continuity block; needs permission before local `/public/legacy/` hosting.
+- CSF Facebook video URL (Cycle 9 T7) — TODO(client) on the same block; link activates when URL arrives.
+- Poor Caravan footnote-marker positions (Cycle 9 T10) — vision spec §3 Doc #5 requires `(1)` and `(2)` markers restored to their source-typescript positions; archival note stands in until the Drive-source reconciliation.
+- Developmental Drama tmai.net link (Cycle 9 T11) — vision spec §3 Doc #7 calls for the citation with archive.org fallback if dead; awaits source reshare.
+- CLIENT REVIEW markers added in Cycle 9: Founders Theatre Games origins first-person testimony (drafted from Doc #3 fragments), Institutional Support narrative (sacred numbers verified; connective prose drafted), CSF outreach continuity, `/legacy/research/` abstract (Cycle 5 draft carried forward), the `/legacy/` landing founders paragraph. Bundle for Lola/Laurie review.
 
 ## Blockers for future cycles
 

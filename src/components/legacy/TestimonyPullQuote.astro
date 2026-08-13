@@ -1,0 +1,19 @@
+---
+interface Props {
+  speaker: string;
+  role?: string;
+  year?: string | number;
+}
+const { speaker, role, year } = Astro.props;
+---
+
+<figure class="border-clay-500/60 my-6 border-l-4 py-2 pl-6 pr-2">
+  <blockquote class="text-ink-800 italic leading-relaxed">
+    <slot />
+  </blockquote>
+  <figcaption class="text-ink-500 mt-3 text-sm not-italic">
+    &mdash; <cite class="text-ink-700 font-medium not-italic">{speaker}</cite>
+    {role && <span>, {role}</span>}
+    {year && <span>, {year}</span>}
+  </figcaption>
+</figure>

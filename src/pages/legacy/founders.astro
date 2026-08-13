@@ -1,29 +1,223 @@
 ---
 import LegacyLayout from '@/layouts/LegacyLayout.astro';
 import FounderCard from '@/components/legacy/FounderCard.astro';
+import FoundationalReading from '@/components/legacy/FoundationalReading.astro';
+import TestimonyPullQuote from '@/components/legacy/TestimonyPullQuote.astro';
 import { FOUNDERS } from '@/data/founders';
+
+const founders = FOUNDERS.filter((f) => f.category === 'founder');
+const originWitnesses = FOUNDERS.filter((f) => f.category === 'origin-witness');
+const cherie = originWitnesses.find((f) => f.slug === 'cherie-karo-schwartz');
+const laurie = originWitnesses.find((f) => f.slug === 'laurie-obrien');
+const faculty = FOUNDERS.filter((f) => f.category === 'faculty');
+const contributors = FOUNDERS.filter((f) => f.category === 'contributor');
 ---
 
 <LegacyLayout
   title="Founders"
   subPage="founders"
-  eyebrow="The people who built the Legacy"
-  description="Nine founders and contributing faculty whose work shaped Developmental Theatre."
+  eyebrow="The people who built the Legacy &mdash; and the institution that resourced them"
+  description="The four founders, the origin witnesses, the contributing faculty, and the critical early contributors who shaped Developmental Theatre."
 >
-  <div class="max-w-2xl">
-    <p class="text-ink-700 text-base">
-      Developmental Theatre was invented at the University of Colorado in the 1970s. Below are the
-      four founders and the five contributing faculty whose work carried the practice into its
-      next generation. For the full lineage, see
-      <a href="/legacy/history/" class="hover:text-clay-500">the one-page history &rarr;</a>
-    </p>
-  </div>
+  <div class="max-w-3xl space-y-14">
 
-  <ul class="mt-10 grid list-none gap-6 md:grid-cols-2 lg:grid-cols-3">
-    {FOUNDERS.map((f) => (
-      <li>
-        <FounderCard founder={f} />
-      </li>
-    ))}
-  </ul>
+    <section>
+      <p class="text-ink-700 text-base">
+        Developmental Theatre cohered in the 1970s around four founders and the
+        University of Colorado &mdash; the institution that resourced them. What
+        began as a single touring company grew into an M.A. programme, an
+        international network of successor theatres, and a fifty-year practice
+        still active today.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="font-display text-ink-900 text-2xl">The four founders</h2>
+      <p class="text-ink-700 mt-2">
+        Richard Knaub, Chuck Wilcox, Lola Wilcox, and Martin Cobin launched the
+        Colorado Caravan at CU Boulder in 1971. Each brought a distinct
+        discipline &mdash; direction, playwriting, education, scholarship
+        &mdash; and each stayed with the practice long enough to hand it on.
+      </p>
+      <ul class="mt-6 grid list-none gap-6 md:grid-cols-2">
+        {founders.map((f) => (
+          <li>
+            <FounderCard founder={f} />
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="font-display text-ink-900 text-2xl">Theatre Games origins</h2>
+      <p class="text-ink-700 mt-2">
+        Two voices from the Caravan floor carry the origin practice forward in
+        their own words:
+      </p>
+
+      {/* CLIENT REVIEW: first-person testimony drafted from vision spec §3 Doc #3
+          fragments (the Cherie compilation → Theatre Games section; the Laurie
+          Workshop Manual → both sections). Verbatim source lives in client
+          Drive; awaits reconciliation. */}
+      {cherie && (
+        <TestimonyPullQuote speaker={cherie.name} role={cherie.years} year="1976&ndash;7">
+          I was in the 1976&ndash;7 Colorado Caravan troupe. What we made together
+          &mdash; the games, the warm-ups, the shared vocabulary of ensemble
+          &mdash; I later gathered into a compilation that has become the base
+          for the <a href="/theatre-games/" class="hover:text-clay-500">Theatre
+          Games section</a> of this website. Every game there has a lineage back
+          to the Caravan floor.
+        </TestimonyPullQuote>
+      )}
+      {laurie && (
+        <TestimonyPullQuote speaker={laurie.name} role="Facilitator, Workshop Manual author">
+          The workshops we ran after every performance became a discipline of
+          their own. I&rsquo;ve been writing the practice down as the{' '}
+          <a href="/legacy/essays/workshop-manual/" class="hover:text-clay-500">
+            Workshop Manual
+          </a>{' '}
+          for facilitators; when it publishes it will live in both this Legacy
+          section and the Theatre Games section.
+        </TestimonyPullQuote>
+      )}
+    </section>
+
+    <section>
+      <h2 class="font-display text-ink-900 text-2xl">Contributing faculty</h2>
+      <p class="text-ink-700 mt-2">
+        CU faculty whose scholarship and languages widened the Caravan&rsquo;s
+        reach beyond the departmental theatre programme.
+      </p>
+      <ul class="mt-6 grid list-none gap-6 md:grid-cols-2">
+        {faculty.map((f) => (
+          <li>
+            <FounderCard founder={f} />
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="font-display text-ink-900 text-2xl">Institutional support</h2>
+
+      {/* CLIENT REVIEW: prose drafted from vision spec §4.2 (sacred numbers) and
+          §3 Doc #3 (CU-contributions and Chautauqua-Park passages). Awaits
+          reconciliation with the source passage in client Drive. */}
+      <p class="text-ink-700 mt-2">
+        The University of Colorado was more than an academic host &mdash; it was
+        the material ground the Caravan grew from. CU supplied the van the
+        company drove, the gas that filled it, the rehearsal space where
+        scripts were tested, and even Lola&rsquo;s desk. Housing came from the
+        Chautauqua Park cabins, whose shared kitchens and mountain-porch
+        dinners built the offstage rapport that made the ensemble work.
+      </p>
+      <p class="text-ink-700 mt-4">
+        Federal Title III funding underwrote the touring. When the National
+        Endowment for the Arts added a Dissemination &amp; Diffusion Grant, the
+        Caravan&rsquo;s reach multiplied. At its height the company was
+        performing for over <strong>30,000 children</strong> each year, and for
+        <strong>100,000 or more</strong> when All-Town performances combined
+        elementary, middle-school, and high-school audiences under a single
+        roof. A national evaluation team designated the programme
+        &ldquo;exemplary.&rdquo;
+      </p>
+      <p class="text-ink-700 mt-4">
+        The same funding stream built an M.A. programme in Developmental
+        Theatre at CU, granted within three years and led by Dr. Martin Cobin.
+        The programme&rsquo;s graduates seeded companies across the country and
+        beyond &mdash; the Overland Stage Company in Wyoming in 1978, followed
+        by successor theatres in Maine, Montana, Hawaii, Denmark, and
+        Australia. Across fifty years the Caravan and its offshoots have
+        performed for over <strong>six million people on three
+        continents</strong>.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="font-display text-ink-900 text-2xl">Foundational reading</h2>
+      <p class="text-ink-700 mt-2">
+        The theoretical and practical texts the Caravan&rsquo;s founders drew
+        on as they built the practice. The list is short by design &mdash;
+        these six works anchor most of Developmental Theatre&rsquo;s
+        vocabulary.
+      </p>
+      <FoundationalReading />
+    </section>
+
+    <section>
+      <h2 class="font-display text-ink-900 text-2xl">Critical early contributors</h2>
+      <p class="text-ink-700 mt-2">
+        People whose sustained work with the Caravan, the CSF outreach
+        programme, or the successor theatres kept the practice alive across
+        decades. Not founders; not faculty; indispensable.
+      </p>
+      <ul class="mt-6 grid list-none gap-6 md:grid-cols-2">
+        {contributors.map((f) => (
+          <li>
+            <FounderCard founder={f} />
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="font-display text-ink-900 text-2xl">
+        Continuity through the Colorado Shakespeare Festival
+      </h2>
+
+      {/* CLIENT REVIEW: CSF outreach continuity prose drafted from vision spec §3
+          Doc #3 (Devin era → Chuck-as-Will → Giguere). Awaits source reconciliation. */}
+      {/* TODO(client): CSF Facebook video URL for outreach programme &mdash;
+          link activates once URL arrives. */}
+      {/* TODO(client): Will Power article PDF hosting &mdash; permission
+          pending; when granted, host under /public/legacy/ and swap the
+          in-text reference for a hyperlink. */}
+      <p class="text-ink-700 mt-2">
+        The Caravan&rsquo;s Shakespeare influence carried into the Colorado
+        Shakespeare Festival&rsquo;s outreach programme. Richard Devin&rsquo;s
+        era established outreach as central to CSF&rsquo;s mission; Chuck
+        Wilcox toured for CSF as Will Shakespeare himself, taking the character
+        into schools across the state.
+      </p>
+      <p class="text-ink-700 mt-4">
+        The programme continues today under Amanda Giguere. CSF publishes a
+        Facebook video on the outreach programme (link pending) and a
+        Will Power article (hosting pending) that document the work in the
+        current era.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="font-display text-ink-900 text-2xl">What came of it</h2>
+      <p class="text-ink-700 mt-2">
+        The Caravan and the M.A. programme ceased when their institutional
+        sponsors moved on. What they built, however, did not. Decades of
+        exploration, teaching, touring, and revision have produced
+        <em>Developmental Theatre: Fearless Creativity</em> &mdash; the current
+        continuation of the work these founders began.
+      </p>
+    </section>
+
+    <section aria-label="Related pages" class="border-ivory-200 border-t pt-8">
+      <h2 class="font-display text-ink-900 text-lg">Continue</h2>
+      <ul class="mt-3 list-none space-y-2">
+        <li>
+          <a href="/legacy/timeline/" class="hover:text-clay-500">
+            Explore the Grand Timeline &rarr;
+          </a>
+        </li>
+        <li>
+          <a href="/legacy/honoring-our-guides/" class="hover:text-clay-500">
+            See Honoring Our Guides &rarr;
+          </a>
+        </li>
+        <li>
+          <a href="/legacy/research/" class="hover:text-clay-500">
+            Read the Research abstract &rarr;
+          </a>
+        </li>
+      </ul>
+    </section>
+
+  </div>
 </LegacyLayout>

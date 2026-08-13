@@ -1,8 +1,22 @@
 ---
+import { getEntry, render } from 'astro:content';
 import LegacyLayout from '@/layouts/LegacyLayout.astro';
 import ReflectivePrompt from '@/components/section/ReflectivePrompt.astro';
+import InfluencesChart from '@/components/legacy/InfluencesChart.astro';
+
+// Lola Wilcox’s "Theatre Influences" essay doubles as the Legacy landing
+// narrative per vision spec §3 Doc #4. Rendered inline here; the essay URL
+// at /legacy/essays/theatre-influences/ stays live for direct linking.
+const theatreInfluences = await getEntry('essays', 'theatre-influences');
+if (!theatreInfluences) throw new Error('theatre-influences essay not found — vision spec §3 Doc #4 requires it for the landing narrative.');
+const { Content } = await render(theatreInfluences);
 
 const directoryCards = [
+  {
+    label: 'Honoring Our Guides',
+    href: '/legacy/honoring-our-guides/',
+    description: 'The institutions and mentors whose work made all of this possible.',
+  },
   {
     label: 'History',
     href: '/legacy/history/',
@@ -11,7 +25,7 @@ const directoryCards = [
   {
     label: 'Founders',
     href: '/legacy/founders/',
-    description: 'Nine people who invented Developmental Theatre and shaped its next fifty years.',
+    description: 'The four founders, origin witnesses, contributing faculty, and critical early contributors.',
   },
   {
     label: 'Timeline',
@@ -19,60 +33,98 @@ const directoryCards = [
     description: 'The Grand Timeline, 1971&ndash;present, filterable by organization.',
   },
   {
+    label: 'Research',
+    href: '/legacy/research/',
+    description: 'The research abstract, replication branches, and Foundational Reading &mdash; for graduate students and other researchers.',
+  },
+  {
     label: 'Essays',
     href: '/legacy/essays/',
     description: 'The founding manifestos and the writings that carry the practice forward.',
-  },
-  {
-    label: 'Honoring Our Guides',
-    href: '/legacy/honoring-our-guides/',
-    description: 'The institutions and mentors whose work made all of this possible.',
   },
 ];
 ---
 
 <LegacyLayout
   title="Legacy"
-  eyebrow="History &mdash; Foundational Concepts &mdash; Who / When / Why &mdash; Next Steps"
-  description="Where DT:FC came from, the people who built it, and the 50+ year timeline that&rsquo;s still unfolding."
+  eyebrow="Once upon a time, in the 1970&rsquo;s&hellip;"
+  description="Where DT:FC came from, the people who built it, and the fifty-year lineage that&rsquo;s still unfolding."
 >
   <ReflectivePrompt sectionKey="legacy" />
 
-  <div class="mt-8 max-w-2xl space-y-6">
-    {/* CLIENT REVIEW: rewritten in Cycle 5 to cross-link out to /legacy/history/. */}
-    <section id="colorado-caravan">
-      <h2>The Colorado Caravan</h2>
-      <p>
-        DT:FC descends from the <strong>Colorado Caravan</strong>, the touring theatre invented at
-        the University of Colorado in the 1970s under NEA Title III grants.
-        <a href="/legacy/history/" class="hover:text-clay-500">Read the full one-page history &rarr;</a>
-      </p>
-    </section>
+  <nav aria-label="Jump to section" class="border-ivory-200 mt-6 border-b pb-3">
+    <ul class="flex flex-wrap gap-x-5 gap-y-2 text-sm">
+      <li>
+        <a href="#colorado-caravan" class="hover:text-clay-500">Read the story</a>
+      </li>
+      <li>
+        <a href="#influences-chart" class="hover:text-clay-500">See the chart</a>
+      </li>
+      <li>
+        <a href="#founders" class="hover:text-clay-500">Meet the founders</a>
+      </li>
+      <li>
+        <a href="#explore" class="hover:text-clay-500">Explore the section</a>
+      </li>
+    </ul>
+  </nav>
 
-    {/* CLIENT REVIEW: rewritten in Cycle 5 to cross-link out to /legacy/founders/. */}
-    <section id="founders">
-      <h2>The Founders</h2>
-      <p>
-        Developmental Theatre was founded by Richard Knaub, Chuck Wilcox, Lola Wilcox, and
-        Martin Cobin, with contributions from Laurie O&rsquo;Brien, Cherie Karo Schwartz, Judith
-        Bock, Daniel S.P. Yang, and Nils Petersen.
-        <a href="/legacy/founders/" class="hover:text-clay-500">Meet the founders &rarr;</a>
+  <section id="colorado-caravan" class="mt-10 scroll-mt-8">
+    <p class="text-ink-500 text-sm">
+      A story by <strong>Lola Wilcox</strong> (2024). Also available as a
+      standalone essay at{' '}
+      <a href="/legacy/essays/theatre-influences/" class="hover:text-clay-500 underline">
+        /legacy/essays/theatre-influences/
+      </a>.
+    </p>
+    <div class="prose prose-neutral mt-6 max-w-none">
+      <Content components={{ InfluencesChart }} />
+    </div>
+  </section>
+
+  <section
+    aria-label="Recruitment"
+    class="border-clay-500/60 my-14 mx-auto max-w-3xl border-l-4 py-6 pl-6 pr-4"
+  >
+    <p class="font-display text-ink-900 text-2xl leading-snug md:text-3xl">
+      You are the next heroes and heroines to continue this legacy.
+    </p>
+    <p class="text-ink-500 mt-3 text-sm">
+      &mdash; from Lola Wilcox&rsquo;s Theatre Influences narrative
+    </p>
+  </section>
+
+  <div class="mx-auto max-w-2xl space-y-10">
+    {/* CLIENT REVIEW: founders paragraph updated in Cycle 9 T8 to point at the
+        rebuilt /legacy/founders/ page and reflect the 4-founders-vs-contributors
+        structure. */}
+    <section id="founders" class="scroll-mt-8">
+      <h2 class="font-display text-ink-900 text-2xl">Meet the Founders</h2>
+      <p class="text-ink-700 mt-3">
+        Developmental Theatre was founded by <strong>Richard Knaub</strong>,{' '}
+        <strong>Chuck Wilcox</strong>, <strong>Lola Wilcox</strong>, and{' '}
+        <strong>Martin Cobin</strong> at the University of Colorado. Contributing
+        faculty, origin witnesses, and critical early contributors carried the
+        practice forward across five decades.
+        <a href="/legacy/founders/" class="hover:text-clay-500"> Meet everyone &rarr;</a>
       </p>
     </section>
 
     <section>
-      <h2>Become part of this Legacy</h2>
-      {/* CLIENT REVIEW: cross-link resolves Idea Two #13 to the Community membership paragraph (see /community/#membership). */}
-      <p>
-        The Legacy is a working one &mdash; anyone who plays, teaches, watches, or supports the
-        work adds to it. Start on the <a href="/community/#membership">Community page</a> to learn
-        how to join.
+      <h2 class="font-display text-ink-900 text-2xl">Become part of this Legacy</h2>
+      {/* CLIENT REVIEW: cross-link resolves Idea Two #13 to the Community
+          membership paragraph (see /community/#membership). */}
+      <p class="text-ink-700 mt-3">
+        The Legacy is a working one &mdash; anyone who plays, teaches, watches,
+        or supports the work adds to it. Start on the{' '}
+        <a href="/community/#membership" class="hover:text-clay-500">Community page</a>{' '}
+        to learn how to join.
       </p>
     </section>
   </div>
 
-  <section class="mt-14">
-    <h2 class="font-display text-2xl">Explore the section</h2>
+  <section id="explore" class="mt-14 scroll-mt-8">
+    <h2 class="font-display text-ink-900 text-2xl">Explore the section</h2>
     <ul class="mt-6 grid list-none gap-4 md:grid-cols-2 lg:grid-cols-3">
       {
         directoryCards.map((card) => (
@@ -81,8 +133,8 @@ const directoryCards = [
               href={card.href}
               class="border-ivory-200 bg-ivory-50 hover:border-clay-500/60 block h-full rounded-[var(--radius-card)] border p-5 no-underline transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]"
             >
-              <h3 class="font-display text-ink-900 text-xl" set:html={card.label}></h3>
-              <p class="text-ink-700 mt-1 text-sm" set:html={card.description}></p>
+              <h3 class="font-display text-ink-900 text-xl" set:html={card.label} />
+              <p class="text-ink-700 mt-1 text-sm" set:html={card.description} />
             </a>
           </li>
         ))

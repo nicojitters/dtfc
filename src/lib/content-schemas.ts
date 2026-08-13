@@ -123,6 +123,10 @@ export const essaysSchema = z.object({
   publishedIn: z.string().optional(),
   excerpt: z.string().max(200),
   sample: z.boolean().default(false),
+  // When true, EssayDetail renders an archival "From the Archive · YYYY"
+  // badge and treats the essay as a historical artifact. Applied to Poor
+  // Caravan (1971) and Developmental Drama in Cycle 9 T10/T11.
+  archival: z.boolean().default(false),
 });
 
 export const newslettersSchema = z.object({

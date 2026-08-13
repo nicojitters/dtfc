@@ -1,0 +1,119 @@
+---
+import LegacyLayout from '@/layouts/LegacyLayout.astro';
+import FoundationalReading from '@/components/legacy/FoundationalReading.astro';
+import { SITE_CONFIG } from '@/lib/site-config';
+---
+
+<LegacyLayout
+  title="Research"
+  subPage="research"
+  eyebrow="Research abstract, materials, and contact for graduate researchers"
+  description="Developmental Theatre is a fifty-year lineage waiting for a definitive history. This page is for the researcher who will write it."
+>
+  <div class="max-w-2xl space-y-10">
+
+    {/* CLIENT REVIEW: abstract text below is the Cycle 5 draft carried forward from history.astro.
+        Needs reconciliation with Doc #10 (Research Abstract) verbatim once client provides the source. */}
+    <section>
+      <h2>Research abstract</h2>
+      <p>
+        Developmental Theatre began in 1971 at the University of Colorado when Richard Knaub,
+        Martin Cobin, Chuck Wilcox, and Lola Wilcox launched the Colorado Caravan under NEA
+        Title III funding. The Caravan&rsquo;s bare-stage, workshop-forward touring model
+        &mdash; five or six actors, one van, gymnasiums and cafetoriums in-the-round, four age
+        levels served, an interactive workshop after every performance &mdash; proved
+        replicable. Its first offshoot, the Overland Stage Company, launched in Wyoming in
+        1978; similar companies followed in Maine, Montana, Hawaii, Denmark, and Australia.
+      </p>
+      <p class="mt-4">
+        Across more than fifty years, the Caravan and its successor companies have performed
+        for over six million people on three continents. The M.A. programme in Developmental
+        Theatre at CU, led by Dr. Martin Cobin, institutionalised the practice inside a
+        university department for the first time and launched careers that have carried
+        Developmental Theatre&rsquo;s tools into schools, community theatres, universities,
+        and therapeutic settings around the world. The programme and the Caravan itself
+        ceased when their institutional sponsors moved on. The practice they developed did
+        not: DT:FC is the current continuation.
+      </p>
+      <p class="mt-4">
+        A definitive history of Developmental Theatre has not yet been written. The
+        materials to write one exist, are accessible, and are catalogued below. We are
+        actively seeking a graduate researcher to take on that project.
+      </p>
+    </section>
+
+    <section>
+      <h2>Research materials</h2>
+      <p>
+        Materials pertinent to gathering qualitative data sets on Developmental Theatre&rsquo;s
+        history, methods, and outcomes:
+      </p>
+      <ul class="mt-4 list-disc space-y-2 pl-6">
+        <li>
+          <strong>Participant contacts</strong> &mdash; contact information for
+          actors, directors, teachers, and audience members across more than ten years of
+          active touring, plus alumni of the CU M.A. programme.
+        </li>
+        <li>
+          <strong>Physical evidence</strong> &mdash; scripts, reviews, scholarly papers,
+          programmes, correspondence with local sponsors, and videos and drawings from
+          the touring years.
+        </li>
+        <li>
+          <strong>Developmental Theatre Facebook Group</strong> &mdash; an active
+          community where alumni post recollections, share archival photos, and connect
+          across generations of the practice.
+        </li>
+        <li>
+          <strong>Master Timeline with replication branches</strong> &mdash; the
+          <a href="/legacy/timeline/" class="hover:text-clay-500">Grand Timeline</a> traces
+          the Caravan and its successor companies in Wyoming, Maine, Montana, Hawaii,
+          Denmark, and Australia.
+        </li>
+        <li>
+          <strong>Bios</strong> &mdash; a growing archive linking Developmental Theatre
+          training with lifelong careers in performance, education, and community
+          practice.
+        </li>
+        <li>
+          <strong>Script, workshop, and competency synopsis</strong> &mdash; a working
+          document mapping the plays, workshops, and skills the Caravan developed and
+          taught across its touring life and its M.A. programme.
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Foundational reading</h2>
+      <p>
+        The theoretical and practical texts the Caravan&rsquo;s founders drew on as
+        they built the practice. The list is short by design &mdash; these six works
+        anchor most of Developmental Theatre&rsquo;s vocabulary.
+      </p>
+      <FoundationalReading />
+    </section>
+
+    <section>
+      <h2>Get in touch</h2>
+      <p>
+        Interested in researching this history? Contact us. We can put you in touch with
+        living participants, share the physical archive, and help you scope a project that
+        fits your programme or your timeline.
+      </p>
+      <div class="border-mustard-400/40 bg-mustard-200/20 mt-4 rounded-[var(--radius-card)] border p-6">
+        <p class="text-ink-700 text-sm">
+          Research inquiries currently route by email. Please write to{' '}
+          <a
+            href={`mailto:${SITE_CONFIG.fallbackContactEmail}?subject=Research%20inquiry%20%E2%80%94%20Developmental%20Theatre`}
+            class="hover:text-clay-500 underline"
+          >
+            {SITE_CONFIG.fallbackContactEmail}
+          </a>{' '}
+          with a short description of your programme, your research question, and your
+          timeline &mdash; we&rsquo;ll respond within a week.
+        </p>
+      </div>
+    </section>
+
+  </div>
+</LegacyLayout>
