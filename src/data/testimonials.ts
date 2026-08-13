@@ -19,7 +19,18 @@ export type Testimonial = z.infer<typeof TestimonialSchema>;
  * When TESTIMONIALS.length === 0, /community/testimonials/ renders an
  * empty-state message above the share-your-story form.
  */
-export const TESTIMONIALS: Testimonial[] = [];
+export const TESTIMONIALS: Testimonial[] = [
+  // CLIENT REVIEW: Track P bundle #1 — permission for Linda Nenno's quote
+  // is pending. `sample: true` flags the entry as unconfirmed; scenes.astro
+  // shows a subtle "Pending permission" chip when sample=true.
+  {
+    slug: 'linda-nenno',
+    attribution: 'Linda Nenno',
+    role: 'Texas State University',
+    body: 'My students are rocking it.',
+    sample: true,
+  },
+];
 
 // Build-time verification: schema + slug uniqueness (both are no-ops on
 // an empty array but activate the moment entries are added).
