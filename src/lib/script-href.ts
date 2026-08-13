@@ -18,6 +18,9 @@ const CHILDRENS_LIBRARIES = new Set(['childrens-plays', 'teaching-modules']);
  */
 export function scriptHref(entry: CollectionEntry<'scripts'>): string {
   const slug = entry.id.replace(/\.mdx?$/, '');
+  if (entry.data.nennoUnit) {
+    return `/shakespeare/scenes/dtfc/${slug}/`;
+  }
   if (CHILDRENS_LIBRARIES.has(entry.data.library)) {
     return `/childrens-theatre/scripts/${slug}/`;
   }
