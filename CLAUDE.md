@@ -132,6 +132,22 @@ component and the Vitest existence test both prepend `/audio/`). Body uses
 
 **Prohibited-text guardrail — PRC vision spec §7.** Additional PATTERNS added in Cycle 10: `DESIRAE:` prefix, `Desirae you will need`, `check this doc info is included`, `OTHERS?`, `(image of water molecule)`, trailing `(LOGO)`, trailing `(ICON)` title suffix, `Note: Published in`, raw `docs.google.com` / `drive.google.com` URLs.
 
+**Shakespeare content additions (Cycle 11).** `scripts` collection library enum now includes `new-plays` for Alternative Four scripts. Two placeholder entries ship at `three-finger-dick.mdx` + `shakespeares-sister.mdx`; real scripts arrive from client Drive shares. `/shakespeare/new-plays/` renders via the standard library-index pattern.
+
+**Colloquial audio.** Hosted at `/public/audio/<filename>.mp4` with ASCII kebab-case filenames (e.g. `midsummah-pidgin-paka.mp4`). Frontmatter `audio: '<filename>.mp4'` (bare) + optional `audioCaption: '<caption>'`. `<AudioEmbed>` component in `src/components/shakespeare/` prepends `/audio/`. Detail template renders audio + a transcript-statement paragraph above the side-by-side text.
+
+**Hawaiian ʻokina (U+02BB) vs. curly apostrophe (U+2019).** In Colloquial Pidgin content (`Midʻsummah`, `iaʻu`, `ʻao`), preserve the ʻokina U+02BB — it is a distinct character from U+2019. English possessives in the same file (`Shakespeare&rsquo;s`) still use U+2019. The prohibited-text guardrail does not distinguish; be intentional per character.
+
+**Sub-nav order (Cycle 11 reorder).** Shakespeare sub-nav order matches vision spec §2 client-numbered order: Alternatives, Honoring Our Guides, Soliloquies, Scenes, Themes, Cuttings, Children's Shakespeare, Colloquial, New Plays, Ask Shakespeare (10 items).
+
+**Canonical Shakespeare theme strings.** Theme labels used across `alternatives.astro`, `themes.astro`, and any script frontmatter `theme:` fields must match exactly. The `themeSlug()` filter lowercases + strips non-alphanumeric, so `'Bullies (CU)'` slugs to `bullies-cu`. Canonical eight themes: Battle of the Sexes, Magic and the Supernatural, Fools and Fooling, Ruler and the Ruled, Rogues and Villains, The Generation Gap, Bullies (CU), Falstaff. Preserve the `(CU)` parenthetical on Bullies for source fidelity + chip-filter consistency.
+
+**500+/440+ Shakespeare year-count.** Canonical is `440+ years` site-wide. `500+ years` never ships.
+
+**Chuck Wilcox site-wide canonical.** Prose uses "Chuck Wilcox" everywhere; formal program credits legitimately quoting "Charles Wilcox" are the only preserved exceptions (see `docs/client-reviews/2026-08-13-cycle11-shakespeare-review.md` bundle item #8).
+
+**TMAI provenance.** The TMAI essay does not exist as a standalone page. Its four assets are distributed: trade-offs callouts on Alternatives/Themes and Alternatives/Cuttings sections, 40-minute credentials on Cuttings library page, scene-selection method on Themes library page, contact CTA on Alternatives essay. Provenance moves to script frontmatter `sourceDoc: 'TMAI essay (Drive)'` where appropriate. Never publish the word "TMAI" in body copy.
+
 ## Commands
 
 - `pnpm dev` — dev server at http://localhost:4321
@@ -172,6 +188,13 @@ component and the Vitest existence test both prepend `/audio/`). Body uses
 - PRC water-molecule illustration — Cohesion entry renders a placeholder note; pending asset.
 - PRC Peterson/Petersen spelling — client decision on canonical spelling; site-wide fix once resolved.
 - PRC `players` / `resilience` beyondSource — client decision on keep/remove/fold.
+- **R&J Rap** (Cycle 11) — withheld pending authorship attribution. When client confirms, add MDX under `src/content/colloquial/` + audio if any.
+- **New Plays real scripts** (Cycle 11) — placeholder cards for *Three Finger Dick* and *Shakespeare&rsquo;s Sister* ship; real scripts pending client Drive share (bundle item #4).
+- **Chuck Wilcox St. Mary&rsquo;s cuts** (Cycle 11) — Cuttings library ships honest "more being prepared" note; scripts arrive over time (bundle item #5).
+- **Soliloquies blurb** (Cycle 11) — drafted; awaits client approval (bundle item #2).
+- **Vocal Expression PRC entry** (Cycle 11) — placeholder `draft:true` shipped so the Shakespeare landing TIP works; awaits client edit / replacement (bundle item #10).
+- **Chuck Wilcox stroke paragraph** (Cycle 11) — flagged for client sensitivity re-read (bundle item #1).
+- **Colloquial nav placement** (Cycle 11) — placed 8th per Cycle 11; bundle item #6 asks for client confirmation.
 
 ## Blockers for future cycles
 
