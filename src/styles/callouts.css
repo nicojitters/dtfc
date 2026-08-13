@@ -59,3 +59,28 @@
   color: var(--color-moss-500);
   margin-bottom: 0.25rem;
 }
+
+/* Trade-offs to consider — Shakespeare Alternatives essay (Cycle 11) */
+.callout-tradeoffs {
+  border-left: 4px solid var(--color-clay-500);
+  background: color-mix(in srgb, var(--color-clay-500) 6%, transparent);
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-card);
+  margin-block: 1.25rem;
+}
+
+.callout-tradeoffs::before {
+  content: 'Trade-offs to consider';
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-clay-700, var(--color-clay-500));
+  margin-bottom: 0.5rem;
+}
+
+.callout-tradeoffs > p:last-child {
+  margin-bottom: 0;
+}
