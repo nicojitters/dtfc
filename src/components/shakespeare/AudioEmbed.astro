@@ -1,0 +1,26 @@
+---
+interface Props {
+  /** Bare filename under public/audio/, e.g. "midsummah-pidgin-paka.mp4". */
+  src: string;
+  /** Optional caption rendered as <figcaption>. */
+  caption?: string;
+}
+
+const { src, caption } = Astro.props;
+const audioUrl = `/audio/${src}`;
+---
+
+<figure class="my-6">
+  <audio
+    controls
+    preload="metadata"
+    src={audioUrl}
+    class="w-full max-w-2xl"
+  >
+    Your browser does not support the audio element.
+    <a href={audioUrl}>Download the recording</a>.
+  </audio>
+  {caption && (
+    <figcaption class="text-ink-700 mt-2 text-sm">{caption}</figcaption>
+  )}
+</figure>

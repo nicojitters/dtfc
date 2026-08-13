@@ -1,71 +1,212 @@
 ---
 import ShakespeareLayout from '@/layouts/ShakespeareLayout.astro';
+import Concept from '@/components/concept/Concept.astro';
 ---
 
 <ShakespeareLayout
   title="Creating Fearless Shakespeare Scripts"
   subPage="alternatives"
   eyebrow="Alternatives to a full play"
-  description="Four proven alternatives to staging a full Shakespeare play &mdash; the organizing logic behind DT:FC’s Shakespeare libraries."
+  description="Four proven alternatives to staging a full Shakespeare play &mdash; the organizing logic behind DT:FC&rsquo;s Shakespeare libraries."
 >
-  <div class="max-w-2xl space-y-8">
-    {/* CLIENT REVIEW: introductory paragraph drafted; replace with imported content from Drive doc "Creating Fearless Shakespeare Scripts / Using Shakespeare in the Schools" when available. */}
-    <p class="text-ink-700 text-lg leading-relaxed">
-      Staging a full Shakespeare play with Players of any age is a large undertaking. DT:FC’s
-      Shakespeare section is organized around four alternatives that are just as fearless and far
-      more approachable: <strong>Scenes</strong>, <strong>Scenes Around a Theme</strong>,
-      <strong>Cuttings</strong>, and <strong>New Plays with a Shakespeare Foundation</strong>.
-    </p>
+  <div class="max-w-2xl space-y-12">
 
-    <section>
-      <h2>Scenes</h2>
-      <p>
-        Individual scenes drawn from across the canon. In CU’s &ldquo;Will Power&rdquo; model,
-        different schools each learn one scene and assemble in spring for a shared performance.
-        Ideal for classrooms that want depth on a short arc.
-      </p>
-      <p class="mt-2">
-        <a href="/shakespeare/scenes/" class="hover:text-clay-500">Browse the Scenes library &rarr;</a>
+    <section id="promise">
+      <p class="text-ink-700 text-lg leading-relaxed">
+        Shakespeare entertains and educates &mdash; in his time and 440+ years later. We have
+        created, and you can create, alternatives to performing a whole Shakespeare play. We
+        recommend alternative scripts when a whole play takes too long or doesn&rsquo;t involve
+        all available Players. Example scripts are provided throughout our libraries.
       </p>
     </section>
 
-    <section>
-      <h2>Scenes Around a Theme</h2>
-      <p>
-        Themed montages that gather scenes across plays around a single question or figure. Themes
-        we’ve worked with: Battle of the Sexes, Ruler and the Ruled, Rogues and Villains, Fools and
-        Fooling, Magic and the Supernatural, The Generation Gap, Falstaff, Bullies.
+    <section id="doctrine">
+      <h2>Leave the Language as Shakespeare&rsquo;s Own</h2>
+      <p class="text-ink-700 leading-relaxed">
+        If you are thinking Shakespeare&rsquo;s language is too difficult to speak, remember he
+        wrote in a period of history where many people did not read &mdash; his plays are part of
+        an oral tradition. It&rsquo;s almost by chance that we have 37 of them. We leave the
+        language as it is because when spoken the rhythm and content will carry the meaning. Read
+        the plays aloud, even if by yourself. Be fearless.
       </p>
-      <p class="mt-2">
-        <a href="/shakespeare/themes/" class="hover:text-clay-500">Browse the Themes library &rarr;</a>
+      <p class="text-ink-700 mt-4 leading-relaxed">
+        When novice Players, including grade-schoolers, have permission to play with the language
+        they naturally learn diction, voice intonation, and breath support.
+      </p>
+      <blockquote class="border-clay-500 mt-6 border-l-2 pl-4 italic text-ink-800">
+        &ldquo;What translation did you use?&rdquo;
+        <footer class="text-ink-600 mt-1 text-sm not-italic">
+          &mdash; a repeated question from teachers after watching Players do the real thing.
+          Answer: none.
+        </footer>
+      </blockquote>
+      <div class="callout-tip mt-6">
+        Use <Concept id="vocal-expression" /> Theatre Games as <Concept id="warmup" /> before
+        Shakespeare rehearsal.
+      </div>
+    </section>
+
+    <section id="alternative-one">
+      <h2>Alternative One &mdash; Scenes</h2>
+      <p class="text-ink-700 leading-relaxed">
+        A scene is a piece of a play that happens in a specific place at a specific time. It can
+        involve one or more characters. Players learn one scene instead of a whole play &mdash; ten
+        people doing a two-person scene opens a door to five different interpretations!
+      </p>
+      <p class="text-ink-700 mt-4 leading-relaxed">
+        A brilliant and fun use of scenes: elementary school teachers in Colorado worked with the
+        University of Colorado&rsquo;s Will Power programme so that different classes in different
+        schools each learned a different scene of the same play. Then, on a spring day, everyone
+        came to CU&rsquo;s Mary Rippon Theatre and performed their scene. The Players watched the
+        other schools&rsquo; scenes in order and saw how their own scene fit into the
+        storyline. <span class="text-ink-500 text-sm">(Will Power article&nbsp;<span class="bg-clay-100 text-clay-700 rounded px-1 py-0.5 text-xs font-medium">pending</span>)</span>
+      </p>
+      <p class="text-ink-700 mt-4 leading-relaxed">
+        A similar alternative is a &ldquo;string of beads&rdquo; &mdash; scenes strung together by
+        narration that fills in the spaces between the chosen scenes. Some examples:
+      </p>
+      <ol class="text-ink-700 mt-3 list-decimal space-y-2 pl-6">
+        <li>
+          <strong>Falstaff</strong> &mdash; telling the story of the character using scenes from
+          the History plays and <em>Merry Wives of Windsor</em>.
+        </li>
+        <li>
+          <strong>Romeo and Juliet</strong> scenes with narration filling in the story. The Nurse
+          is a favored character as narrator.
+        </li>
+        <li>
+          <strong>A Midsummer Night&rsquo;s Dream</strong> with the scenes being the Lovers
+          and/or the Mechanicals.
+        </li>
+      </ol>
+      <p class="mt-6">
+        <a href="/shakespeare/scenes/" class="hover:text-clay-500 font-medium">Browse the Scenes library &rarr;</a>
       </p>
     </section>
 
-    <section>
-      <h2>Cuttings</h2>
-      <p>
-        Full plays cut down to 40 minutes (or 20 for schools with tighter blocks) while keeping the
-        story intact. Proven cuttings include Romeo &amp; Juliet, Lear, and A Midsummer Night’s
-        Dream.
+    <section id="alternative-two">
+      <h2>Alternative Two &mdash; Scenes Around a Theme</h2>
+      <p class="text-ink-700 leading-relaxed">
+        A theme is chosen from seemingly inexhaustible possibilities given the breadth and depth of
+        Shakespeare&rsquo;s plays. Scenes from various plays &mdash; and even language from the
+        Sonnets &mdash; are woven together in a sequence that explores the theme. There might be an
+        introduction and short &ldquo;bridges&rdquo; between scenes, but we find them unnecessary.
       </p>
-      <p class="mt-2">
-        <a href="/shakespeare/cuttings/" class="hover:text-clay-500">Browse the Cuttings library &rarr;</a>
+      <p class="text-ink-700 mt-4 leading-relaxed">
+        Scripts can be weighted with serious material or have a more humorous, riotous, even
+        uproarious set of scenes. Shakespeare often strikes a balance with both in one play.
+        Consider the audience who will be viewing the production.
+      </p>
+      <p class="text-ink-700 mt-4 leading-relaxed">
+        Sometimes the arrangement of scenes is obvious; other times it takes careful exploration.
+      </p>
+      <blockquote class="border-clay-500 mt-4 border-l-2 pl-4 italic text-ink-800">
+        Experiment. Shakespeare did.
+      </blockquote>
+      <p class="text-ink-700 mt-4 font-medium">Themes we&rsquo;ve worked with:</p>
+      <ol class="text-ink-700 mt-2 list-decimal space-y-1 pl-6">
+        <li>Battle of the Sexes</li>
+        <li>Magic and the Supernatural</li>
+        <li>Fools and Fooling</li>
+        <li>Ruler and the Ruled</li>
+        <li>Rogues and Villains</li>
+        <li>The Generation Gap</li>
+        <li>Bullies (CU)</li>
+        <li>Falstaff</li>
+      </ol>
+      <p class="text-ink-700 mt-4 leading-relaxed">
+        We perform Scenes Around a Theme without narration. Changes in Players or an added hat or
+        headscarf may indicate a different setting or a different play &mdash; but hints like this
+        are not necessary. If knowing which play is desired, very short narrative pieces or an
+        easel with signboards listing the play and scene will serve.
+      </p>
+      <div class="callout-tradeoffs mt-6">
+        <p>
+          When you assemble scenes around a theme, you are working with a narrator function &mdash;
+          a &ldquo;string of beads&rdquo; structure. Your audience sees a set of scenes that make
+          a kind of sense together, a shape that doesn&rsquo;t quite exist in
+          Shakespeare&rsquo;s own lexicon. That&rsquo;s the trade-off you accept for the
+          thematic depth this format offers.
+        </p>
+      </div>
+      <p class="mt-6">
+        <a href="/shakespeare/themes/" class="hover:text-clay-500 font-medium">Browse the Themes library &rarr;</a>
       </p>
     </section>
 
-    <section>
-      <h2>New Plays with a Shakespeare Foundation</h2>
-      <p>
-        Original scripts written in a Shakespearean idiom or riffing on Shakespearean source
-        material. Two examples: <em>The Ballad of Three Finger Dick</em> by Chuck Wilcox, and
-        <em>Shakespeare’s Sister</em> by Marta Barnard. See the Cuttings library for now &mdash; a
-        dedicated New Plays library is a possible follow-up.
+    <section id="alternative-three">
+      <h2>Alternative Three &mdash; Cuttings</h2>
+      <p class="text-ink-700 leading-relaxed">
+        Cut the three-plus-hour play to forty minutes (or twenty). Here&rsquo;s the method:
+      </p>
+      <ol class="text-ink-700 mt-3 list-decimal space-y-2 pl-6">
+        <li>
+          Begin by recording how you and/or others tell the play to someone else in three minutes.
+        </li>
+        <li>
+          Find and read through a summary of the play (available on various websites and in books).
+        </li>
+        <li>List the scenes you will use.</li>
+        <li>
+          Then &mdash; mercilessly cut the scenes internally. Create a story line that gives
+          character opportunities to your Players.
+        </li>
+      </ol>
+      <p class="text-ink-700 mt-4 leading-relaxed">
+        Chuck Wilcox is providing plays he cut for use while teaching elementary grades at
+        St. Mary&rsquo;s Academy in Denver. More scripts are being prepared over time.
+      </p>
+      <div class="callout-tradeoffs mt-6">
+        <p>
+          A cutting creates yet another reality that is not truly Shakespeare &mdash; whole
+          sections of the play are left out. That&rsquo;s the trade-off you accept for a
+          forty-minute playable version that keeps the story intact.
+        </p>
+      </div>
+      <p class="mt-6">
+        <a href="/shakespeare/cuttings/" class="hover:text-clay-500 font-medium">Browse the Cuttings library &rarr;</a>
       </p>
     </section>
 
-    <p class="text-ink-500 border-ivory-200 mt-8 border-t pt-4 text-sm">
-      Every alternative in this list is compatible with the pedagogical stance from the section
-      landing: leave the language as Shakespeare’s own.
-    </p>
+    <section id="alternative-four">
+      <h2>Alternative Four &mdash; New Plays with a Shakespeare Foundation</h2>
+      <p class="text-ink-700 leading-relaxed">
+        It is possible to lift a play&rsquo;s storyline, characters, and even dialogue into a
+        different script. The themes are universal; the characters are archetypal. The language is
+        modernized or adapted to a different dialect altogether. <em>West Side Story</em> &mdash;
+        with music by Leonard Bernstein and book by Arthur Laurents &mdash; is the major example,
+        transplanting <em>Romeo and Juliet</em>&rsquo;s scaffolding into 1950s New York.
+      </p>
+      <p class="text-ink-700 mt-4 leading-relaxed">
+        There are endless possibilities to take a play, or Shakespeare himself, and create a piece
+        that provides both entertainment and exploratory knowledge.
+      </p>
+      <p class="text-ink-700 mt-4 font-medium">Two DT:FC-family new plays:</p>
+      <ul class="text-ink-700 mt-3 list-none space-y-4 pl-0">
+        <li>
+          <strong><em>The Ballad of Three Finger Dick</em></strong> by Chuck Wilcox &mdash;
+          set in the American Wild West, using the language and idiom of that time and place.
+          <a href="/shakespeare/honoring-our-guides/#chuck-wilcox" class="hover:text-clay-500 ml-1 text-sm">Chuck&rsquo;s story on Honoring Our Guides &rarr;</a>
+        </li>
+        <li>
+          <strong><em>Shakespeare&rsquo;s Sister</em></strong> by Marta Barnard &mdash; written
+          for two women, it toured as a one-woman show after Marta played both roles at the first
+          production.
+          <a href="/shakespeare/honoring-our-guides/#marta-barnard" class="hover:text-clay-500 ml-1 text-sm">Marta&rsquo;s story on Honoring Our Guides &rarr;</a>
+        </li>
+      </ul>
+      <p class="mt-6">
+        <a href="/shakespeare/new-plays/" class="hover:text-clay-500 font-medium">Browse the New Plays library &rarr;</a>
+      </p>
+    </section>
+
+    <section id="contact">
+      <div class="callout-tip">
+        <strong>Want to see a script?</strong> Reach out through
+        <a href="/shakespeare/ask-shakespeare/#form" class="hover:text-clay-700 font-medium">Ask Shakespeare</a>
+        &mdash; we&rsquo;re glad to share cuts, scenes, and works-in-progress.
+      </div>
+    </section>
+
   </div>
 </ShakespeareLayout>

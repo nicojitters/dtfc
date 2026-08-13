@@ -38,5 +38,6 @@ export const ICON_REGISTRY = {
   resilience:             { file: 'resilience.svg',             prcSlug: 'resilience',             iconFlagged: false },
   stage:                  { file: 'stage.svg',                  prcSlug: 'stage',                  iconFlagged: false },
   'theatre-games':        { file: 'theatre-games.svg',          prcSlug: 'theatre-games',          iconFlagged: true  },
+  'vocal-expression':     { file: 'vocal-expression.svg',       prcSlug: 'vocal-expression',       iconFlagged: false },
   warmup:                 { file: 'warmup.svg',                 prcSlug: 'warmup',                 iconFlagged: true  },
 } as const satisfies Record<string, IconRegistryEntry>;
