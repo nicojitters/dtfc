@@ -37,7 +37,7 @@ const { Content } = await render(entry);
 
     {entry.data.audio && (
       <>
-        <AudioEmbed src={entry.data.audio} caption={entry.data.audioCaption} />
+        <AudioEmbed src={`/audio/${entry.data.audio}`} caption={entry.data.audioCaption} />
         <p class="text-ink-700 text-sm max-w-prose">
           The side-by-side text below serves as an accessible transcript of the recording.
         </p>
