@@ -1,0 +1,20 @@
+---
+import type { ConceptEntry } from '@/lib/concepts';
+import Chip from '@/components/ui/Chip.astro';
+
+interface Props {
+  entry: ConceptEntry;
+}
+const { entry } = Astro.props;
+---
+
+{entry.data.draft && (
+  <Chip tone="teal">
+    Draft
+  </Chip>
+)}
+{entry.data.beyondSource && (
+  <Chip tone="mustard">
+    Beyond source
+  </Chip>
+)}

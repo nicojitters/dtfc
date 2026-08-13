@@ -1,0 +1,35 @@
+---
+import { iconPath } from '@/lib/icons';
+import { getConcept } from '@/lib/concepts';
+
+interface Props {
+  related: string[];
+}
+const { related } = Astro.props;
+
+if (related.length === 0) return null;
+
+const entries = await Promise.all(related.map((slug) => getConcept(slug)));
+---
+
+<section class="border-ivory-200 mt-10 border-t pt-6" aria-label="Related resources">
+  <h2 class="font-display text-ink-900 text-lg">Other Player Resources</h2>
+  <ul class="mt-4 grid gap-3 sm:grid-cols-2">
+    {
+      entries.map((e) => (
+        <li>
+          <a
+            href={`/resource-center/${e.data.slug}/`}
+            class="border-ivory-200 hover:border-clay-500/40 flex items-start gap-3 rounded-[var(--radius-card)] border bg-white p-3 no-underline"
+          >
+            <img src={iconPath(e.data.icon)} alt="" width="22" height="22" class="mt-1 shrink-0" />
+            <div class="min-w-0">
+              <p class="font-display text-ink-900 text-base">{e.data.name}</p>
+              <p class="text-ink-500 mt-0.5 text-xs">{e.data.shortDefinition}</p>
+            </div>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>

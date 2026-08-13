@@ -1,0 +1,29 @@
+---
+interface Props {
+  letters: string[]; // uppercase A-Z that have at least one entry
+}
+const { letters } = Astro.props;
+const ALL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+---
+
+<nav
+  class="border-ivory-200 bg-ivory-50/95 sticky top-0 z-10 flex flex-wrap gap-1 border-b px-1 py-2 backdrop-blur"
+  aria-label="Alphabetical index"
+>
+  {
+    ALL.map((letter) =>
+      letters.includes(letter) ? (
+        <a
+          href={`#${letter.toLowerCase()}`}
+          class="text-clay-500 hover:bg-clay-50 focus-visible:bg-clay-50 rounded px-2 py-1 text-sm font-medium no-underline"
+        >
+          {letter}
+        </a>
+      ) : (
+        <span class="text-ink-500/40 rounded px-2 py-1 text-sm" aria-hidden="true">
+          {letter}
+        </span>
+      ),
+    )
+  }
+</nav>

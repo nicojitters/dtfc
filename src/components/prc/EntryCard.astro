@@ -1,0 +1,36 @@
+---
+import { iconPath } from '@/lib/icons';
+import { ICON_REGISTRY } from '@/data/icon-registry';
+import type { ConceptEntry } from '@/lib/concepts';
+
+interface Props {
+  entry: ConceptEntry;
+}
+const { entry } = Astro.props;
+const registry = (ICON_REGISTRY as Record<string, { iconFlagged: boolean }>)[entry.data.slug];
+const isIconFlagged = registry?.iconFlagged ?? false;
+const relatedCount = entry.data.related.length;
+---
+
+<a
+  href={`/resource-center/${entry.data.slug}/`}
+  class="border-ivory-200 hover:border-clay-500/40 hover:shadow-[var(--shadow-soft)] block rounded-[var(--radius-card)] border bg-white p-4 no-underline transition"
+>
+  <div class="flex items-start gap-3">
+    <img src={iconPath(entry.data.icon)} alt="" width="28" height="28" class="mt-1 shrink-0" />
+    <div class="min-w-0 flex-1">
+      <div class="flex items-baseline gap-2">
+        <p class="font-display text-ink-900 text-lg">{entry.data.name}</p>
+        {isIconFlagged && (
+          <span class="bg-teal-600/10 text-teal-600 rounded px-1.5 py-0.5 text-[0.65rem] font-medium tracking-wide uppercase">
+            ICON
+          </span>
+        )}
+      </div>
+      <p class="text-ink-500 mt-1 text-sm">{entry.data.shortDefinition}</p>
+      {relatedCount > 0 && (
+        <p class="text-ink-500/70 mt-2 text-xs">{relatedCount} related</p>
+      )}
+    </div>
+  </div>
+</a>

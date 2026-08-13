@@ -1,3 +1,5 @@
+@import './callouts.css';
+
 @theme {
   /* Color — palette */
   --color-clay-50: #fbeee9;
