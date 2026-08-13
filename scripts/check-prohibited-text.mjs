@@ -188,6 +188,83 @@ export const PATTERNS = [
     regex: /https?:\/\/drive\.google\.com\/[^\s)]*\.mp4/g,
     reason: 'Shakespeare §6: raw Drive mp4 URL — audio must be locally hosted',
   },
+  // Shakespeare vision spec v2 §7 — editorial working notes that must not ship.
+  // See /Users/cnote/Downloads/dtfc-shakespeare-vision-spec-v2.md §7 for source.
+  {
+    phrase: '(Missy - edit)',
+    regex: /\(Missy - edit\)/,
+    reason: 'Title working note — strip assignment notes from titles; tickets go in bundle instead',
+  },
+  {
+    phrase: '(Needs Internal Edits)',
+    regex: /\(Needs Internal Edits\)/,
+    reason: 'Title working note — move to client-review bundle item; do not ship in title',
+  },
+  {
+    phrase: '(Check EDIT)',
+    regex: /\(Check EDIT\)/,
+    reason: 'Title working note — strip working note; if content needs review, ticket it',
+  },
+  {
+    phrase: '(Lola to Do)',
+    regex: /\(Lola to Do\)/,
+    reason: 'Title working note — task tracker note, remove from title',
+  },
+  {
+    phrase: 'needs last scenes',
+    regex: /needs last scenes/i,
+    reason: 'Cutting incompleteness signal in title — rename file and add honest chip in body',
+  },
+  {
+    phrase: 'Newsletter # raw H1 header',
+    regex: /^# Newsletter #/m,
+    reason: 'Ask Shakespeare column raw "Newsletter #N" H1 header — move provenance to frontmatter',
+  },
+  {
+    phrase: 'Act x, l y',
+    regex: /Act x, l y/,
+    reason: 'Short Speeches placeholder fragment — replace with real act/line reference before ship',
+  },
+  {
+    phrase: 'Helena 0r the other one',
+    regex: /Helena 0r the other one/i,
+    reason: 'Short Speeches placeholder fragment (typo + uncertainty) — complete with intended character',
+  },
+  {
+    phrase: 'Maybe from of one or more of the Fools',
+    regex: /Maybe from of one or more of the Fools/,
+    reason: 'Short Speeches placeholder fragment — author with specific Fool speech',
+  },
+  {
+    phrase: 'Speechs',
+    regex: /\bSpeechs\b/,
+    reason: 'Typo — should be "Speeches"',
+  },
+  {
+    phrase: 'Theseua',
+    regex: /Theseua/i,
+    reason: 'Typo — should be "Theseus"',
+  },
+  {
+    phrase: 'Ardiane',
+    regex: /Ardiane/i,
+    reason: 'Typo — should be "Ariadne"',
+  },
+  {
+    phrase: 'Minoatuar',
+    regex: /Minoatuar/i,
+    reason: 'Typo — should be "Minotaur"',
+  },
+  {
+    phrase: 'Prince Hal alter-father',
+    regex: /Prince Hal alter-father/,
+    reason: 'Falstaff description mistakenly applied to Horatio (copy-paste bug) — use correct Horatio description',
+  },
+  {
+    phrase: 'Large Person in every way',
+    regex: /Large Person in every way/,
+    reason: 'Falstaff description mistakenly applied to Horatio (copy-paste bug) — verify Horatio has correct description',
+  },
 ];
 
 /**
