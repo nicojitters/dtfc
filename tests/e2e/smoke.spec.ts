@@ -51,7 +51,7 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   // PRC landing — Cycle 10 letter rail + grouped cards
   await page.getByRole('link', { name: 'Players Resource Center' }).first().click();
   await expect(page).toHaveURL(/\/resource-center\/?$/);
-  await expect(page.getByText('What are the ICONS')).toBeVisible();
+  await expect(page.getByText('What are the ICONs?')).toBeVisible();
   // Letter rail is present as a nav
   const letterRail = page.getByRole('navigation', { name: /Alphabetical index/i });
   await expect(letterRail).toBeVisible();

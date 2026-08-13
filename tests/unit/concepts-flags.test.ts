@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { conceptSchema } from '@/lib/content-schemas';
+import { ICON_REGISTRY } from '@/data/icon-registry';
 import { getCollection } from './_astro-content';
 
 describe('conceptSchema — Cycle 10 additive fields', () => {
@@ -99,5 +100,12 @@ describe('concepts collection — Cycle 10 flag distribution', () => {
     const stage = entries.find((e) => e.data.slug === 'stage');
     expect(stage?.data.credits).toMatch(/Jackie Pualani Johnson/);
     expect(stage?.data.desiraeReplaceable).toBe(true);
+  });
+
+  it('every concept slug has an entry in ICON_REGISTRY', async () => {
+    const entries = await getCollection('concepts');
+    const registryKeys = new Set(Object.keys(ICON_REGISTRY));
+    const missing = entries.map((e) => e.data.slug).filter((slug) => !registryKeys.has(slug));
+    expect(missing).toEqual([]);
   });
 });
