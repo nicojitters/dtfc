@@ -65,7 +65,7 @@ Each has an "About this script" section drawn from Drive doc 1b&rsquo;s anecdote
 
 **What shipped:** In the Shakespeare sub-nav, Colloquial sits 8th of 10 &mdash; after Children&rsquo;s Shakespeare (7th) and before New Plays (9th). This matches the &ldquo;flag placement to client&rdquo; note in the vision spec.
 
-**Asking:** Does this placement work for you? If you&rsquo;d rather Colloquial land elsewhere (e.g., right after Alternatives to feature it as a differentiator), we&rsquo;ll move it. The full sub-nav order is: Scenes, Soliloquies, Themes, Cuttings, Alternatives, Ask Shakespeare, Children&rsquo;s Shakespeare, Colloquial, New Plays, Honoring Our Guides.
+**Asking:** Does this placement work for you? If you&rsquo;d rather Colloquial land elsewhere (e.g., right after Alternatives to feature it as a differentiator), we&rsquo;ll move it. The full sub-nav order is: Alternatives, Honoring Our Guides, Soliloquies, Scenes, Themes, Cuttings, Children&rsquo;s Shakespeare, Colloquial, New Plays, Ask Shakespeare.
 
 ---
 
