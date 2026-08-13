@@ -48,11 +48,35 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   await expect(page.locator('strong', { hasText: 'RESILIENCE' }).first()).toBeVisible();
   await runAxe(page, 'home landing');
 
-  // Navigate to PRC
+  // PRC landing — Cycle 10 letter rail + grouped cards
   await page.getByRole('link', { name: 'Players Resource Center' }).first().click();
   await expect(page).toHaveURL(/\/resource-center\/?$/);
   await expect(page.getByText('What are the ICONS')).toBeVisible();
-  await runAxe(page, 'resource center');
+  // Letter rail is present as a nav
+  const letterRail = page.getByRole('navigation', { name: /Alphabetical index/i });
+  await expect(letterRail).toBeVisible();
+  // Clicking F jumps to the Facilitation section anchor
+  await letterRail.getByRole('link', { name: 'F' }).click();
+  await expect(page).toHaveURL(/#f$/);
+  // Filter narrows the visible cards
+  const filter = page.locator('[data-concept-filter]');
+  await filter.fill('cohes');
+  await expect(page.getByRole('link', { name: /Cohesion/ }).first()).toBeVisible();
+  await filter.fill('');
+  await runAxe(page, 'resource center landing');
+
+  // PRC entry detail — Casting (uses consolidation subsection + related block)
+  await page.goto('/resource-center/casting/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Casting' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'For Educators' })).toBeVisible();
+  await expect(page.getByRole('region', { name: /Related resources/i })).toBeVisible();
+  await runAxe(page, 'resource center casting entry');
+
+  // Stage entry — all 6 SVG diagrams render
+  await page.goto('/resource-center/stage/');
+  const diagrams = page.locator('figure svg[role="img"]');
+  await expect(diagrams).toHaveCount(6);
+  await expect(page.getByText(/Jackie Pualani Johnson/)).toBeVisible();
 
   // Navigate to Theatre Games landing
   await page.getByRole('link', { name: 'Theatre Games' }).first().click();
