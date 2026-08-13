@@ -283,10 +283,16 @@ export const PATTERNS = [
 export const CURLY_APOSTROPHE_ALLOWLIST = [
   // Cycle 3 Shakespeare verse files intentionally use straight apostrophes
   // for Elizabethan contractions ('tis, 'twere, Environ'd, perfect'st).
+  // Cycle 12 raw Pairs scenes follow the same pattern.
   // Do not add other files to this list without controller review.
   'src/content/scripts/juliet-romeo-and-juliet-act-iv-scene-iii.mdx',
   'src/content/scripts/lady-macbeth-macbeth-act-i-scene-v.mdx',
   'src/content/scripts/mechanicals-scenes-a-midsummer-nights-dream.mdx',
+  'src/content/scripts/fairy-robin-msnd.mdx',
+  'src/content/scripts/petruchio-kate-taming.mdx',
+  'src/content/scripts/jaques-orlando-ayli.mdx',
+  'src/content/scripts/celia-rosalind-ayli.mdx',
+  'src/content/scripts/quickly-falstaff-merry-wives.mdx',
 ];
 
 /**
