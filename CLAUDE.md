@@ -122,6 +122,16 @@ component and the Vitest existence test both prepend `/audio/`). Body uses
 
 **Cross-section contract links (Cycle 9 T12).** Bidirectional cross-links wired: Legacy Founders origin-witness testimony hyperlinks Cherie's compilation → `/theatre-games/` and Laurie's manual → `/legacy/essays/workshop-manual/`; `/theatre-games/` carries a "From the Legacy archive" aside linking to the Workshop Manual placeholder; `why-these-plays-are-successful.mdx` (Legacy) ↔ `/childrens-theatre/why-these-plays-work.astro` (practitioner) callout each way; Timeline footer links to Founders; Founders cross-links tail links to Timeline + Honoring Our Guides + Research.
 
+**PRC content model (Cycle 10).** `concepts` collection is the site-wide glossary; schema in `src/lib/content-schemas.ts` accepts optional `credits`, `provenance`, `assets`, `draft`, `beyondSource`, `desiraeReplaceable`, `aiAttribution`. Icon registry lives at `src/data/icon-registry.ts` — maps `id → {file, prcSlug, iconFlagged}`; `iconPath()` in `src/lib/icons.ts` consults it first. 20 entries total (18 in-spec + `icons` draft + `players`/`resilience` beyondSource). Every `<Concept id="…" />` popover reads its `shortDefinition` from the collection — no duplicated definitions.
+
+**Adding a PRC entry.** Drop `src/content/concepts/<slug>.mdx` with the schema. Body H2s vary by source; call out TIPs via `<div class="callout-tip">`, "Why Do I Care?" via `<div class="callout-why">`, boxed teacher notes via `<div class="callout-box">`, Practical Suggestions via `<div class="callout-practical">`. Add related-resource slugs to frontmatter `related:`. If ICON-flagged, add `iconFlagged: true` to `src/data/icon-registry.ts` for its id. If the entry uses AI-assisted research disclosure, set `aiAttribution: true` — the EditorialNoteAI footer renders automatically. `shortDefinition` drafted from source? Set `draft: true`; source has an explicit "Short Definition:"? Use verbatim and leave `draft: false`.
+
+**PRC landing** (`src/pages/resource-center/index.astro`) renders `<LetterRail />` (sticky A-Z jump nav) + letter-grouped `<EntryCard />` grids + on-page text filter. Entries carry `data-pagefind-filter="section:resource-center"` on the article root so the header search modal can chip-scope to PRC.
+
+**Casting cross-list.** `src/pages/childrens-theatre/index.astro` has a sidebar callout to `/resource-center/casting/`; `src/pages/childrens-theatre/scripts/[slug].astro` injects an inline "See Casting →" link at the tail of every `childrens-plays` / `teaching-modules` render so future plays inherit.
+
+**Prohibited-text guardrail — PRC vision spec §7.** Additional PATTERNS added in Cycle 10: `DESIRAE:` prefix, `Desirae you will need`, `check this doc info is included`, `OTHERS?`, `(image of water molecule)`, trailing `(LOGO)`, trailing `(ICON)` title suffix, `Note: Published in`, raw `docs.google.com` / `drive.google.com` URLs.
+
 ## Commands
 
 - `pnpm dev` — dev server at http://localhost:4321
@@ -154,6 +164,14 @@ component and the Vitest existence test both prepend `/audio/`). Body uses
 - Poor Caravan footnote-marker positions (Cycle 9 T10) — vision spec §3 Doc #5 requires `(1)` and `(2)` markers restored to their source-typescript positions; archival note stands in until the Drive-source reconciliation.
 - Developmental Drama tmai.net link (Cycle 9 T11) — vision spec §3 Doc #7 calls for the citation with archive.org fallback if dead; awaits source reshare.
 - CLIENT REVIEW markers added in Cycle 9: Founders Theatre Games origins first-person testimony (drafted from Doc #3 fragments), Institutional Support narrative (sacred numbers verified; connective prose drafted), CSF outreach continuity, `/legacy/research/` abstract (Cycle 5 draft carried forward), the `/legacy/` landing founders paragraph. Bundle for Lola/Laurie review.
+- PRC ICONs explainer approval — `src/content/concepts/icons.mdx` is a Cycle 1 internal draft flagged `draft:true`; awaits client edit or replacement. Bundled with Cycle 10 client-review doc.
+- PRC Audience entry — referenced from Warmup as `(pending)`; no source doc. Bundled with Cycle 10 client review.
+- PRC Constraints extraction — Fearless Creativity's Constraints link currently lands on `/resource-center/plot/#constraints`. Client decision pending on standalone entry.
+- PRC concept-icon artwork — all entries use placeholder icons; swap file-by-file under `public/icons/` when Desirae delivers.
+- PRC Stage diagrams — 6 in-repo SVGs ship as `desiraeReplaceable:true`; swap `src/components/prc/StageDiagram.astro` variant bodies when Desirae refines.
+- PRC water-molecule illustration — Cohesion entry renders a placeholder note; pending asset.
+- PRC Peterson/Petersen spelling — client decision on canonical spelling; site-wide fix once resolved.
+- PRC `players` / `resilience` beyondSource — client decision on keep/remove/fold.
 
 ## Blockers for future cycles
 
