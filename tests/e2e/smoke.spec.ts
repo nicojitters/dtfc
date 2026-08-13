@@ -223,6 +223,52 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   }
   await runAxe(page, 'ask shakespeare / form fallback');
 
+  // Shakespeare landing — doctrine block + "What translation did you use?" + Concept popovers
+  // AC2: vision spec §7 — doctrine block, proof-point quote, and Concept popover triggers present
+  await page.goto('/shakespeare/');
+  await expect(
+    page.getByRole('heading', { name: /Leave the Language as Shakespeare/ }),
+  ).toBeVisible();
+  await expect(page.getByText(/What translation did you use\?/)).toBeVisible();
+  // Concept popover triggers use [popovertarget] on the button element (T10 pattern)
+  const conceptButtons = page.locator('[popovertarget]');
+  expect(await conceptButtons.count()).toBeGreaterThanOrEqual(2);
+  await runAxe(page, 'shakespeare landing — doctrine + popovers');
+
+  // New Plays landing — both DT:FC family plays render as cards
+  // AC8: vision spec §7 — Three Finger Dick + Shakespeare's Sister visible
+  await page.goto('/shakespeare/new-plays/');
+  await expect(page.getByRole('heading', { name: /Three Finger Dick/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Shakespeare.s Sister/ })).toBeVisible();
+  await runAxe(page, 'shakespeare new-plays landing');
+
+  // Colloquial detail — ʻokina character renders; audio/transcript absent (no audio file set in T7)
+  // AC6: vision spec §7 — ʻokina (U+02BB) in title renders correctly; audio element conditional
+  await page.goto('/shakespeare/colloquial/one-uddah-midsummah/');
+  // h1 must contain the ʻokina character (U+02BB) from the frontmatter title
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Midʻsummah');
+  // T7 shipped without audio (Drive file inaccessible): no `audio` frontmatter field is set,
+  // so the <audio> element and transcript statement do NOT render — assert the ship state.
+  await expect(page.locator('audio')).toHaveCount(0);
+  await expect(page.getByText(/accessible transcript/)).toHaveCount(0);
+  await runAxe(page, 'shakespeare colloquial detail — okina render');
+
+  // Honoring Our Guides — Legacy cross-links are present and resolvable
+  // AC5+cross-section: vision spec §7 — Founders link + Yang essay anchor link visible
+  await page.goto('/shakespeare/honoring-our-guides/');
+  const legacyLink = page.locator('a[href="/legacy/founders"]').first();
+  await expect(legacyLink).toBeVisible();
+  const yangLink = page.locator('a[href="/legacy/essays/theatre-influences/#asian-theatre"]');
+  await expect(yangLink).toBeVisible();
+
+  // Alternatives — TMAI trade-offs callouts + Contact CTA
+  // AC4: vision spec §7 — ≥2 .callout-tradeoffs blocks + Ask Shakespeare link present
+  await page.goto('/shakespeare/alternatives/');
+  const tradeoffs = page.locator('.callout-tradeoffs');
+  expect(await tradeoffs.count()).toBeGreaterThanOrEqual(2);
+  const contactCta = page.locator('a[href="/shakespeare/ask-shakespeare/#form"]').first();
+  await expect(contactCta).toBeVisible();
+
   // Children's Theatre section — landing, sub-nav, how-to guide with wheel, library, script detail
   await page.goto('/childrens-theatre/');
   await expect(page.getByRole('heading', { level: 1 })).toContainText("Children");
