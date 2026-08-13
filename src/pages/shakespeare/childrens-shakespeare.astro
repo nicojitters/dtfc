@@ -1,6 +1,7 @@
 ---
 import ShakespeareLayout from '@/layouts/ShakespeareLayout.astro';
 import LibraryIndex from '@/components/scripts/LibraryIndex.astro';
+import NeverMemorizeBox from '@/components/shakespeare/NeverMemorizeBox.astro';
 ---
 
 <ShakespeareLayout
@@ -9,6 +10,7 @@ import LibraryIndex from '@/components/scripts/LibraryIndex.astro';
   eyebrow="Script library"
   description="Shakespeare adaptations chosen and shaped for young Players."
 >
+  <NeverMemorizeBox />
   <LibraryIndex
     library="childrens-shakespeare"
     title="Children’s Shakespeare library"
