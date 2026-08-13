@@ -448,13 +448,15 @@ test("Themes: archival section + Fools/Fooling heading + Laurie O'Brien link on 
   await expect(page.getByRole('heading', { name: 'Pretenders List of Scenes' })).toBeVisible();
   // Magic and the Supernatural IS a real script entry -> rendered as ScriptCard <a href> link.
   await expect(page.getByRole('link', { name: /Magic and the Supernatural/ })).toBeVisible();
+  // Scan themes landing archival section before navigating to detail.
+  await runAxe(page, 'themes landing archival section');
   // Laurie O'Brien link lives in the script body (MDX), not the themes index.
   // Navigate to the detail page to assert the founders cross-link shipped by T12.
   await page.goto('/shakespeare/scripts/magic-and-the-supernatural-theme/');
   // Note: the link text uses &rsquo; which renders as curly apostrophe U+2019.
   const laurie = page.getByRole('link', { name: /Laurie O/ });
   await expect(laurie).toBeVisible();
-  await runAxe(page, 'themes archival section + magic detail');
+  await runAxe(page, 'magic script detail');
 });
 
 // Skipped: Cycle 12 T15 deferred audio (Drive 404); re-enable when Track K bundle lands.
