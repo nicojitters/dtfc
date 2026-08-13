@@ -1,0 +1,121 @@
+---
+type Variant =
+  | 'proscenium'
+  | 'arena'
+  | 'in-the-round'
+  | 'thrust'
+  | 'unusual'
+  | 'sightlines';
+interface Props {
+  variant: Variant;
+}
+const { variant } = Astro.props;
+---
+
+<figure class="border-ivory-200 my-6 rounded-[var(--radius-card)] border bg-white p-4">
+  {
+    variant === 'proscenium' && (
+      <svg viewBox="0 0 240 140" role="img" aria-labelledby="stage-proscenium-title" class="mx-auto block h-auto w-full max-w-[320px]">
+        <title id="stage-proscenium-title">Proscenium stage — audience faces a framed stage on one side</title>
+        <rect x="10" y="10" width="220" height="40" fill="none" stroke="currentColor" stroke-width="2" />
+        <text x="120" y="35" text-anchor="middle" font-size="10" fill="currentColor">STAGE</text>
+        <g fill="currentColor" opacity="0.6">
+          {Array.from({ length: 32 }).map((_, i) => {
+            const cx = 20 + (i % 16) * 13;
+            const cy = 75 + Math.floor(i / 16) * 15;
+            return <circle cx={cx} cy={cy} r="3" />;
+          })}
+        </g>
+        <text x="120" y="130" text-anchor="middle" font-size="10" fill="currentColor">AUDIENCE</text>
+      </svg>
+    )
+  }
+  {
+    variant === 'arena' && (
+      <svg viewBox="0 0 240 200" role="img" aria-labelledby="stage-arena-title" class="mx-auto block h-auto w-full max-w-[320px]">
+        <title id="stage-arena-title">Arena stage — audience surrounds the stage on all four sides</title>
+        <rect x="90" y="80" width="60" height="40" fill="none" stroke="currentColor" stroke-width="2" />
+        <text x="120" y="105" text-anchor="middle" font-size="10" fill="currentColor">STAGE</text>
+        <g fill="currentColor" opacity="0.6">
+          {[...Array(8)].map((_, i) => <circle cx={30 + i * 25} cy={30} r="3" />)}
+          {[...Array(8)].map((_, i) => <circle cx={30 + i * 25} cy={170} r="3" />)}
+          {[...Array(4)].map((_, i) => <circle cx={30} cy={70 + i * 20} r="3" />)}
+          {[...Array(4)].map((_, i) => <circle cx={210} cy={70 + i * 20} r="3" />)}
+        </g>
+      </svg>
+    )
+  }
+  {
+    variant === 'in-the-round' && (
+      <svg viewBox="0 0 240 200" role="img" aria-labelledby="stage-round-title" class="mx-auto block h-auto w-full max-w-[320px]">
+        <title id="stage-round-title">Theatre in the Round — audience surrounds a circular stage</title>
+        <circle cx="120" cy="100" r="35" fill="none" stroke="currentColor" stroke-width="2" />
+        <text x="120" y="104" text-anchor="middle" font-size="10" fill="currentColor">STAGE</text>
+        <g fill="currentColor" opacity="0.6">
+          {[...Array(16)].map((_, i) => {
+            const a = (i / 16) * Math.PI * 2;
+            const cx = 120 + Math.cos(a) * 75;
+            const cy = 100 + Math.sin(a) * 75;
+            return <circle cx={cx} cy={cy} r="3" />;
+          })}
+          {[...Array(16)].map((_, i) => {
+            const a = (i / 16) * Math.PI * 2 + Math.PI / 16;
+            const cx = 120 + Math.cos(a) * 90;
+            const cy = 100 + Math.sin(a) * 90;
+            return <circle cx={cx} cy={cy} r="3" />;
+          })}
+        </g>
+      </svg>
+    )
+  }
+  {
+    variant === 'thrust' && (
+      <svg viewBox="0 0 240 170" role="img" aria-labelledby="stage-thrust-title" class="mx-auto block h-auto w-full max-w-[320px]">
+        <title id="stage-thrust-title">Thrust stage — stage extends into audience; audience wraps three sides</title>
+        <rect x="60" y="10" width="120" height="40" fill="none" stroke="currentColor" stroke-width="2" />
+        <rect x="90" y="50" width="60" height="40" fill="none" stroke="currentColor" stroke-width="2" />
+        <text x="120" y="35" text-anchor="middle" font-size="10" fill="currentColor">STAGE</text>
+        <g fill="currentColor" opacity="0.6">
+          {[...Array(8)].map((_, i) => <circle cx={30 + i * 25} cy={110} r="3" />)}
+          {[...Array(8)].map((_, i) => <circle cx={30 + i * 25} cy={130} r="3" />)}
+          {[...Array(3)].map((_, i) => <circle cx={30} cy={60 + i * 20} r="3" />)}
+          {[...Array(3)].map((_, i) => <circle cx={210} cy={60 + i * 20} r="3" />)}
+        </g>
+      </svg>
+    )
+  }
+  {
+    variant === 'unusual' && (
+      <svg viewBox="0 0 240 170" role="img" aria-labelledby="stage-unusual-title" class="mx-auto block h-auto w-full max-w-[320px]">
+        <title id="stage-unusual-title">Unusual configurations — found spaces, multi-focus, touring, pop-up, street</title>
+        <g fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="20" y="20" width="60" height="30" />
+          <rect x="150" y="30" width="70" height="25" />
+          <rect x="40" y="90" width="80" height="30" />
+          <circle cx="180" cy="105" r="18" />
+        </g>
+        <g fill="currentColor" opacity="0.6">
+          {[...Array(6)].map((_, i) => <circle cx={20 + i * 12} cy={140} r="2.5" />)}
+          {[...Array(6)].map((_, i) => <circle cx={140 + i * 12} cy={140} r="2.5" />)}
+        </g>
+      </svg>
+    )
+  }
+  {
+    variant === 'sightlines' && (
+      <svg viewBox="0 0 240 170" role="img" aria-labelledby="stage-sightlines-title" class="mx-auto block h-auto w-full max-w-[320px]">
+        <title id="stage-sightlines-title">Sight lines — connecting each audience seat to the acting area</title>
+        <rect x="90" y="20" width="60" height="30" fill="none" stroke="currentColor" stroke-width="2" />
+        <text x="120" y="40" text-anchor="middle" font-size="10" fill="currentColor">STAGE</text>
+        <g stroke="currentColor" stroke-width="0.75" opacity="0.5">
+          {[...Array(7)].map((_, i) => (
+            <line x1={120} y1={35} x2={20 + i * 33} y2={150} />
+          ))}
+        </g>
+        <g fill="currentColor" opacity="0.6">
+          {[...Array(7)].map((_, i) => <circle cx={20 + i * 33} cy={150} r="3" />)}
+        </g>
+      </svg>
+    )
+  }
+</figure>
