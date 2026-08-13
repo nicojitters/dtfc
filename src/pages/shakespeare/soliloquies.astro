@@ -1,7 +1,16 @@
 ---
+import { getCollection } from 'astro:content';
 import ShakespeareLayout from '@/layouts/ShakespeareLayout.astro';
 import LibraryIndex from '@/components/scripts/LibraryIndex.astro';
 import NeverMemorizeBox from '@/components/shakespeare/NeverMemorizeBox.astro';
+import SoliloquyFilters from '@/components/scripts/SoliloquyFilters.tsx';
+
+const soliloquies = await getCollection('scripts', ({ data }) =>
+  data.library === 'soliloquies' && !data.draft,
+);
+const plays = Array.from(
+  new Set(soliloquies.map((e) => e.data.play).filter((p): p is string => Boolean(p))),
+).sort();
 ---
 
 <ShakespeareLayout
@@ -21,6 +30,7 @@ import NeverMemorizeBox from '@/components/shakespeare/NeverMemorizeBox.astro';
       collects individual solo speeches suitable for K-through-adult Players.
     </p>
   </div>
+  <SoliloquyFilters client:idle plays={plays} />
   <LibraryIndex
     library="soliloquies"
     title="Soliloquies &amp; Solo Speeches library"
