@@ -133,7 +133,7 @@ export const PATTERNS = [
   },
   {
     phrase: 'ICON suffix',
-    regex: /(?:^|\n).*?[:—-]\s*\(?ICON\)?\s*$/gm,
+    regex: /\(ICON\)|\s[:—-]\s*ICON/gm,
     reason: 'PRC §7: (ICON) title suffix — belongs in icon registry, not visible titles',
   },
   {

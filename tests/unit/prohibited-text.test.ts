@@ -61,6 +61,7 @@ describe('PATTERNS — Cycle 10 PRC vision spec §7 additions', () => {
     ['(image of water molecule)', '(image of water molecule)'],
     ['Developmental Theatre - Description (LOGO)', '(LOGO)'],
     ['Warmup : ICON', '(ICON) suffix'],
+    ['Theatre Games Magic Toolbox (ICON)', '(ICON) suffix'],
     ['Note: Published in September 2024 Newsletter', 'Note: Published in '],
     ['https://docs.google.com/document/d/abc/edit', 'raw docs.google.com URL'],
     ['https://drive.google.com/file/d/xyz/view', 'raw drive.google.com URL'],
