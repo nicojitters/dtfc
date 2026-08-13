@@ -11,7 +11,7 @@ const themes = [
   'Magic and the Supernatural',
   'The Generation Gap',
   'Falstaff',
-  'Bullies',
+  'Bullies (CU)',
 ];
 const themeSlug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
@@ -26,11 +26,26 @@ const entries = (await getCollection('scripts'))
   eyebrow="Script library"
   description="Themed montages that gather scenes across plays around a single question or figure."
 >
+  <div class="max-w-prose mb-8">
+    <p>
+      A themed montage &mdash; scenes from several plays around one idea &mdash; lets Players
+      of many ages perform Shakespeare together while keeping every part vivid. Themes we
+      have used: Battle of the Sexes; Magic and the Supernatural; Fools and Fooling; Ruler
+      and the Ruled; Rogues and Villains; The Generation Gap; Bullies (CU); Falstaff.
+    </p>
+    <p class="mt-4">
+      See <a href="/shakespeare/alternatives/#alternative-two">Alternative Two</a> of the
+      Alternatives essay for the no-narration performance practice (hat/headscarf character
+      signals, optional easel signboards) and the &ldquo;Consider the audience&rdquo;
+      caution.
+    </p>
+  </div>
+
   <section class="max-w-2xl">
     <h2 class="font-display text-2xl">Themed montages</h2>
     <p class="text-ink-700 mt-2 text-sm leading-relaxed">
       Scenes gathered from across the canon around a single question or figure. Filter by theme
-      below — chips are deep-linkable.
+      below &mdash; chips are deep-linkable.
     </p>
   </section>
 
@@ -71,6 +86,12 @@ const entries = (await getCollection('scripts'))
       </ul>
     )
   }
+
+  <div class="callout-tip max-w-prose mt-8">
+    <strong>Choosing scenes:</strong> Start from what your Players already have memorized
+    from other work; shave scenes internally; eliminate extraneous characters. That way you
+    arrive at a themed montage that feels rehearsed, not assembled.
+  </div>
 </ShakespeareLayout>
 
 <script is:inline>
