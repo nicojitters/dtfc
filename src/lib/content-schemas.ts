@@ -33,6 +33,22 @@ export const conceptSchema = z.object({
   shortDefinition: z.string().max(240),
   icon: z.string().default('placeholder'),
   related: z.array(z.string()).default([]),
+  // Cycle 10 additions — all optional / defaulted so existing entries pass
+  credits: z.string().optional(),
+  provenance: z.string().optional(),
+  assets: z
+    .array(
+      z.object({
+        slug: z.string(),
+        description: z.string(),
+        status: z.enum(['placeholder', 'delivered']).default('placeholder'),
+      }),
+    )
+    .default([]),
+  draft: z.boolean().default(false),
+  beyondSource: z.boolean().default(false),
+  desiraeReplaceable: z.boolean().default(false),
+  aiAttribution: z.boolean().default(false),
 });
 
 export const scriptsSchema = z

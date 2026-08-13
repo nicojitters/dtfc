@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import ConceptLayout from '@/layouts/ConceptLayout.astro';
 import Concept from '@/components/concept/Concept.astro';
+import WayfarersJourneyWheel from '@/components/childrens/WayfarersJourneyWheel.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('concepts');
@@ -16,5 +17,5 @@ const { Content } = await render(entry);
 ---
 
 <ConceptLayout entry={entry}>
-  <Content components={{ Concept }} />
+  <Content components={{ Concept, WayfarersJourneyWheel }} />
 </ConceptLayout>

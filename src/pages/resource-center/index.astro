@@ -1,9 +1,20 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
 import ReflectivePrompt from '@/components/section/ReflectivePrompt.astro';
+import LetterRail from '@/components/prc/LetterRail.astro';
+import EntryCard from '@/components/prc/EntryCard.astro';
 import { listConcepts } from '@/lib/concepts';
-import { iconPath } from '@/lib/icons';
+
 const concepts = await listConcepts();
+
+// Group by first letter of name; letters with no entries stay out of the rail.
+const grouped = new Map<string, typeof concepts>();
+for (const entry of concepts) {
+  const letter = entry.data.name.charAt(0).toUpperCase();
+  if (!grouped.has(letter)) grouped.set(letter, []);
+  grouped.get(letter)!.push(entry);
+}
+const activeLetters = Array.from(grouped.keys()).sort();
 ---
 
 <SectionLayout
@@ -14,62 +25,71 @@ const concepts = await listConcepts();
 >
   <ReflectivePrompt sectionKey="resource-center" />
 
-  <section id="icons" class="border-teal-600/20 bg-teal-600/5 mt-6 rounded-[var(--radius-card)] border p-5">
-    {/* CLIENT REVIEW: landing-page callout answering Idea Two #4
-        ("What are the ICONS and how are they used?") */}
-    <h2 class="font-display text-xl">What are the ICONS?</h2>
+  <section
+    id="icons"
+    class="border-teal-600/20 bg-teal-600/5 mt-6 rounded-[var(--radius-card)] border p-5"
+    data-pagefind-ignore
+  >
+    <h2 class="font-display text-xl">What are the ICONs?</h2>
     <p class="text-ink-700 mt-2 max-w-prose text-sm">
       The small visual symbols throughout the site — pictures paired with a name and a short
-      definition — are called <strong>ICONs</strong>. Click or tap any one to see its definition without
-      leaving the page. <a href="/resource-center/icons/">Read the full ICONs entry →</a>
+      definition — are called <strong>ICONs</strong>. Click or tap any one to see its definition
+      without leaving the page.
+      <a href="/resource-center/icons/">Read the full ICONs entry &rarr;</a>
     </p>
   </section>
 
-  <div class="max-w-3xl">
-    <div class="rounded-[var(--radius-card)] bg-white p-4 shadow-[var(--shadow-soft)]">
-      <label class="block">
-        <span class="text-sm font-medium">Filter</span>
-        <input
-          type="search"
-          placeholder="Type to filter…"
-          class="border-ivory-200 bg-ivory-50 mt-1 w-full rounded border px-3 py-2 text-base"
-          data-concept-filter
-        />
-      </label>
-    </div>
+  <div class="mt-8" data-pagefind-ignore>
+    <label class="block max-w-md">
+      <span class="text-sm font-medium">Filter</span>
+      <input
+        type="search"
+        placeholder="Type to filter&hellip;"
+        class="border-ivory-200 bg-ivory-50 mt-1 w-full rounded border px-3 py-2 text-base"
+        data-concept-filter
+      />
+    </label>
+  </div>
 
-    <ul
-      class="divide-ivory-200 border-ivory-200 mt-6 divide-y rounded-[var(--radius-card)] border bg-white"
-      data-concept-list
-    >
-      {
-        concepts.map((entry) => (
-          <li data-concept-name={entry.data.name.toLowerCase()}>
-            <a
-              href={`/resource-center/${entry.data.slug}/`}
-              class="hover:bg-ivory-50 flex items-start gap-3 p-4 no-underline"
-            >
-              <img src={iconPath(entry.data.icon)} alt="" width="24" height="24" class="mt-1" />
-              <div>
-                <p class="font-display text-ink-900 text-lg">{entry.data.name}</p>
-                <p class="text-ink-500 text-sm">{entry.data.shortDefinition}</p>
+  <div class="mt-4">
+    <LetterRail letters={activeLetters} />
+  </div>
+
+  <div class="mt-6 space-y-10" data-concept-groups>
+    {
+      activeLetters.map((letter) => (
+        <section data-letter-section={letter}>
+          <h2 id={letter.toLowerCase()} class="font-display text-clay-500 text-2xl">
+            {letter}
+          </h2>
+          <div class="mt-3 grid gap-3 sm:grid-cols-2">
+            {grouped.get(letter)!.map((entry) => (
+              <div data-concept-name={entry.data.name.toLowerCase()}>
+                <EntryCard entry={entry} />
               </div>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+            ))}
+          </div>
+        </section>
+      ))
+    }
   </div>
 </SectionLayout>
 
 <script>
   const filter = document.querySelector<HTMLInputElement>('[data-concept-filter]');
-  const list = document.querySelector<HTMLUListElement>('[data-concept-list]');
+  const groups = document.querySelectorAll<HTMLElement>('[data-letter-section]');
   filter?.addEventListener('input', () => {
     const q = filter.value.trim().toLowerCase();
-    list?.querySelectorAll<HTMLLIElement>('li').forEach((li) => {
-      const name = li.dataset.conceptName ?? '';
-      li.hidden = q.length > 0 && !name.includes(q);
+    groups.forEach((section) => {
+      const cards = section.querySelectorAll<HTMLElement>('[data-concept-name]');
+      let anyVisible = false;
+      cards.forEach((card) => {
+        const name = card.dataset.conceptName ?? '';
+        const hide = q.length > 0 && !name.includes(q);
+        card.hidden = hide;
+        if (!hide) anyVisible = true;
+      });
+      section.hidden = q.length > 0 && !anyVisible;
     });
   });
 </script>

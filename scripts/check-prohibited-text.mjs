@@ -99,6 +99,58 @@ export const PATTERNS = [
     regex: /google\.com\/search\?/gi,
     reason: 'Legacy §6: raw Google-search URL (replace with a clean reference link)',
   },
+  // PRC vision spec §7 — editorial working notes and asset markers that must not ship.
+  // See /Users/cnote/Downloads/dtfc-players-resource-center-vision-spec.md §7 for source.
+  {
+    phrase: 'DESIRAE: prefix',
+    regex: /\bDESIRAE:/g,
+    reason: 'PRC §7: designer working-note prefix (strip during MDX migration)',
+  },
+  {
+    phrase: 'Desirae you will need',
+    regex: /Desirae you will need/gi,
+    reason: 'PRC §7: designer asset-request working note',
+  },
+  {
+    phrase: 'check this doc info is included',
+    regex: /check this doc info is included/gi,
+    reason: 'PRC §7: source-doc title audit note (from Writing a Play doc)',
+  },
+  {
+    phrase: 'OTHERS?',
+    regex: /\bOTHERS\?/g,
+    reason: 'PRC §7: draft-list open question from Warmup source doc',
+  },
+  {
+    phrase: '(image of water molecule)',
+    regex: /\(image of water molecule\)/gi,
+    reason: 'PRC §7: asset request marker from Cohesion source doc',
+  },
+  {
+    phrase: '(LOGO)',
+    regex: /\s+\(LOGO\)(?!\w)/g,
+    reason: 'PRC §7: logo placement marker from Developmental Theatre doc',
+  },
+  {
+    phrase: 'ICON suffix',
+    regex: /\(ICON\)|\s[:—-]\s*ICON/gm,
+    reason: 'PRC §7: (ICON) title suffix — belongs in icon registry, not visible titles',
+  },
+  {
+    phrase: 'Note: Published in ',
+    regex: /Note: Published in /g,
+    reason: 'PRC §7: provenance-in-body note (belongs in frontmatter, not page copy)',
+  },
+  {
+    phrase: 'raw docs.google.com URL',
+    regex: /https?:\/\/docs\.google\.com\/[a-z]+\/d\//gi,
+    reason: 'PRC §7: raw docs.google.com URL (convert to internal route or hosted asset)',
+  },
+  {
+    phrase: 'raw drive.google.com URL',
+    regex: /https?:\/\/drive\.google\.com\//gi,
+    reason: 'PRC §7: raw drive.google.com URL (convert to internal route or hosted asset)',
+  },
 ];
 
 /**

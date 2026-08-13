@@ -1,0 +1,61 @@
+/**
+ * Cycle 10 — MDX body callouts used by PRC entries.
+ * Border-left + tinted background matches the source docs' TIP / boxed
+ * teacher-note visual affordances. All colors reference existing tokens.
+ */
+.callout-tip,
+.callout-why,
+.callout-box,
+.callout-practical {
+  margin: 1.25rem 0;
+  padding: 0.875rem 1rem 0.875rem 1.125rem;
+  border-radius: var(--radius-card);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.callout-tip {
+  border-left: 4px solid var(--color-clay-500);
+  background: color-mix(in oklab, var(--color-clay-500) 6%, white);
+}
+.callout-tip::before {
+  content: 'TIP';
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--color-clay-500);
+  margin-bottom: 0.25rem;
+}
+
+.callout-why {
+  border-left: 4px solid var(--color-teal-600);
+  background: color-mix(in oklab, var(--color-teal-600) 6%, white);
+}
+.callout-why::before {
+  content: 'Why do I care?';
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--color-teal-600);
+  margin-bottom: 0.25rem;
+}
+
+.callout-box {
+  border: 1px dashed var(--color-ink-500);
+  background: var(--color-ivory-100);
+}
+
+.callout-practical {
+  border-left: 4px solid var(--color-moss-500);
+  background: color-mix(in oklab, var(--color-moss-500) 6%, white);
+}
+.callout-practical::before {
+  content: 'Practical Suggestion';
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: var(--color-moss-500);
+  margin-bottom: 0.25rem;
+}

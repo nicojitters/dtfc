@@ -51,3 +51,26 @@ describe('prohibited-text guardrail', () => {
     expect(hits[0].col).toBeGreaterThan(0);
   });
 });
+
+describe('PATTERNS — Cycle 10 PRC vision spec §7 additions', () => {
+  const table: Array<[string, string]> = [
+    ['DESIRAE: Alphabetical Arrangement', 'DESIRAE:'],
+    ['Desirae you will need the simple line drawing', 'Desirae you will need'],
+    ['Writing a Play - check this doc info is included', 'check this doc info is included'],
+    ['OTHERS? One Seed Child, OCEAN?', 'OTHERS?'],
+    ['(image of water molecule)', '(image of water molecule)'],
+    ['Developmental Theatre - Description (LOGO)', '(LOGO)'],
+    ['Warmup : ICON', '(ICON) suffix'],
+    ['Theatre Games Magic Toolbox (ICON)', '(ICON) suffix'],
+    ['Note: Published in September 2024 Newsletter', 'Note: Published in '],
+    ['https://docs.google.com/document/d/abc/edit', 'raw docs.google.com URL'],
+    ['https://drive.google.com/file/d/xyz/view', 'raw drive.google.com URL'],
+  ];
+  for (const [input, phraseFragment] of table) {
+    it(`detects ${phraseFragment}`, () => {
+      const hits = findViolations(input, 'fake.mdx');
+      const found = hits.some((h) => h.phrase.toLowerCase().includes(phraseFragment.toLowerCase().replace(/[()]/g, '')));
+      expect(found).toBe(true);
+    });
+  }
+});
