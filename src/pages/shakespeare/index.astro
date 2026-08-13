@@ -1,6 +1,7 @@
 ---
 import ShakespeareLayout from '@/layouts/ShakespeareLayout.astro';
 import ReflectivePrompt from '@/components/section/ReflectivePrompt.astro';
+import Concept from '@/components/concept/Concept.astro';
 
 const directoryCards = [
   {
@@ -38,14 +39,27 @@ const directoryCards = [
 >
   <ReflectivePrompt sectionKey="shakespeare" />
 
-  {/* CLIENT REVIEW: "Leave the Language as Shakespeare’s Own" callout drafted from spec §4.3 item 7. */}
   <aside class="border-clay-500/25 bg-clay-500/5 mt-8 rounded-[var(--radius-card)] border-l-4 p-5">
     <h2 class="font-display text-ink-900 text-xl">Leave the Language as Shakespeare&rsquo;s Own.</h2>
     <p class="text-ink-700 mt-2 max-w-prose text-base leading-relaxed">
       When Players of any age step into Shakespeare&rsquo;s words as written, they train ear, breath, and
       imagination together. DT:FC does not paraphrase or &ldquo;translate&rdquo; the original in performance
-      &mdash; the language itself does the teaching. (For readers who want a bridge into the words,
-      see our <a href="/shakespeare/colloquial/" class="hover:text-clay-500">Colloquial pairings</a>
+      &mdash; the language itself does the teaching. Roughly 37 plays survive; every one of them is
+      still being staged somewhere, more than four centuries later.
+    </p>
+    <blockquote class="border-clay-500 mt-4 border-l-2 pl-4 italic text-ink-800">
+      &ldquo;What translation did you use?&rdquo;
+      <footer class="text-ink-600 mt-1 text-sm not-italic">
+        &mdash; a repeated question from teachers after watching Players do the real thing. Answer: none.
+      </footer>
+    </blockquote>
+    <div class="callout-tip mt-4">
+      <strong>TIP:</strong>
+      Use <Concept id="vocal-expression" /> Theatre Games as <Concept id="warmup" /> before Shakespeare rehearsal.
+    </div>
+    <p class="text-ink-700 mt-4 max-w-prose text-sm">
+      (For readers who want a bridge into the words, see our
+      <a href="/shakespeare/colloquial/" class="hover:text-clay-500">Colloquial pairings</a>
       alongside the originals.)
     </p>
   </aside>
