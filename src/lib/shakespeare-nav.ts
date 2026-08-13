@@ -17,7 +17,7 @@ export const SHAKESPEARE_NAV: ShakespeareNavItem[] = [
   { key: 'cuttings', label: 'Cuttings', href: '/shakespeare/cuttings/' },
   {
     key: 'childrens-shakespeare',
-    label: "Children's Shakespeare",
+    label: "Children’s Shakespeare",
     href: '/shakespeare/childrens-shakespeare/',
   },
   { key: 'colloquial', label: 'Colloquial', href: '/shakespeare/colloquial/' },
