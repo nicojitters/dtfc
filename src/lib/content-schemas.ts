@@ -14,6 +14,7 @@ export const SCRIPT_LIBRARIES = [
   'childrens-shakespeare',
   'childrens-plays',
   'teaching-modules',
+  'new-plays', // Cycle 11 addition — /shakespeare/new-plays/ library
 ] as const;
 
 export const gameSchema = z.object({
