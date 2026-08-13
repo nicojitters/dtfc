@@ -119,9 +119,9 @@ The orphan footnote fragment ("1. Act V, scene ii, the murder scene, lines 1&nda
 
 ---
 
-## 11. Audio hosting for *One Udd&apos;ah Mid&rsquo;summah* recording
+## 11. Audio hosting for *One Uddah Midʻsummah* recording
 
-**What shipped:** The Colloquial page for *One Udd&apos;ah Mid&rsquo;summah* is wired for an audio player, but no audio file is hosted this cycle.
+**What shipped:** The Colloquial page for *One Uddah Midʻsummah* is wired for an audio player, but no audio file is hosted this cycle.
 
 **Reason:** The Google Drive link in doc 4 (file `Midʻsummah-Pidgin-Paka.mp4`) returned "not found" when our tools tried to download it &mdash; the file likely isn&rsquo;t shared with the account our tooling is authenticated against.
 
