@@ -151,6 +151,43 @@ export const PATTERNS = [
     regex: /https?:\/\/drive\.google\.com\//gi,
     reason: 'PRC §7: raw drive.google.com URL (convert to internal route or hosted asset)',
   },
+  // Shakespeare vision spec §6 — must-not-ship editorial artifacts.
+  // See /Users/cnote/Downloads/dtfc-shakespeare-vision-spec.md §6 for source.
+  {
+    phrase: '(Desirae: use part of text for description of script sections ?)',
+    regex: /\(Desirae:\s*use part of text for description of script sections\s*\?\s*\)/g,
+    reason: 'Shakespeare §6: title parenthetical instruction from doc 1b',
+  },
+  {
+    phrase: 'Shakspeare',
+    regex: /\bShakspeare\b/g,
+    reason: 'Shakespeare §6: title typo — canonical spelling is Shakespeare',
+  },
+  {
+    phrase: 'Act V, scene ii, the murder scene, lines 1–117',
+    regex: /Act V, scene ii, the murder scene, lines 1[–-]117/g,
+    reason: 'Shakespeare §6: orphan footnote fragment from doc 2 (no referent)',
+  },
+  {
+    phrase: 'TMAI (as visible provenance label)',
+    regex: /\bTMAI\b/g,
+    reason: 'Shakespeare §6: provenance label — move to frontmatter sourceDoc',
+  },
+  {
+    phrase: 'Berstein',
+    regex: /\bBerstein\b/g,
+    reason: 'Shakespeare §6: composer name typo — canonical is Bernstein',
+  },
+  {
+    phrase: 'WIthin',
+    regex: /\bWIthin\b/g,
+    reason: 'Shakespeare §6: source typo — canonical is Within',
+  },
+  {
+    phrase: 'raw Drive mp4 URL',
+    regex: /https?:\/\/drive\.google\.com\/[^\s)]*\.mp4/g,
+    reason: 'Shakespeare §6: raw Drive mp4 URL — audio must be locally hosted',
+  },
 ];
 
 /**
