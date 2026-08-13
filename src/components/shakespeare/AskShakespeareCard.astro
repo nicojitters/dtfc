@@ -10,6 +10,11 @@ const href = `/shakespeare/ask-shakespeare/${slug}/`;
 ---
 
 <article class="border-ivory-200 bg-ivory-50 hover:border-clay-500/60 rounded-[var(--radius-card)] border p-5 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]">
+  {entry.data.draft && (
+    <span class="inline-block text-xs px-2 py-0.5 rounded bg-amber-100 text-amber-900 mb-2">
+      Draft &mdash; not yet published
+    </span>
+  )}
   <div class="flex items-baseline gap-3">
     <span class="text-mustard-800 text-xs font-semibold tracking-widest uppercase">
       #{entry.data.columnNumber}

@@ -232,7 +232,7 @@ export const IDEA_TWO_ANSWERS: Array<{ question: string; answerAt: string }> = [
   { question: 'What theatre game competency trains Elocution, Memorization, Declamation, Presentation?', answerAt: '/theatre-games/#vocal-expression' },
   { question: "How many of Shakespeare's plays are performed now — 440+ years later?", answerAt: '/shakespeare/#four-hundred-forty' },
   { question: "Who is translating Shakespeare's plays into Chinese?", answerAt: '/shakespeare/#daniel-yang' },
-  { question: 'Do you have a question to Ask Shakespeare?', answerAt: '/shakespeare/#ask-shakespeare' },
+  { question: 'Do you have a question to Ask Shakespeare?', answerAt: '/shakespeare/ask-shakespeare/#form' },
   { question: 'In the 1970s what did the University of Colorado create that led to this website?', answerAt: '/legacy/#colorado-caravan' },
   { question: 'Who founded Developmental Theatre?', answerAt: '/legacy/#founders' },
   { question: 'How do I become part of this Legacy?', answerAt: '/community/#membership' },
