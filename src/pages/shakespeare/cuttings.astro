@@ -1,6 +1,7 @@
 ---
 import ShakespeareLayout from '@/layouts/ShakespeareLayout.astro';
 import LibraryIndex from '@/components/scripts/LibraryIndex.astro';
+import CueCardsExplainer from '@/components/shakespeare/CueCardsExplainer.astro';
 ---
 
 <ShakespeareLayout
@@ -21,15 +22,20 @@ import LibraryIndex from '@/components/scripts/LibraryIndex.astro';
       the Alternatives essay for the method in full.
     </p>
   </div>
+
+  <div class="callout-tip max-w-prose mt-8">
+    <strong>We have successfully performed 40-minute versions of:</strong> Romeo and Juliet;
+    Lear; A Midsummer Night&rsquo;s Dream (primarily focused on the Mechanicals).
+  </div>
+
+  <CueCardsExplainer />
+
   <LibraryIndex
     library="cuttings"
     title="Cuttings library"
     intro="Full-play cuttings that fit inside a class period or an evening — story intact."
   />
-  <div class="callout-tip max-w-prose mt-8">
-    <strong>We have successfully performed 40-minute versions of:</strong> Romeo and Juliet;
-    Lear; A Midsummer Night&rsquo;s Dream (primarily focused on the Mechanicals).
-  </div>
+
   <p class="max-w-prose text-ink-700 mt-4 italic">
     Chuck Wilcox is providing plays he cut from his St. Mary&rsquo;s Academy teaching &mdash;
     more cuttings are being prepared over time. If you&rsquo;d like a look at what&rsquo;s
