@@ -3,6 +3,16 @@ import { getCollection, render } from 'astro:content';
 import ShakespeareLayout from '@/layouts/ShakespeareLayout.astro';
 import ScriptDetail from '@/components/scripts/ScriptDetail.astro';
 
+/** Map library value to the Shakespeare sub-nav URL segment used for the index page. */
+const LIBRARY_INDEX: Record<string, string> = {
+  soliloquies: '/shakespeare/soliloquies/',
+  scenes: '/shakespeare/scenes/',
+  themes: '/shakespeare/themes/',
+  cuttings: '/shakespeare/cuttings/',
+  'childrens-shakespeare': '/shakespeare/childrens-shakespeare/',
+  'new-plays': '/shakespeare/new-plays/',
+};
+
 export async function getStaticPaths() {
   const entries = await getCollection('scripts');
   return entries.map((entry) => ({
@@ -13,6 +23,9 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+
+/** Redirect target for draft entries in production. Falls back to /shakespeare/. */
+const draftRedirectTarget = LIBRARY_INDEX[entry.data.library] ?? '/shakespeare/';
 ---
 
 <ShakespeareLayout
@@ -21,6 +34,13 @@ const { Content } = await render(entry);
   eyebrow={`${entry.data.play}`}
   description={entry.data.title}
 >
+  {entry.data.draft && (
+    <script is:inline define:vars={{ isProd: import.meta.env.PROD, draftRedirectTarget }}>
+      if (isProd && !new URLSearchParams(window.location.search).has('draft')) {
+        window.location.replace(draftRedirectTarget);
+      }
+    </script>
+  )}
   <ScriptDetail entry={entry}>
     <Content />
   </ScriptDetail>
