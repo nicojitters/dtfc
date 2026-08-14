@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { findViolations } from '../../scripts/check-prohibited-text.mjs';
+import { findViolations, PATTERNS } from '../../scripts/check-prohibited-text.mjs';
 
 describe('prohibited-text guardrail', () => {
   it('flags "Great Change" (case-insensitive)', () => {
@@ -50,6 +50,43 @@ describe('prohibited-text guardrail', () => {
     expect(hits[0].file).toBe('fake.txt');
     expect(hits[0].col).toBeGreaterThan(0);
   });
+});
+
+describe('PATTERNS — every pattern has the g flag', () => {
+  it('all patterns have the g flag (required by findViolations while-loop)', () => {
+    for (const p of PATTERNS) {
+      expect(p.regex.flags, `pattern "${p.phrase}" is missing g flag`).toContain('g');
+    }
+  });
+});
+
+describe('PATTERNS — Cycle 12 Shakespeare vision spec §7 additions', () => {
+  const table: Array<[string, string]> = [
+    ['Scene title (Missy - edit)', '(Missy - edit)'],
+    ['Great Scene Title (Needs Internal Edits)', '(Needs Internal Edits)'],
+    ['My Script (Check EDIT)', '(Check EDIT)'],
+    ['Cut Scene (Lola to Do)', '(Lola to Do)'],
+    ['This cutting needs last scenes from Act III', 'needs last scenes'],
+    ['# Newsletter #12\nsome content', 'Newsletter # raw H1 header'],
+    ['Quote from Act x, l y of the play', 'Act x, l y'],
+    ['Helena 0r the other one speaks here', 'Helena 0r the other one'],
+    ['Maybe from of one or more of the Fools in the play', 'Maybe from of one or more of the Fools'],
+    ['Here are the Speechs from Act I', 'Speechs'],
+    ['Theseua enters the stage', 'Theseua'],
+    ['Ardiane stood waiting', 'Ardiane'],
+    ['The Minoatuar roared', 'Minoatuar'],
+    ['Horatio, Prince Hal alter-father, stood by', 'Prince Hal alter-father'],
+    ['Horatio is a Large Person in every way', 'Large Person in every way'],
+  ];
+  for (const [input, phraseFragment] of table) {
+    it(`detects "${phraseFragment}"`, () => {
+      const hits = findViolations(input, 'fake.mdx');
+      const found = hits.some((h) =>
+        h.phrase.toLowerCase().includes(phraseFragment.toLowerCase().replace(/[()]/g, '')),
+      );
+      expect(found).toBe(true);
+    });
+  }
 });
 
 describe('PATTERNS — Cycle 10 PRC vision spec §7 additions', () => {
