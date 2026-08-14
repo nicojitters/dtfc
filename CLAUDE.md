@@ -142,6 +142,26 @@ component and the Vitest existence test both prepend `/audio/`). Body uses
 
 **Canonical Shakespeare theme strings.** Theme labels used across `alternatives.astro`, `themes.astro`, and any script frontmatter `theme:` fields must match exactly. The `themeSlug()` filter lowercases + strips non-alphanumeric, so `'Bullies (CU)'` slugs to `bullies-cu`. Canonical eight themes: Battle of the Sexes, Magic and the Supernatural, Fools and Fooling, Ruler and the Ruled, Rogues and Villains, The Generation Gap, Bullies (CU), Falstaff. Preserve the `(CU)` parenthetical on Bullies for source fidelity + chip-filter consistency.
 
+**DT:FC 2-3 Person Scene wrapper (Cycle 12).** Any script with `nennoUnit: true` in frontmatter renders via `DtfcSceneUnit` at `/shakespeare/scenes/dtfc/<slug>/`. Wrapper fields (all optional except where noted): `chanceCasting`, `pronunciations` (Record), `characterOneLiners` (Record), `competencyReflection` (1–5 items), `evaluationRitual` (`'liked-wonder' | 'liked-wish'` — default `'liked-wonder'` when unset), `sceneNotes`, `difficultyTag`. Wrapper visual chrome uses PRC callout tokens (`--color-tip-bg` / `--color-tip-border`). Route precedence: `nennoUnit` check in `scriptHref()` runs before library-based routing.
+
+**Audience cue cards (Cycle 12).** `<CueCardsExplainer />` renders the 7 named DT:FC cue cards on `/shakespeare/cuttings/#cue-cards`. Do NOT duplicate the explainer inside individual script MDXs; cross-reference the anchor instead. Cue-card cues in cuttings render as `[Cue Card: NAME]` inline in script text.
+
+**"Never memorize" method box (Cycle 12).** `<NeverMemorizeBox />` is a shared component; mount on Soliloquies (below grid) and Children's Shakespeare (above grid). Reuses `.callout-tip` styling.
+
+**Soliloquy filter UI (Cycle 12).** `<SoliloquyFilters client:idle>` is a Preact island; three chip strips (play/gender/register). State URL-persisted. `ScriptCard` emits `data-soliloquy-card data-play data-gender data-register` when entry is a soliloquy AND has those fields.
+
+**Draft flag (Cycle 12).** `scriptsSchema.draft` + `askShakespeareSchema.draft` gate index-grid rendering in production; detail routes emit but client-side redirect when `import.meta.env.PROD && data.draft === true`. Dev + `?draft=1` query bypass.
+
+**Spanish shelf pattern (Cycle 12).** Children's Shakespeare page renders "Obras de Teatro Shakespeare para Niños en Español" section with `lang="es"` on the section root and per-paragraph `lang` attrs when mixing Spanish + English. Do NOT machine-translate content; ship honest coming-soon until client provides real source docs.
+
+**Archival scans pattern (Cycle 12).** PDFs live at `/public/legacy/shakespeare-archive/<name>.pdf` (ASCII kebab-case). Presented on `/shakespeare/themes/#archival` with framing matching `/legacy/essays/towards-a-poor-caravan/`. OCR text never published as text.
+
+**Nenno wrapper `….` cut-marks.** Source authors write literal `….` (four-dot ellipsis) matching Drive-source convention. `.dtfc-scene-text` class provides typographic isolation; no CSS transform needed.
+
+**Petruchio/Kate possible-cuts styling.** Yellow-highlighted optional cuts from Drive-source render as `<span class="possible-cut">…</span>` inline in MDX. Legend paragraph `<p class="scenes-possible-cut-legend">` sits above the script.
+
+**`pnpm check:folger` advisory.** Runs `scripts/check-folger-links.mjs` against every `folger.edu` URL in the scripts collection. Fetches each, reports 404s. Advisory only — NOT wired into `pnpm build`. Run manually before merging Shakespeare content that adds new Folger links.
+
 **500+/440+ Shakespeare year-count.** Canonical is `440+ years` site-wide. `500+ years` never ships.
 
 **Chuck Wilcox site-wide canonical.** Prose uses "Chuck Wilcox" everywhere; formal program credits legitimately quoting "Charles Wilcox" are the only preserved exceptions (see `docs/client-reviews/2026-08-13-cycle11-shakespeare-review.md` bundle item #8).
@@ -195,6 +215,7 @@ component and the Vitest existence test both prepend `/audio/`). Body uses
 - **Vocal Expression PRC entry** (Cycle 11) — placeholder `draft:true` shipped so the Shakespeare landing TIP works; awaits client edit / replacement (bundle item #10).
 - **Chuck Wilcox stroke paragraph** (Cycle 11) — flagged for client sensitivity re-read (bundle item #1).
 - **Colloquial nav placement** (Cycle 11) — placed 8th per Cycle 11; bundle item #6 asks for client confirmation.
+- **Cycle 12 deferrals** (v2 spec §2 Out-of-scope): Battle of the Sexes script text (bundle #6), Chuck's St. Mary's cuts, R&J Rap authorship (bundle #8), Peterson/Petersen spelling (bundle #9), Will Power article PDF (Cycle 9 T7 carried), Vocal Expression PRC replacement (Cycle 11 bundle #10 carried), 15/20-min R&J duplicate (bundle #12), real Spanish scripts (bundle #10), All the World's a Stage reconstruction.
 
 ## Blockers for future cycles
 
