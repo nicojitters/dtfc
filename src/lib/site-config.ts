@@ -12,7 +12,21 @@
  * Post-launch (Cycle 8): swap `fallbackContactEmail` to the real inbox and
  * swap `ogDefaults.image` to Desirae's real OG asset.
  */
-const canonicalHost = import.meta.env.PUBLIC_SITE_URL ?? 'https://dtfc.example';
+const FALLBACK_HOST = 'https://dtfc.example';
+
+// Falls back on undefined, empty string, and any value `new URL()` rejects —
+// `??` alone missed empty strings + bare domains and threw at render time.
+function resolveCanonicalHost(): string {
+  const raw = import.meta.env.PUBLIC_SITE_URL;
+  if (!raw) return FALLBACK_HOST;
+  try {
+    return new URL(raw).origin;
+  } catch {
+    return FALLBACK_HOST;
+  }
+}
+
+const canonicalHost = resolveCanonicalHost();
 
 export const SITE_CONFIG = {
   fallbackContactEmail: 'hello@dtfc.example',
