@@ -215,7 +215,7 @@ component and the Vitest existence test both prepend `/audio/`). Body uses
 - **Vocal Expression PRC entry** (Cycle 11) — placeholder `draft:true` shipped so the Shakespeare landing TIP works; awaits client edit / replacement (bundle item #10).
 - **Chuck Wilcox stroke paragraph** (Cycle 11) — flagged for client sensitivity re-read (bundle item #1).
 - **Colloquial nav placement** (Cycle 11) — placed 8th per Cycle 11; bundle item #6 asks for client confirmation.
-- **Cycle 12 deferrals** (v2 spec §2 Out-of-scope): Battle of the Sexes script text (bundle #6), Chuck's St. Mary's cuts, R&J Rap authorship (bundle #8), Peterson/Petersen spelling (bundle #9), Will Power article PDF (Cycle 9 T7 carried), Vocal Expression PRC replacement (Cycle 11 bundle #10 carried), 15/20-min R&J duplicate (bundle #12), real Spanish scripts (bundle #10), All the World's a Stage reconstruction.
+- **Cycle 12 deferrals** (v2 spec §2 Out-of-scope): Battle of the Sexes script text (bundle #6), Chuck’s St. Mary’s cuts, R&J Rap authorship (bundle #8), Peterson/Petersen spelling (bundle #9), Will Power article PDF (Cycle 9 T7 carried), Vocal Expression PRC replacement (Cycle 11 bundle #10 carried), 15/20-min R&J duplicate (bundle #12), real Spanish scripts (bundle #10), All the World’s a Stage reconstruction.
 
 ## Blockers for future cycles
 
