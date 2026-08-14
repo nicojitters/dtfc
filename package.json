@@ -11,6 +11,7 @@
     "check:concepts": "node scripts/check-concept-refs.mjs",
     "check:prohibited": "node scripts/check-prohibited-text.mjs",
     "check:links": "node scripts/check-external-links.mjs",
+    "check:folger": "node scripts/check-folger-links.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",

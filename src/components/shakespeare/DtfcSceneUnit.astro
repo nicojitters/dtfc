@@ -1,0 +1,95 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'scripts'>;
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const ritual = d.evaluationRitual ?? 'liked-wonder';
+const ritualText =
+  ritual === 'liked-wish'
+    ? 'One thing I wish&hellip;'
+    : 'One thing I wonder&hellip;';
+---
+<article class="dtfc-scene-wrapper" data-nenno-slug={entry.id.replace(/\.mdx?$/, '')}>
+  <span class="dtfc-scene-eyebrow">DT:FC 2-3 Person Scene</span>
+
+  <header>
+    <h2 class="font-display text-2xl mb-1">{d.title}</h2>
+    {d.play && <p class="text-ink-500 text-sm">{d.play}</p>}
+    {d.difficultyTag && (
+      <span class="inline-block mt-2 px-2 py-0.5 text-xs rounded bg-ivory-50 border border-ivory-200">
+        {d.difficultyTag}
+      </span>
+    )}
+  </header>
+
+  {d.chanceCasting && (
+    <>
+      <h3>How to cast this scene</h3>
+      <p>{d.chanceCasting}</p>
+    </>
+  )}
+
+  {d.pronunciations && Object.keys(d.pronunciations).length > 0 && (
+    <>
+      <h3>Say it right</h3>
+      <dl class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
+        {Object.entries(d.pronunciations).map(([name, sound]) => (
+          <>
+            <dt class="font-medium">{name}</dt>
+            <dd>{sound}</dd>
+          </>
+        ))}
+      </dl>
+    </>
+  )}
+
+  {d.characterOneLiners && Object.keys(d.characterOneLiners).length > 0 && (
+    <>
+      <h3>Who&rsquo;s who</h3>
+      <dl class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2">
+        {Object.entries(d.characterOneLiners).map(([name, key]) => (
+          <>
+            <dt class="font-medium">{name}</dt>
+            <dd>{key}</dd>
+          </>
+        ))}
+      </dl>
+    </>
+  )}
+
+  <h3>The scene</h3>
+  <div class="dtfc-scene-inner">
+    <div class="dtfc-scene-text">
+      <slot />
+    </div>
+  </div>
+
+  {d.sceneNotes && (
+    <>
+      <h3>Facilitator notes</h3>
+      <p>{d.sceneNotes}</p>
+    </>
+  )}
+
+  {d.competencyReflection && d.competencyReflection.length > 0 && (
+    <>
+      <h3>Reflect together</h3>
+      <ol class="list-decimal ml-6 space-y-1">
+        {d.competencyReflection.map((q) => (
+          <li>{q}</li>
+        ))}
+      </ol>
+    </>
+  )}
+
+  <h3>Wrap up</h3>
+  <p>Now let&rsquo;s share:</p>
+  <p class="pl-4 italic">
+    Two things I liked&hellip;<br />
+    <Fragment set:html={ritualText} />
+  </p>
+</article>

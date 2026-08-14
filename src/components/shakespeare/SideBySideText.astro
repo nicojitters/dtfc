@@ -2,7 +2,27 @@
 // Wraps a sequence of alternating <Original> and <Colloquial> children in a
 // definition list rendered as a two-column grid on desktop and stacked on
 // mobile. Screen readers get the DL pairing regardless of viewport.
+// Mobile toggle (Both / Original / Colloquial) is hidden above the md breakpoint.
 ---
-<dl class="grid gap-x-8 gap-y-3 md:grid-cols-2">
+<fieldset class="md:hidden mb-4 border-0 p-0">
+  <legend class="text-sm mb-2">View:</legend>
+  <label class="inline-block mr-3">
+    <input type="radio" name="sbs-view" value="both" checked
+      onchange="document.querySelectorAll('.sbs-outer').forEach(el => el.dataset.view='both')" />
+    Both
+  </label>
+  <label class="inline-block mr-3">
+    <input type="radio" name="sbs-view" value="original"
+      onchange="document.querySelectorAll('.sbs-outer').forEach(el => el.dataset.view='original')" />
+    Original
+  </label>
+  <label class="inline-block">
+    <input type="radio" name="sbs-view" value="colloquial"
+      onchange="document.querySelectorAll('.sbs-outer').forEach(el => el.dataset.view='colloquial')" />
+    Colloquial
+  </label>
+</fieldset>
+
+<dl class="sbs-outer grid gap-x-8 gap-y-3 md:grid-cols-2" data-view="both">
   <slot />
 </dl>

@@ -20,6 +20,13 @@ const { Content } = await render(entry);
   eyebrow={`Ask Shakespeare #${entry.data.columnNumber}`}
   description={entry.data.excerpt}
 >
+  {entry.data.draft && (
+    <script is:inline define:vars={{ isProd: import.meta.env.PROD }}>
+      if (isProd && !new URLSearchParams(window.location.search).has('draft')) {
+        window.location.replace('/shakespeare/ask-shakespeare/');
+      }
+    </script>
+  )}
   <div class="max-w-2xl">
     <p class="text-ink-500 text-sm">
       <a href="/shakespeare/ask-shakespeare/">All columns</a>

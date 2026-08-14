@@ -1,6 +1,7 @@
 ---
 import ShakespeareLayout from '@/layouts/ShakespeareLayout.astro';
 import LibraryIndex from '@/components/scripts/LibraryIndex.astro';
+import NeverMemorizeBox from '@/components/shakespeare/NeverMemorizeBox.astro';
 ---
 
 <ShakespeareLayout
@@ -9,6 +10,28 @@ import LibraryIndex from '@/components/scripts/LibraryIndex.astro';
   eyebrow="Script library"
   description="Shakespeare adaptations chosen and shaped for young Players."
 >
+  <NeverMemorizeBox />
+
+  <section id="spanish" lang="es" class="my-10 p-6 border border-ivory-300 rounded bg-canvas">
+    <h2 class="text-3xl font-display mb-2" lang="es">
+      Obras de Teatro Shakespeare para Niños en Español
+    </h2>
+    <p class="subtitle text-sm text-ivory-700 mb-4" lang="en">
+      Shakespeare plays for young Spanish speakers
+    </p>
+
+    <p lang="es" class="mb-2">
+      Estos guiones están en desarrollo. Contáctanos a través de
+      <a href="/shakespeare/ask-shakespeare/#form">Ask Shakespeare</a> para
+      recibir un aviso cuando estén listos.
+    </p>
+    <p lang="en" class="text-sm text-ivory-700">
+      These scripts are in development. Contact us via
+      <a href="/shakespeare/ask-shakespeare/#form">Ask Shakespeare</a> to be
+      notified when they&rsquo;re ready.
+    </p>
+  </section>
+
   <LibraryIndex
     library="childrens-shakespeare"
     title="Children’s Shakespeare library"

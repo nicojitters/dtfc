@@ -188,6 +188,83 @@ export const PATTERNS = [
     regex: /https?:\/\/drive\.google\.com\/[^\s)]*\.mp4/g,
     reason: 'Shakespeare §6: raw Drive mp4 URL — audio must be locally hosted',
   },
+  // Shakespeare vision spec v2 §7 — editorial working notes that must not ship.
+  // See /Users/cnote/Downloads/dtfc-shakespeare-vision-spec-v2.md §7 for source.
+  {
+    phrase: '(Missy - edit)',
+    regex: /\(Missy - edit\)/g,
+    reason: 'Title working note — strip assignment notes from titles; tickets go in bundle instead',
+  },
+  {
+    phrase: '(Needs Internal Edits)',
+    regex: /\(Needs Internal Edits\)/g,
+    reason: 'Title working note — move to client-review bundle item; do not ship in title',
+  },
+  {
+    phrase: '(Check EDIT)',
+    regex: /\(Check EDIT\)/g,
+    reason: 'Title working note — strip working note; if content needs review, ticket it',
+  },
+  {
+    phrase: '(Lola to Do)',
+    regex: /\(Lola to Do\)/g,
+    reason: 'Title working note — task tracker note, remove from title',
+  },
+  {
+    phrase: 'needs last scenes',
+    regex: /needs last scenes/gi,
+    reason: 'Cutting incompleteness signal in title — rename file and add honest chip in body',
+  },
+  {
+    phrase: 'Newsletter # raw H1 header',
+    regex: /^# Newsletter #/gm,
+    reason: 'Ask Shakespeare column raw "Newsletter #N" H1 header — move provenance to frontmatter',
+  },
+  {
+    phrase: 'Act x, l y',
+    regex: /Act x, l y/g,
+    reason: 'Short Speeches placeholder fragment — replace with real act/line reference before ship',
+  },
+  {
+    phrase: 'Helena 0r the other one',
+    regex: /Helena 0r the other one/gi,
+    reason: 'Short Speeches placeholder fragment (typo + uncertainty) — complete with intended character',
+  },
+  {
+    phrase: 'Maybe from of one or more of the Fools',
+    regex: /Maybe from of one or more of the Fools/g,
+    reason: 'Short Speeches placeholder fragment — author with specific Fool speech',
+  },
+  {
+    phrase: 'Speechs',
+    regex: /\bSpeechs\b/g,
+    reason: 'Typo — should be "Speeches"',
+  },
+  {
+    phrase: 'Theseua',
+    regex: /Theseua/gi,
+    reason: 'Typo — should be "Theseus"',
+  },
+  {
+    phrase: 'Ardiane',
+    regex: /Ardiane/gi,
+    reason: 'Typo — should be "Ariadne"',
+  },
+  {
+    phrase: 'Minoatuar',
+    regex: /Minoatuar/gi,
+    reason: 'Typo — should be "Minotaur"',
+  },
+  {
+    phrase: 'Prince Hal alter-father',
+    regex: /Prince Hal alter-father/g,
+    reason: 'Falstaff description mistakenly applied to Horatio (copy-paste bug) — use correct Horatio description',
+  },
+  {
+    phrase: 'Large Person in every way',
+    regex: /Large Person in every way/g,
+    reason: 'Falstaff description mistakenly applied to Horatio (copy-paste bug) — verify Horatio has correct description',
+  },
 ];
 
 /**
@@ -206,10 +283,16 @@ export const PATTERNS = [
 export const CURLY_APOSTROPHE_ALLOWLIST = [
   // Cycle 3 Shakespeare verse files intentionally use straight apostrophes
   // for Elizabethan contractions ('tis, 'twere, Environ'd, perfect'st).
+  // Cycle 12 raw Pairs scenes follow the same pattern.
   // Do not add other files to this list without controller review.
   'src/content/scripts/juliet-romeo-and-juliet-act-iv-scene-iii.mdx',
   'src/content/scripts/lady-macbeth-macbeth-act-i-scene-v.mdx',
   'src/content/scripts/mechanicals-scenes-a-midsummer-nights-dream.mdx',
+  'src/content/scripts/fairy-robin-msnd.mdx',
+  'src/content/scripts/petruchio-kate-taming.mdx',
+  'src/content/scripts/jaques-orlando-ayli.mdx',
+  'src/content/scripts/celia-rosalind-ayli.mdx',
+  'src/content/scripts/quickly-falstaff-merry-wives.mdx',
 ];
 
 /**

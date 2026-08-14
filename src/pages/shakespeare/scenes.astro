@@ -1,6 +1,14 @@
 ---
+import { getCollection } from 'astro:content';
 import ShakespeareLayout from '@/layouts/ShakespeareLayout.astro';
 import LibraryIndex from '@/components/scripts/LibraryIndex.astro';
+import ScriptCard from '@/components/scripts/ScriptCard.astro';
+import { TESTIMONIALS } from '@/data/testimonials';
+
+const dtfcScenes = await getCollection('scripts', ({ data }) =>
+  Boolean(data.nennoUnit) && !data.draft,
+);
+const nennoTestimonial = TESTIMONIALS.find((t) => t.slug === 'linda-nenno');
 ---
 
 <ShakespeareLayout
@@ -22,9 +30,44 @@ import LibraryIndex from '@/components/scripts/LibraryIndex.astro';
       variant and the Colorado Will Power story.
     </p>
   </div>
+
+  <section class="my-10">
+    <p class="text-xs uppercase tracking-wider mb-1 text-clay-600">
+      The wrapper is the product
+    </p>
+    <h2 class="text-3xl font-display mb-4">DT:FC 2-3 Person Scenes</h2>
+    <p class="mb-6 max-w-2xl">
+      Every DT:FC scene is wrapped in a pedagogical shell: chance-cast from a
+      hat, pronunciation guides, reflection questions, and a shared evaluation
+      ritual. The wrapper is the product.
+    </p>
+
+    {nennoTestimonial && (
+      <figure class="my-6 border-l-4 border-clay-500 pl-4 italic">
+        <blockquote>&ldquo;{nennoTestimonial.body}&rdquo;</blockquote>
+        <figcaption class="text-sm mt-2 not-italic">
+          &mdash; {nennoTestimonial.attribution}, {nennoTestimonial.role}
+        </figcaption>
+      </figure>
+    )}
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {dtfcScenes.map((entry) => <ScriptCard entry={entry} />)}
+    </div>
+  </section>
+
+  <hr class="my-10 border-ivory-300" />
+
+  <!-- Raw scenes library grid (non-Nenno entries with library: 'scenes') -->
+  <p class="text-sm text-ivory-700 mb-4">
+    Looking for the Mechanicals arc? It&rsquo;s filed under
+    <a href="/shakespeare/childrens-shakespeare/">Children&rsquo;s Shakespeare</a>
+    &mdash; the same scenes work as a string-of-beads example and as young
+    Players&rsquo; first Shakespeare.
+  </p>
   <LibraryIndex
     library="scenes"
     title="Scenes library"
-    intro="Individual scenes drawn from across Shakespeare’s plays. Great for classroom groups working on one arc in depth."
+    intro="Individual scenes drawn from across Shakespeare&rsquo;s plays. Great for classroom groups working on one arc in depth."
   />
 </ShakespeareLayout>

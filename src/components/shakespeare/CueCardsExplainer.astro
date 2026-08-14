@@ -1,0 +1,37 @@
+---
+const cards = [
+  { text: 'TA-DAAA!', note: 'Triumphant flourish' },
+  { text: 'WIND NOISE', note: 'Mood-setting; hush → whoosh' },
+  { text: 'HEE-HAW', note: 'Comic donkey; peak Bottom' },
+  { text: 'WILD APPLAUSE', note: 'Closing beat' },
+  { text: 'BOO! HISS!', note: 'Villains enter' },
+  { text: 'MOB NOISE', note: 'Crowd scenes' },
+  { text: 'OH NO!', note: 'Reversals + gasps' },
+];
+---
+<section id="cue-cards" class="my-10">
+  <p class="text-xs uppercase tracking-wider text-clay-500 mb-1">A DT:FC signature</p>
+  <h2 class="text-3xl font-display mb-4">Audience Cue Cards</h2>
+  <p class="mb-6 max-w-2xl">
+    In a DT:FC cutting, the audience is a co-performer. Cue cards flash to
+    prompt reactions &mdash; the room becomes the crowd of Verona, the mob in
+    Rome, the forest in Athens. Practice the cues aloud together before the
+    show starts.
+  </p>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+    {cards.map((c) => (
+      <div class="p-3 border border-ivory-200 rounded bg-ivory-50 text-center">
+        <p class="font-display text-lg leading-tight">{c.text}</p>
+        <p class="text-xs text-ink-500 mt-1">{c.note}</p>
+      </div>
+    ))}
+  </div>
+
+  <p class="max-w-2xl text-sm text-ink-500">
+    Audience participation is Poor-Theatre inheritance, not incidental stage
+    direction. The tradition traces through Grotowski and the Colorado
+    Caravan; DT:FC cuttings carry it forward with practiced cues that turn
+    watchers into the third character on stage.
+  </p>
+</section>

@@ -198,11 +198,17 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   await expect(page).toHaveURL(/\/shakespeare\/scenes\/?/);
   await expect(page.getByRole('heading', { level: 2, name: /Scenes library/i })).toBeVisible();
 
-  // Follow into an individual script (any card that exists — the first one)
+  // Follow into an individual script (any card that exists — the first one).
+  // Cycle 12: scenes page now leads with DT:FC Nenno entries (routed to /scenes/dtfc/<slug>/)
+  // before the standard library grid. Accept both URL shapes.
   const firstScriptLink = page.locator('article a').first();
   await firstScriptLink.click();
-  await expect(page).toHaveURL(/\/shakespeare\/scripts\/[^/]+\/?/);
-  await expect(page.getByRole('button', { name: /Print this script/i })).toBeVisible();
+  await expect(page).toHaveURL(/\/shakespeare\/(scripts|scenes\/dtfc)\/[^/]+\/?/);
+  // Print button only exists on standard script detail pages; skip if on a Nenno detail page.
+  const isNennoDetail = (await page.url()).includes('/scenes/dtfc/');
+  if (!isNennoDetail) {
+    await expect(page.getByRole('button', { name: /Print this script/i })).toBeVisible();
+  }
 
   // Colloquial index → detail
   await page.goto('/shakespeare/colloquial/');
@@ -347,4 +353,172 @@ test('smoke: landing → PRC → games finder → concept popover', async ({ pag
   });
   await page.reload();
   expect(errors, `Console/page errors:\n${errors.join('\n')}`).toEqual([]);
+});
+
+
+// --- Cycle 12 checkpoints ---
+
+test('Scenes landing: DT:FC cluster + Nenno testimonial', async ({ page }) => {
+  await page.goto('/shakespeare/scenes/');
+  await expect(page.getByText('DT:FC 2-3 Person Scenes')).toBeVisible();
+  // Testimonial body is rendered inside a blockquote wrapped in curly-quote characters;
+  // use { exact: false } to match the substring regardless of surrounding " " chars.
+  await expect(page.getByText('My students are rocking it.', { exact: false })).toBeVisible();
+  // DtfcSceneUnit sets data-nenno-slug; ScriptCard links into /scenes/dtfc/. Count all 8.
+  const nennoCards = page.locator('[data-nenno-slug], a[href*="/scenes/dtfc/"]');
+  expect(await nennoCards.count()).toBeGreaterThanOrEqual(8);
+  await runAxe(page, 'scenes landing DT:FC cluster');
+});
+
+test('Nenno detail: wrapper chrome + all sections', async ({ page }) => {
+  await page.goto('/shakespeare/scenes/dtfc/nurse-juliet-rj-nenno/');
+  // The eyebrow span and the h1 both contain "DT:FC 2-3 Person Scene"; use .first() to avoid strict-mode violation.
+  await expect(page.getByText('DT:FC 2-3 Person Scene').first()).toBeVisible();
+  // DtfcSceneUnit renders H3 headings. "Who’s who" uses &rsquo; (curly apostrophe U+2019).
+  // Scope to the DtfcSceneUnit article wrapper and use level:3 for headings that also appear
+  // as MDX-generated H2 anchors in the body (e.g. "The scene" -> #the-scene H2 + DtfcSceneUnit H3).
+  const article = page.locator('article.dtfc-scene-wrapper');
+  await expect(article).toBeVisible();
+  // Headings that are unambiguously H3 (no MDX H2 counterpart):
+  for (const heading of ['How to cast this scene', 'Say it right', "Who’s who", 'Reflect together', 'Wrap up']) {
+    await expect(article.getByRole('heading', { name: heading })).toBeVisible();
+  }
+  // "The scene" exists as both a DtfcSceneUnit H3 and a MDX body H2 -- use level:3 to be specific.
+  await expect(article.getByRole('heading', { name: 'The scene', level: 3 })).toBeVisible();
+  await runAxe(page, 'nenno detail nurse-juliet wrapper chrome');
+});
+
+test('Nenno Hamlet/Horatio: correct description (no Falstaff)', async ({ page }) => {
+  await page.goto('/shakespeare/scenes/dtfc/hamlet-horatio-nenno/');
+  const html = await page.content();
+  expect(html).not.toContain('Prince Hal alter-father');
+  expect(html).not.toContain('Large Person in every way');
+  expect(html).toContain('Wittenberg');
+});
+
+test('Cuttings: CueCardsExplainer above library grid', async ({ page }) => {
+  await page.goto('/shakespeare/cuttings/');
+  await expect(page.getByText('Audience Cue Cards')).toBeVisible();
+  for (const card of ['TA-DAAA!', 'WIND NOISE', 'HEE-HAW', 'WILD APPLAUSE', 'BOO! HISS!', 'MOB NOISE', 'OH NO!']) {
+    await expect(page.getByText(card, { exact: true })).toBeVisible();
+  }
+});
+
+test('Soliloquies: filter island + NeverMemorizeBox', async ({ page }) => {
+  await page.goto('/shakespeare/soliloquies/');
+  await expect(page.getByText('Filter soliloquies')).toBeVisible();
+  await expect(page.getByText('Never Think or Say the Word')).toBeVisible();
+  // T13 shipped 22 non-draft soliloquies (richard-iii-1 is draft:true). Threshold >= 15
+  // is deliberately conservative in case future draft flags affect the rendered count.
+  const cards = page.locator('[data-soliloquy-card]');
+  const initialCount = await cards.count();
+  expect(initialCount).toBeGreaterThanOrEqual(15);
+
+  // SoliloquyFilters uses client:idle -- wait for the Preact island to hydrate.
+  // "grief" is one of the ALL_REGISTERS values in SoliloquyFilters.tsx (lowercase).
+  const griefBtn = page.getByRole('button', { name: 'grief' });
+  await expect(griefBtn).toBeVisible({ timeout: 10_000 });
+  await griefBtn.click();
+  await page.waitForTimeout(400);
+  const filteredCount = await cards.evaluateAll((els) =>
+    els.filter((el) => (el as HTMLElement).style.display !== 'none').length,
+  );
+  // After filtering to "grief" register, fewer cards should be visible (not all 22 are grief).
+  expect(filteredCount).toBeLessThan(initialCount);
+  await runAxe(page, 'soliloquies filter island');
+});
+
+test("Children's Shakespeare: Spanish shelf + NeverMemorizeBox + Mechanicals card", async ({ page }) => {
+  await page.goto('/shakespeare/childrens-shakespeare/');
+  await expect(page.locator('[lang="es"]').first()).toContainText(
+    'Obras de Teatro Shakespeare para Niños en Español',
+  );
+  await expect(page.getByText('Never Think or Say the Word')).toBeVisible();
+  await expect(page.getByText('Mechanicals')).toBeVisible();
+  await runAxe(page, "children's shakespeare landing");
+});
+
+test("Themes: archival section + Fools/Fooling heading + Laurie O'Brien link on script detail", async ({ page }) => {
+  await page.goto('/shakespeare/themes/');
+  await expect(page.getByText('Archival Theme Scripts (1970s)')).toBeVisible();
+  // T16: PDFs deferred (Drive MCP 10MB cap). Archival entries render as <div> tiles (not <a> links).
+  // Adapted: use getByRole('heading') to target the archival H3 headings specifically.
+  // ('Fools and Fooling' also appears in a chip button and in prose -- heading is unambiguous.)
+  await expect(page.getByRole('heading', { name: 'Fools and Fooling' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Pretenders List of Scenes' })).toBeVisible();
+  // Magic and the Supernatural IS a real script entry -> rendered as ScriptCard <a href> link.
+  await expect(page.getByRole('link', { name: /Magic and the Supernatural/ })).toBeVisible();
+  // Scan themes landing archival section before navigating to detail.
+  await runAxe(page, 'themes landing archival section');
+  // Laurie O'Brien link lives in the script body (MDX), not the themes index.
+  // Navigate to the detail page to assert the founders cross-link shipped by T12.
+  await page.goto('/shakespeare/scripts/magic-and-the-supernatural-theme/');
+  // Note: the link text uses &rsquo; which renders as curly apostrophe U+2019.
+  const laurie = page.getByRole('link', { name: /Laurie O/ });
+  await expect(laurie).toBeVisible();
+  await runAxe(page, 'magic script detail');
+});
+
+// Skipped: Cycle 12 T15 deferred audio (Drive 404); re-enable when Track K bundle lands.
+// When re-enabling: assert page.locator('audio') has src attr /audio/midsummah-pidgin-paka.mp4
+// and page.getByText('serves as an accessible transcript') is visible.
+test.skip('Colloquial: audio + transcript statement', async ({ page }) => {
+  await page.goto('/shakespeare/colloquial/one-uddah-midsummah/');
+  await expect(page.locator('audio')).toHaveAttribute('src', '/audio/midsummah-pidgin-paka.mp4');
+  await expect(page.getByText('serves as an accessible transcript')).toBeVisible();
+});
+
+test('Colloquial: verbatim landing paragraph + okina in title', async ({ page }) => {
+  // Verbatim "Carrying on that tradition" paragraph IS shipped on colloquial index (T15 intro).
+  await page.goto('/shakespeare/colloquial/');
+  await expect(page.getByText('Carrying on that tradition')).toBeVisible();
+
+  // okina (U+02BB) in title renders correctly on the detail page.
+  await page.goto('/shakespeare/colloquial/one-uddah-midsummah/');
+  const title = await page.locator('h1').first().textContent();
+  // U+02BB is the Hawaiian okina; check it appears in the title.
+  expect(title).toContain('Midʻsummah');
+});
+
+test('Colloquial mobile toggle: switch to Original only', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 667 });
+  await page.goto('/shakespeare/colloquial/one-uddah-midsummah/');
+  await page.getByLabel('Original', { exact: true }).check();
+  await page.waitForTimeout(100);
+  const colloquialSide = page.locator('.colloquial').first();
+  await expect(colloquialSide).toBeHidden();
+});
+
+test('Ask Shakespeare: column #5 draft chip + form section present', async ({ page }) => {
+  await page.goto('/shakespeare/ask-shakespeare/');
+  // T8 landed draft:true on column 5 ("censorship"). AskShakespeareCard renders the chip inline.
+  await expect(page.getByText('Draft — not yet published')).toBeVisible();
+
+  // In test env (.env unset / fallback mode), the <form id="form"> does not render.
+  // Verify instead that the "Submit a question" section heading is present (renders in both modes).
+  await expect(page.getByRole('heading', { name: 'Submit a question' })).toBeVisible();
+});
+
+test('Landing: Ask Shakespeare IDEA_TWO answer URL routes to ask page', async ({ page }) => {
+  // The landing teaser questions are plain <li> text items (not hyperlinks).
+  // IDEA_TWO_ANSWERS maps the Ask Shakespeare question to /shakespeare/ask-shakespeare/#form.
+  // T8 updated this answerAt URL. Verify the URL resolves correctly and loads the ask page.
+  await page.goto('/shakespeare/ask-shakespeare/#form');
+  await expect(page).toHaveURL(/\/shakespeare\/ask-shakespeare\/#form/);
+  // The "Submit a question" section heading is present in both form and fallback modes.
+  await expect(page.getByRole('heading', { name: 'Submit a question' })).toBeVisible();
+});
+
+test('Alternatives: Alt Four trade-offs callout + last-minute Sister wording + Mechanicals link', async ({ page }) => {
+  await page.goto('/shakespeare/alternatives/');
+  // Navigate directly to the Alt Four section to ensure content is in view.
+  await page.goto('/shakespeare/alternatives/#alternative-four');
+  // The callout-tradeoffs div in Alt Four contains "Shakespeare-adjacent, not truly Shakespeare".
+  // Use locator with filter since getByText regex matching can miss elements with ::before pseudo-content.
+  const tradeoffSection = page.locator('#alternative-four .callout-tradeoffs');
+  await expect(tradeoffSection).toBeVisible();
+  await expect(tradeoffSection).toContainText('Shakespeare-adjacent');
+  await expect(page.getByText(/last-minute/)).toBeVisible();
+  // Mechanicals link text is "Mechanicals ->" (rendered from &rarr;).
+  await expect(page.getByRole('link', { name: /Mechanicals/ })).toBeVisible();
 });

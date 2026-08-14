@@ -88,6 +88,19 @@ export const scriptsSchema = z
       .default([]),
     aiPrompt: z.string().optional(),
     series: z.string().optional(),
+    // ---- Cycle 12 additions ----
+    draft: z.boolean().optional().default(false),
+    nennoUnit: z.boolean().optional(),
+    chanceCasting: z.string().optional(),
+    pronunciations: z.record(z.string(), z.string()).optional(),
+    characterOneLiners: z.record(z.string(), z.string()).optional(),
+    competencyReflection: z.array(z.string()).min(1).max(5).optional(),
+    evaluationRitual: z.enum(['liked-wonder', 'liked-wish']).optional(),
+    sceneNotes: z.string().optional(),
+    difficultyTag: z.enum(['beginner', 'intermediate', 'advanced']).optional(),
+    register: z.enum(['comic', 'dramatic', 'villain', 'grief']).optional(),
+    speakerGender: z.enum(['female', 'male', 'nonbinary', 'unspecified']).optional(),
+    actScene: z.object({ act: z.string(), scene: z.string() }).optional(),
   })
   .refine((s) => s.library !== 'themes' || !!s.theme, {
     message: "scripts entries with library === 'themes' must set a `theme`",
@@ -101,6 +114,7 @@ export const askShakespeareSchema = z.object({
   asker: z.string().default('Reader'),
   excerpt: z.string().max(200),
   sample: z.boolean().default(false),
+  draft: z.boolean().optional().default(false),
 });
 
 export const colloquialSchema = z.object({
