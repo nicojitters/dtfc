@@ -7,7 +7,7 @@ const { action, fallbackMode } = formActionFor('newsletter');
 
 {
   fallbackMode ? (
-    <div class="border-teal-600/30 bg-teal-600/5 flex h-full flex-col justify-between rounded-[var(--radius-card)] border p-6">
+    <div class="border-teal-600/30 bg-teal-600/5 flex flex-col justify-between rounded-[var(--radius-card)] border p-6">
       <div>
         <h2 class="font-display text-ink-900 text-lg">Stay in touch</h2>
         <p class="text-ink-500 mt-1 text-xs">
@@ -21,7 +21,7 @@ const { action, fallbackMode } = formActionFor('newsletter');
     </div>
   ) : (
     <form
-      class="border-teal-600/30 bg-teal-600/5 focus-within:border-teal-600 flex h-full flex-col justify-between rounded-[var(--radius-card)] border p-6"
+      class="border-teal-600/30 bg-teal-600/5 focus-within:border-teal-600 flex flex-col justify-between rounded-[var(--radius-card)] border p-6"
       action={action}
       method="POST"
       data-newsletter-form
