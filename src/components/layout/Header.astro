@@ -10,13 +10,13 @@ const { section } = Astro.props;
 ---
 
 <header class="border-ivory-200 bg-ivory-50 border-b">
-  <div class="mx-auto grid w-full max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-8 px-5 py-4 md:px-8">
-    <a href="/" class="text-ink-900 flex shrink-0 items-center gap-3 justify-self-start no-underline">
-      <img src="/DTFC-logo.png" alt="" width="40" height="40" class="bg-clay-100 rounded-full" />
+  <div class="mx-auto grid w-full max-w-7xl grid-cols-[1fr_auto_1fr] items-baseline gap-8 px-5 py-4 md:px-8">
+    <a href="/" class="text-ink-900 flex shrink-0 items-baseline gap-3 justify-self-start no-underline">
+      <img src="/DTFC-logo.png" alt="" width="40" height="40" class="bg-clay-100 rounded-full self-center" />
       <span class="font-display text-xl">DT:FC</span>
     </a>
 
-    <div class="col-start-3 flex items-center gap-2 justify-self-end">
+    <div class="col-start-3 row-start-1 flex items-center gap-2 justify-self-end">
       <button
         type="button"
         data-search-trigger
@@ -40,7 +40,7 @@ const { section } = Astro.props;
       </button>
     </div>
 
-    <nav aria-label="Primary" class="col-start-2 hidden justify-self-center lg:block">
+    <nav aria-label="Primary" class="col-start-2 row-start-1 hidden justify-self-center lg:block">
       <Nav section={section} />
     </nav>
   </div>
