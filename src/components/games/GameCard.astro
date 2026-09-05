@@ -11,7 +11,7 @@ const { game } = Astro.props;
 
 <a
   href={`/theatre-games/${game.slug}/`}
-  class="border-ivory-200 hover:border-clay-500 block h-full rounded-[var(--radius-card)] border bg-white p-5 no-underline transition hover:shadow-[var(--shadow-soft)]"
+  class="border-ivory-200 hover:border-teal-600 block h-full rounded-[var(--radius-card)] border bg-white p-5 no-underline transition hover:shadow-[var(--shadow-soft)]"
 >
   <div class="flex flex-wrap items-center gap-2">
     <Chip tone="clay">{COMPETENCY_LABELS[game.competency]}</Chip>

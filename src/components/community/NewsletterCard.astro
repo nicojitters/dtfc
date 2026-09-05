@@ -9,12 +9,12 @@ const slug = entry.id.replace(/\.mdx?$/, '');
 const href = `/community/newsletters/${slug}/`;
 ---
 
-<article class="border-ivory-200 bg-ivory-50 hover:border-clay-500/60 rounded-[var(--radius-card)] border p-5 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]">
+<article class="border-ivory-200 bg-ivory-50 hover:border-teal-600/60 rounded-[var(--radius-card)] border p-5 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]">
   <p class="text-ink-500 text-xs uppercase tracking-widest">
     Issue #{entry.data.issueNumber} &middot; {entry.data.publishDate}
   </p>
   <h3 class="font-display text-ink-900 mt-2 text-xl">
-    <a href={href} class="hover:text-clay-500 no-underline" set:html={entry.data.title} />
+    <a href={href} class="hover:text-teal-600 no-underline" set:html={entry.data.title} />
   </h3>
   <p class="text-ink-700 mt-3 text-sm" set:html={entry.data.excerpt} />
   {

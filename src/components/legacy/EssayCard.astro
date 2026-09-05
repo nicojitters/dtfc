@@ -9,9 +9,9 @@ const slug = entry.id.replace(/\.mdx?$/, '');
 const href = `/legacy/essays/${slug}/`;
 ---
 
-<article class="border-ivory-200 bg-ivory-50 hover:border-clay-500/60 rounded-[var(--radius-card)] border p-5 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]">
+<article class="border-ivory-200 bg-ivory-50 hover:border-teal-600/60 rounded-[var(--radius-card)] border p-5 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]">
   <h3 class="font-display text-ink-900 text-xl">
-    <a href={href} class="hover:text-clay-500 no-underline" set:html={entry.data.title}></a>
+    <a href={href} class="hover:text-teal-600 no-underline" set:html={entry.data.title}></a>
   </h3>
   <p class="text-ink-500 mt-1 text-sm" set:html={`${entry.data.author}${entry.data.year ? ` · ${entry.data.year}` : ''}`}></p>
   {entry.data.publishedIn && <p class="text-ink-500 text-xs" set:html={entry.data.publishedIn}></p>}

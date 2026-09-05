@@ -20,7 +20,7 @@ const { src, type = 'audio/mp4', caption, downloadable = true } = Astro.props;
         {caption}
         {caption && downloadable && ' · '}
         {downloadable && (
-          <a href={src} download class="hover:text-clay-500 no-underline">
+          <a href={src} download class="hover:text-teal-600 no-underline">
             Download →
           </a>
         )}

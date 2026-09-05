@@ -13,7 +13,7 @@ const { box, mode, class: className = '' } = Astro.props;
 <li class={`list-none ${className}`.trim()}>
   <a
     href={box.href}
-    class="border-ivory-200 bg-ivory-50 hover:border-clay-500/60 focus-visible:ring-clay-500 block h-full rounded-[var(--radius-card)] border p-6 no-underline transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)] focus-visible:ring-2 focus-visible:ring-offset-2"
+    class="border-ivory-200 bg-ivory-50 hover:border-teal-600/60 focus-visible:ring-clay-500 block h-full rounded-[var(--radius-card)] border p-6 no-underline transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)] focus-visible:ring-2 focus-visible:ring-offset-2"
   >
     <h2 class="font-display text-ink-900 text-xl">{box.label}</h2>
     <BoxContent box={box} mode={mode} />

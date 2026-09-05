@@ -35,7 +35,7 @@ const seriesSlug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').re
         <button
           type="button"
           data-series=""
-          class="inline-flex items-center rounded-[var(--radius-chip)] bg-ivory-200 text-ink-700 aria-[pressed=true]:bg-clay-500 aria-[pressed=true]:text-ivory-50 px-3 py-0.5 text-xs font-medium"
+          class="inline-flex items-center rounded-[var(--radius-chip)] bg-ivory-200 text-ink-700 aria-[pressed=true]:bg-teal-600 aria-[pressed=true]:text-ivory-50 px-3 py-0.5 text-xs font-medium"
           aria-pressed="true"
         >
           All
@@ -43,7 +43,7 @@ const seriesSlug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').re
         <button
           type="button"
           data-series="standalone"
-          class="inline-flex items-center rounded-[var(--radius-chip)] bg-mustard-200 text-ink-700 aria-[pressed=true]:bg-clay-500 aria-[pressed=true]:text-ivory-50 px-3 py-0.5 text-xs font-medium"
+          class="inline-flex items-center rounded-[var(--radius-chip)] bg-mustard-200 text-ink-700 aria-[pressed=true]:bg-teal-600 aria-[pressed=true]:text-ivory-50 px-3 py-0.5 text-xs font-medium"
           aria-pressed="false"
         >
           Standalone
@@ -53,7 +53,7 @@ const seriesSlug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').re
             type="button"
             data-series={seriesSlug(s)}
             data-series-label={s}
-            class="inline-flex items-center rounded-[var(--radius-chip)] bg-mustard-200 text-ink-700 aria-[pressed=true]:bg-clay-500 aria-[pressed=true]:text-ivory-50 px-3 py-0.5 text-xs font-medium"
+            class="inline-flex items-center rounded-[var(--radius-chip)] bg-mustard-200 text-ink-700 aria-[pressed=true]:bg-teal-600 aria-[pressed=true]:text-ivory-50 px-3 py-0.5 text-xs font-medium"
             aria-pressed="false"
           >
             {s}

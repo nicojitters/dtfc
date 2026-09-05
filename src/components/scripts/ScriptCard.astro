@@ -24,14 +24,14 @@ const registerColors: Record<string, string> = {
 ---
 
 <article
-  class="border-ivory-200 bg-ivory-50 hover:border-clay-500/60 rounded-[var(--radius-card)] border p-5 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]"
+  class="border-ivory-200 bg-ivory-50 hover:border-teal-600/60 rounded-[var(--radius-card)] border p-5 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]"
   data-soliloquy-card={isSoliloquy ? '' : undefined}
   data-play={isSoliloquy ? (entry.data.play ?? '') : undefined}
   data-gender={isSoliloquy ? (entry.data.speakerGender ?? '') : undefined}
   data-register={isSoliloquy ? (entry.data.register ?? '') : undefined}
 >
   <h3 class="font-display text-ink-900 text-xl">
-    <a href={href} class="hover:text-clay-500 no-underline">
+    <a href={href} class="hover:text-teal-600 no-underline">
       {entry.data.title}
     </a>
   </h3>
