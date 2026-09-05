@@ -11,7 +11,7 @@
     font-size: var(--text-base);
     line-height: var(--leading-body);
     color: var(--color-ink-900);
-    background: var(--color-ivory-50);
+    background: white;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
@@ -22,6 +22,16 @@
   h4 {
     font-family: var(--font-display);
     line-height: var(--leading-tight);
+  }
+
+  h1 {
+    color: var(--color-teal-600);
+  }
+  h2,
+  h3 {
+    color: var(--color-teal-800);
+  }
+  h4 {
     color: var(--color-ink-900);
   }
 
