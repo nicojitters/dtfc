@@ -5,7 +5,7 @@ import NewsletterSignup from '@/components/ui/NewsletterSignup.astro';
 const year = 2026; // build-time literal; avoid new Date() to keep the plan deterministic
 ---
 
-<footer class="border-ivory-200 bg-ivory-100 mt-16 border-t">
+<footer class="border-teal-600 bg-ivory-100 mt-16 border-t-2">
   <Container class="grid gap-10 py-12 md:grid-cols-3">
     <div>
       <p class="font-display text-xl">Developmental Theatre: Fearless Creativity</p>
@@ -19,7 +19,7 @@ const year = 2026; // build-time literal; avoid new Date() to keep the plan dete
         {
           NAV_ITEMS.map((item) => (
             <li>
-              <a href={item.href}>{item.label}</a>
+              <a href={item.href} class="hover:text-teal-600">{item.label}</a>
             </li>
           ))
         }
@@ -28,11 +28,11 @@ const year = 2026; // build-time literal; avoid new Date() to keep the plan dete
 
     <NewsletterSignup source="footer" />
   </Container>
-  <div class="border-ivory-200 border-t">
+  <div class="border-teal-600/20 border-t">
     <Container class="text-ink-500 flex flex-wrap items-center justify-between gap-2 py-4 text-xs">
       <span>&copy; {year} Developmental Theatre: Fearless Creativity</span>
       <span>
-        <a href="/community/about/">About</a> · <a href="/community/donate/">Donate</a>
+        <a href="/community/about/" class="hover:text-teal-600">About</a> · <a href="/community/donate/" class="hover:text-teal-600">Donate</a>
       </span>
     </Container>
   </div>
