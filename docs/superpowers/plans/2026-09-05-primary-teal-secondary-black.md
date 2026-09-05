@@ -896,13 +896,13 @@ EOF
 
 - [ ] **Step 1: Update Chip.astro tone map**
 
-Edit `src/components/ui/Chip.astro`, lines 7-12. Exact old:
+Edit `src/components/ui/Chip.astro`, lines 7-12. Exact old (**post-Task-8 state** — the `neutral` line already has `bg-white` because Task 8's Ivory sweep touched Chip.astro; per pre-flight ruling in `.superpowers/sdd/…/progress.md`):
 ```typescript
 const tones = {
   clay: 'bg-clay-100 text-clay-700',
   teal: 'bg-teal-100 text-teal-800',
   mustard: 'bg-mustard-200 text-ink-700',
-  neutral: 'bg-ivory-200 text-ink-700',
+  neutral: 'bg-white text-ink-700',
 };
 ```
 Exact new:
