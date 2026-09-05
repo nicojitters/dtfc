@@ -43,13 +43,13 @@
   }
 
   a {
-    color: var(--color-clay-700);
+    color: var(--color-teal-800);
     text-decoration-line: underline;
     text-underline-offset: 3px;
     text-decoration-thickness: 1px;
   }
   a:hover {
-    color: var(--color-clay-500);
+    color: var(--color-teal-600);
   }
 
   :focus-visible {
