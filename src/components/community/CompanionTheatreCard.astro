@@ -7,7 +7,7 @@ interface Props {
 const { theatre } = Astro.props;
 ---
 
-<article class="border-ivory-200 bg-ivory-50 rounded-[var(--radius-card)] border p-5">
+<article class="border-ink-500/15 bg-white rounded-[var(--radius-card)] border p-5">
   <h3 class="font-display text-ink-900 text-xl">
     {
       theatre.website ? (
@@ -39,7 +39,7 @@ const { theatre } = Astro.props;
     }
     {
       theatre.sample && (
-        <span class="bg-ivory-200 text-ink-500 rounded-[var(--radius-chip)] px-2 py-0.5 text-xs font-medium">
+        <span class="bg-white text-ink-500 rounded-[var(--radius-chip)] px-2 py-0.5 text-xs font-medium">
           Sample — pending full import
         </span>
       )

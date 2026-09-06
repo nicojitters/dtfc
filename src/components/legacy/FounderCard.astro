@@ -15,7 +15,7 @@ function initials(name: string): string {
 }
 ---
 
-<article id={founder.slug} class="border-ivory-200 bg-ivory-50 rounded-[var(--radius-card)] border p-5">
+<article id={founder.slug} class="border-ink-500/15 bg-white rounded-[var(--radius-card)] border p-5">
   <div class="flex items-start gap-4">
     {
       founder.photoSrc ? (
@@ -48,7 +48,7 @@ function initials(name: string): string {
         }
         {
           founder.sample && (
-            <span class="bg-ivory-200 text-ink-500 rounded-[var(--radius-chip)] px-2 py-0.5 text-xs font-medium">
+            <span class="bg-white text-ink-500 rounded-[var(--radius-chip)] px-2 py-0.5 text-xs font-medium">
               Sample &mdash; pending final import
             </span>
           )

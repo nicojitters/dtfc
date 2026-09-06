@@ -9,7 +9,7 @@ interface Props {
 const { section } = Astro.props;
 ---
 
-<header class="border-teal-600 bg-ivory-50 border-b-2">
+<header class="border-teal-600 bg-white border-b-2">
   <div class="mx-auto grid w-full max-w-7xl grid-cols-[1fr_auto_1fr] items-baseline gap-8 px-5 py-4 md:px-8">
     <a href="/" class="text-ink-900 flex shrink-0 items-baseline gap-3 justify-self-start no-underline">
       <img src="/DTFC-logo.png" alt="" width="40" height="40" class="bg-white rounded-full self-center" />
@@ -31,7 +31,7 @@ const { section } = Astro.props;
       </button>
       <button
         type="button"
-        class="border-ivory-200 rounded border px-3 py-2 text-sm lg:hidden"
+        class="border-ink-500/15 rounded border px-3 py-2 text-sm lg:hidden"
         aria-expanded="false"
         aria-controls="mobile-nav"
         data-mobile-toggle
@@ -45,7 +45,7 @@ const { section } = Astro.props;
     </nav>
   </div>
 
-  <div id="mobile-nav" hidden class="border-teal-600/20 bg-ivory-50 border-t lg:hidden">
+  <div id="mobile-nav" hidden class="border-teal-600/20 bg-white border-t lg:hidden">
     <Container class="py-4">
       <Nav section={section} />
     </Container>
