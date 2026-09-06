@@ -12,19 +12,19 @@ const characterCount = entry.data.characters.length;
 
 const isSoliloquy = entry.data.library === 'soliloquies';
 
-// Register color mapping using existing token families (amber/charcoal/indigo not in tokens.css).
-// comic → teal (light, playful); dramatic → clay (warm, serious);
-// villain → ivory-200/ink-900 (neutral, shadowed); grief → mustard (muted, somber).
+// Register color mapping on the primary-teal / secondary-black palette.
+// comic → teal-100 (light, playful); dramatic → teal-800 (bold, serious);
+// villain → ink-900 (shadowed); grief → ink-500/15 (muted, somber).
 const registerColors: Record<string, string> = {
   comic:    'bg-teal-100 text-teal-800',
-  dramatic: 'bg-clay-100 text-clay-700',
-  villain:  'bg-ivory-200 text-ink-900',
-  grief:    'bg-mustard-200 text-ink-700',
+  dramatic: 'bg-teal-800 text-white',
+  villain:  'bg-ink-900 text-white',
+  grief:    'bg-ink-500/15 text-ink-700',
 };
 ---
 
 <article
-  class="border-ivory-200 bg-ivory-50 hover:border-teal-600/60 rounded-[var(--radius-card)] border p-5 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]"
+  class="border-ink-500/15 bg-white hover:border-teal-600/60 rounded-[var(--radius-card)] border p-5 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]"
   data-soliloquy-card={isSoliloquy ? '' : undefined}
   data-play={isSoliloquy ? (entry.data.play ?? '') : undefined}
   data-gender={isSoliloquy ? (entry.data.speakerGender ?? '') : undefined}
@@ -42,12 +42,12 @@ const registerColors: Record<string, string> = {
     {entry.data.theme && <Chip tone="clay">{entry.data.theme}</Chip>}
     {entry.data.series && <Chip tone="teal">{entry.data.series}</Chip>}
     {entry.data.register && (
-      <span class={`inline-flex items-center rounded-[var(--radius-chip)] px-3 py-0.5 text-xs font-medium ${registerColors[entry.data.register] ?? 'bg-ivory-100 text-ink-500'}`}>
+      <span class={`inline-flex items-center rounded-[var(--radius-chip)] px-3 py-0.5 text-xs font-medium ${registerColors[entry.data.register] ?? 'bg-ink-500/10 text-ink-500'}`}>
         {entry.data.register}
       </span>
     )}
     {entry.data.speakerGender && entry.data.speakerGender !== 'unspecified' && (
-      <span class="inline-flex items-center rounded-[var(--radius-chip)] px-3 py-0.5 text-xs font-medium bg-ivory-100 text-ink-700 border border-ivory-200">
+      <span class="inline-flex items-center rounded-[var(--radius-chip)] px-3 py-0.5 text-xs font-medium bg-white text-ink-700 border border-ink-500/15">
         {entry.data.speakerGender}
       </span>
     )}

@@ -32,7 +32,7 @@ const entries = (await getCollection('colloquial')).sort((a, b) =>
           const href = `/shakespeare/colloquial/${slug}/`;
           return (
             <li>
-              <article class="border-ivory-200 bg-ivory-50 hover:border-teal-600/60 h-full rounded-[var(--radius-card)] border p-5 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]">
+              <article class="border-ink-500/15 bg-white hover:border-teal-600/60 h-full rounded-[var(--radius-card)] border p-5 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]">
                 <h3 class="font-display text-ink-900 text-xl">
                   <a href={href} class="hover:text-teal-600 no-underline">
                     {entry.data.title}

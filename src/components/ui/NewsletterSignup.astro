@@ -15,7 +15,7 @@ const formId = `newsletter-${source}`;
 
 {
   fallbackMode ? (
-    <div class="border-mustard-400/40 bg-mustard-200/20 rounded-[var(--radius-card)] border p-4">
+    <div class="border-ink-500/25 bg-ink-500/5 rounded-[var(--radius-card)] border p-4">
       <p class="text-ink-700 text-sm">
         <strong>{heading}</strong>
       </p>
@@ -46,7 +46,7 @@ const formId = `newsletter-${source}`;
             name="email"
             autocomplete="email"
             placeholder="you@example.com"
-            class="border-ivory-200 mt-1 w-full rounded border bg-white px-3 py-2 text-base"
+            class="border-ink-500/15 mt-1 w-full rounded border bg-white px-3 py-2 text-base"
           />
         </label>
         <input type="hidden" name="_subject" value={`Newsletter signup (${source})`} />
@@ -87,13 +87,13 @@ const formId = `newsletter-${source}`;
             } else {
               form.insertAdjacentHTML(
                 'afterend',
-                `<p role="alert" class="mt-2 text-sm text-clay-700">Something went wrong. Please email us at <a href="mailto:${email}" class="underline">${email}</a>.</p>`,
+                `<p role="alert" class="mt-2 text-sm text-teal-800">Something went wrong. Please email us at <a href="mailto:${email}" class="underline">${email}</a>.</p>`,
               );
             }
           } catch {
             form.insertAdjacentHTML(
               'afterend',
-              `<p role="alert" class="mt-2 text-sm text-clay-700">Network error. Please email us at <a href="mailto:${email}" class="underline">${email}</a>.</p>`,
+              `<p role="alert" class="mt-2 text-sm text-teal-800">Network error. Please email us at <a href="mailto:${email}" class="underline">${email}</a>.</p>`,
             );
           }
         });

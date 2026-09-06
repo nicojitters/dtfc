@@ -61,7 +61,7 @@ const entries = (await getCollection('scripts'))
     <button
       type="button"
       data-theme=""
-      class="inline-flex items-center rounded-[var(--radius-chip)] px-3 py-0.5 text-xs font-medium bg-ivory-200 text-ink-700 aria-[pressed=true]:bg-teal-600 aria-[pressed=true]:text-ivory-50"
+      class="inline-flex items-center rounded-[var(--radius-chip)] px-3 py-0.5 text-xs font-medium bg-white text-ink-700 aria-[pressed=true]:bg-teal-600 aria-[pressed=true]:text-ivory-50"
       aria-pressed="true"
     >
       All
@@ -72,7 +72,7 @@ const entries = (await getCollection('scripts'))
           type="button"
           data-theme={themeSlug(theme)}
           data-theme-label={theme}
-          class="inline-flex items-center rounded-[var(--radius-chip)] px-3 py-0.5 text-xs font-medium bg-mustard-200 text-ink-700 aria-[pressed=true]:bg-teal-600 aria-[pressed=true]:text-ivory-50"
+          class="inline-flex items-center rounded-[var(--radius-chip)] px-3 py-0.5 text-xs font-medium bg-ink-500/15 text-ink-700 aria-[pressed=true]:bg-teal-600 aria-[pressed=true]:text-ivory-50"
           aria-pressed="false"
         >
           {theme}
@@ -121,13 +121,13 @@ const entries = (await getCollection('scripts'))
     </p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="p-4 border border-ivory-300 rounded bg-canvas">
+      <div class="p-4 border border-ink-500/15 rounded bg-canvas">
         <p class="text-xs uppercase tracking-wider mb-1">Scanned typescript &mdash; pending</p>
         <h3 class="font-display text-xl mb-2">Fools and Fooling</h3>
         <p class="text-sm">1970s performance typescript. ~16MB PDF. Hosting permission pending.</p>
       </div>
 
-      <div class="p-4 border border-ivory-300 rounded bg-canvas">
+      <div class="p-4 border border-ink-500/15 rounded bg-canvas">
         <p class="text-xs uppercase tracking-wider mb-1">Scanned typescript &mdash; pending</p>
         <h3 class="font-display text-xl mb-2">Pretenders List of Scenes</h3>
         <p class="text-sm mb-2">

@@ -12,7 +12,7 @@ if (related.length === 0) return null;
 const entries = await Promise.all(related.map((slug) => getConcept(slug)));
 ---
 
-<section class="border-ivory-200 mt-10 border-t pt-6" aria-label="Related resources">
+<section class="border-ink-500/15 mt-10 border-t pt-6" aria-label="Related resources">
   <h2 class="font-display text-ink-900 text-lg">Other Player Resources</h2>
   <ul class="mt-4 grid gap-3 sm:grid-cols-2">
     {
@@ -20,7 +20,7 @@ const entries = await Promise.all(related.map((slug) => getConcept(slug)));
         <li>
           <a
             href={`/resource-center/${e.data.slug}/`}
-            class="border-ivory-200 hover:border-teal-600/40 flex items-start gap-3 rounded-[var(--radius-card)] border bg-white p-3 no-underline"
+            class="border-ink-500/15 hover:border-teal-600/40 flex items-start gap-3 rounded-[var(--radius-card)] border bg-white p-3 no-underline"
           >
             <img src={iconPath(e.data.icon)} alt="" width="22" height="22" class="mt-1 shrink-0" />
             <div class="min-w-0">

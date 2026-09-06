@@ -13,21 +13,21 @@ const {
 
 <figure class="my-8" id={id}>
   <div class="overflow-x-auto">
-    <table class="border-ivory-200 w-full min-w-[720px] border-collapse border text-sm">
+    <table class="border-ink-500/15 w-full min-w-[720px] border-collapse border text-sm">
       <caption class="text-ink-500 caption-top pb-3 text-left text-sm">
         {caption}
       </caption>
       <thead>
-        <tr class="bg-ivory-200/40">
+        <tr class="bg-white/40">
           <th
             scope="col"
-            class="bg-ivory-50 border-ivory-200 sticky left-0 z-10 border p-2 text-left align-bottom"
+            class="bg-white border-ink-500/15 sticky left-0 z-10 border p-2 text-left align-bottom"
           >
             Theatre Convention
           </th>
           {
             INFLUENCES_CHART.columns.map((col) => (
-              <th scope="col" class="border-ivory-200 border p-2 text-left align-bottom">
+              <th scope="col" class="border-ink-500/15 border p-2 text-left align-bottom">
                 <div class="font-medium">{col.label}</div>
                 {col.subtitle && (
                   <div class="text-ink-500 text-xs font-normal">({col.subtitle})</div>
@@ -43,12 +43,12 @@ const {
             <tr>
               <th
                 scope="row"
-                class="bg-ivory-50 border-ivory-200 text-ink-900 sticky left-0 border p-2 text-left align-top font-medium"
+                class="bg-white border-ink-500/15 text-ink-900 sticky left-0 border p-2 text-left align-top font-medium"
               >
                 {row.label}
               </th>
               {row.values.map((cell) => (
-                <td class="border-ivory-200 text-ink-700 border p-2 align-top">{cell}</td>
+                <td class="border-ink-500/15 text-ink-700 border p-2 align-top">{cell}</td>
               ))}
             </tr>
           ))
