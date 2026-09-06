@@ -7,6 +7,15 @@ interface Props {
 }
 const { voice } = Astro.props;
 const duration = formatDuration(voice.durationSeconds);
+// Strip 'Competency: ' prefix for the on-poster hover chip — the visual
+// context (a chip floating on a person’s video) reads as topic-attribution
+// without needing the prefix. Full tag with prefix stays in the modal and
+// in the trigger’s aria-label.
+const tagLabel = voice.tag
+  ? voice.tag.startsWith('Competency: ')
+    ? voice.tag.slice('Competency: '.length)
+    : voice.tag
+  : null;
 ---
 
 <figure class="w-[140px] shrink-0 snap-start md:w-[110px] lg:w-[120px]">
@@ -19,7 +28,7 @@ const duration = formatDuration(voice.durationSeconds);
     data-tag={voice.tag ?? ''}
     data-poster={voice.posterSrc}
     data-duration={duration}
-    aria-label={`Watch: ${voice.name}, ${duration}`}
+    aria-label={`Watch: ${voice.name}, ${duration}${voice.tag ? `, ${voice.tag}` : ''}`}
     class="group border-ink-500/15 hover:border-teal-600 focus-visible:ring-clay-500 focus-visible:ring-offset-2 relative block aspect-[3/4] w-full overflow-hidden rounded-[var(--radius-card)] border bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)] focus-visible:ring-2"
   >
     <img
@@ -31,6 +40,14 @@ const duration = formatDuration(voice.durationSeconds);
       decoding="async"
       class="absolute inset-0 h-full w-full object-cover"
     />
+    {tagLabel && (
+      <span
+        aria-hidden="true"
+        class="text-teal-800 bg-white/95 pointer-events-none absolute left-1/2 top-2 -translate-x-1/2 whitespace-nowrap rounded-full px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-widest opacity-0 shadow-sm transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
+      >
+        {tagLabel}
+      </span>
+    )}
     <span
       aria-hidden="true"
       class="absolute inset-0 flex items-center justify-center opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100"
@@ -49,7 +66,10 @@ const duration = formatDuration(voice.durationSeconds);
       </span>
     </span>
   </button>
-  <figcaption class="text-ink-500 mt-2 text-xs leading-snug line-clamp-3">
+  <figcaption
+    class="text-ink-500 mt-2 text-xs leading-snug line-clamp-3"
+    title={voice.hyphenates}
+  >
     {voice.hyphenates}
   </figcaption>
 </figure>
