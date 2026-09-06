@@ -896,12 +896,12 @@ EOF
 
 - [ ] **Step 1: Update Chip.astro tone map**
 
-Edit `src/components/ui/Chip.astro`, lines 7-12. Exact old (**post-Task-8 state** — the `neutral` line already has `bg-white` because Task 8's Ivory sweep touched Chip.astro; per pre-flight ruling in `.superpowers/sdd/…/progress.md`):
+Edit `src/components/ui/Chip.astro`, lines 7-12. Exact old (**post-Task-7 + post-Task-8 state**: Task 7 residual-swept the `mustard:` line to `bg-teal-100 text-teal-800`; Task 8 flipped the `neutral:` line's `bg-ivory-200 → bg-white`; both are documented ledger rulings):
 ```typescript
 const tones = {
   clay: 'bg-clay-100 text-clay-700',
   teal: 'bg-teal-100 text-teal-800',
-  mustard: 'bg-mustard-200 text-ink-700',
+  mustard: 'bg-teal-100 text-teal-800',
   neutral: 'bg-white text-ink-700',
 };
 ```
@@ -919,13 +919,13 @@ Tone names kept for API stability. Callsites using `<Chip tone="clay">` now rend
 
 - [ ] **Step 2: Update ScriptCard register color mapping**
 
-Edit `src/components/scripts/ScriptCard.astro`, lines 18-23. Exact old:
+Edit `src/components/scripts/ScriptCard.astro`, lines 18-23. Exact old (**post-Task-7 + post-Task-8 state**: Task 7 residual-swept `grief:` to `bg-teal-100 text-teal-800`; Task 8 flipped `villain:` line's `bg-ivory-200 → bg-white`; both are documented ledger rulings):
 ```typescript
 const registerColors: Record<string, string> = {
   comic:    'bg-teal-100 text-teal-800',
   dramatic: 'bg-clay-100 text-clay-700',
-  villain:  'bg-ivory-200 text-ink-900',
-  grief:    'bg-mustard-200 text-ink-700',
+  villain:  'bg-white text-ink-900',
+  grief:    'bg-teal-100 text-teal-800',
 };
 ```
 Exact new:
