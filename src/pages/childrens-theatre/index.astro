@@ -1,6 +1,7 @@
 ---
 import ChildrensLayout from '@/layouts/ChildrensLayout.astro';
 import ReflectivePrompt from '@/components/section/ReflectivePrompt.astro';
+import DecorativeArrow from '@/components/brand/DecorativeArrow.astro';
 
 const directoryCards = [
   {
@@ -86,7 +87,8 @@ const directoryCards = [
     </ul>
   </section>
 
-  <aside class="border-teal-600/20 bg-teal-600/5 mt-8 rounded-[var(--radius-card)] border p-5">
+  <aside class="border-teal-600/20 bg-teal-600/5 relative mt-8 rounded-[var(--radius-card)] border p-5">
+    <DecorativeArrow variant="down-left" class="text-teal-800 pointer-events-none absolute -top-6 -right-6 hidden h-14 w-14 md:block" />
     <h2 class="font-display text-xl">Casting Players for these plays</h2>
     <p class="text-ink-700 mt-2 text-sm">
       Role-drawing methods, versatile vs. stable casting, and the &ldquo;For Educators&rdquo; framing all live in the Players Resource Center.

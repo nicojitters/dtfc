@@ -2,6 +2,7 @@
 import ShakespeareLayout from '@/layouts/ShakespeareLayout.astro';
 import ReflectivePrompt from '@/components/section/ReflectivePrompt.astro';
 import Concept from '@/components/concept/Concept.astro';
+import DecorativeArrow from '@/components/brand/DecorativeArrow.astro';
 
 const directoryCards = [
   {
@@ -39,7 +40,8 @@ const directoryCards = [
 >
   <ReflectivePrompt sectionKey="shakespeare" />
 
-  <aside class="border-teal-600/25 bg-teal-600/5 mt-8 rounded-[var(--radius-card)] border-l-4 p-5">
+  <aside class="border-teal-600/25 bg-teal-600/5 relative mt-8 rounded-[var(--radius-card)] border-l-4 p-5">
+    <DecorativeArrow variant="down-right" class="text-teal-800 pointer-events-none absolute -top-6 -left-6 hidden h-14 w-14 md:block" />
     <h2 class="font-display text-ink-900 text-xl">Leave the Language as Shakespeare&rsquo;s Own.</h2>
     <p class="text-ink-700 mt-2 max-w-prose text-base leading-relaxed">
       When Players of any age step into Shakespeare&rsquo;s words as written, they train ear, breath, and

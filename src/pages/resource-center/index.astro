@@ -4,6 +4,7 @@ import ReflectivePrompt from '@/components/section/ReflectivePrompt.astro';
 import LetterRail from '@/components/prc/LetterRail.astro';
 import EntryCard from '@/components/prc/EntryCard.astro';
 import { listConcepts } from '@/lib/concepts';
+import DecorativeArrow from '@/components/brand/DecorativeArrow.astro';
 
 const concepts = await listConcepts();
 
@@ -27,9 +28,10 @@ const activeLetters = Array.from(grouped.keys()).sort();
 
   <section
     id="icons"
-    class="border-teal-600/20 bg-teal-600/5 mt-6 rounded-[var(--radius-card)] border p-5"
+    class="border-teal-600/20 bg-teal-600/5 relative mt-6 rounded-[var(--radius-card)] border p-5"
     data-pagefind-ignore
   >
+    <DecorativeArrow variant="down-right" class="text-teal-800 pointer-events-none absolute -top-6 -left-6 hidden h-14 w-14 md:block" />
     <h2 class="font-display text-xl">What are the ICONs?</h2>
     <p class="text-ink-700 mt-2 max-w-prose text-sm">
       The small visual symbols throughout the site — pictures paired with a name and a short

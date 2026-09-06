@@ -1,6 +1,7 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
 import NewsletterSignup from '@/components/ui/NewsletterSignup.astro';
+import DecorativeArrow from '@/components/brand/DecorativeArrow.astro';
 ---
 
 <SectionLayout
@@ -15,7 +16,8 @@ import NewsletterSignup from '@/components/ui/NewsletterSignup.astro';
       opens.
     </p>
   </div>
-  <div class="mt-6 max-w-md">
+  <div class="relative mt-6 max-w-md">
+    <DecorativeArrow variant="down-left" class="text-teal-800 pointer-events-none absolute -top-6 -right-6 hidden h-14 w-14 md:block" />
     <NewsletterSignup source="workshops-interest" heading="Notify me when workshops open." />
   </div>
 </SectionLayout>
