@@ -1,0 +1,55 @@
+---
+import type { Voice } from '@/data/voices';
+import { formatDuration } from '@/data/voices';
+
+interface Props {
+  voice: Voice;
+}
+const { voice } = Astro.props;
+const duration = formatDuration(voice.durationSeconds);
+---
+
+<figure class="w-[140px] shrink-0 snap-start md:w-[110px] lg:w-[120px]">
+  <button
+    type="button"
+    data-voice-trigger
+    data-yt-id={voice.ytId}
+    data-name={voice.name}
+    data-hyphenates={voice.hyphenates}
+    data-tag={voice.tag ?? ''}
+    data-poster={voice.posterSrc}
+    data-duration={duration}
+    aria-label={`Watch: ${voice.name}, ${duration}`}
+    class="group border-ink-500/15 hover:border-teal-600 focus-visible:ring-clay-500 focus-visible:ring-offset-2 relative block aspect-[3/4] w-full overflow-hidden rounded-[var(--radius-card)] border bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)] focus-visible:ring-2"
+  >
+    <img
+      src={voice.posterSrc}
+      alt=""
+      width="240"
+      height="320"
+      loading="lazy"
+      decoding="async"
+      class="absolute inset-0 h-full w-full object-cover"
+    />
+    <span
+      aria-hidden="true"
+      class="absolute inset-0 flex items-center justify-center opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100"
+    >
+      <svg width="40" height="40" viewBox="0 0 40 40" class="drop-shadow-lg">
+        <circle cx="20" cy="20" r="18" fill="rgba(20,112,123,0.9)" />
+        <path d="M 16 12 L 28 20 L 16 28 Z" fill="white" />
+      </svg>
+    </span>
+    <span class="absolute inset-x-0 bottom-0 flex items-end justify-between gap-1 bg-gradient-to-t from-black/85 via-black/50 to-transparent p-2 pt-6">
+      <span class="text-ivory-50 text-left text-xs font-semibold leading-tight">
+        {voice.name}
+      </span>
+      <span class="text-ivory-50/90 shrink-0 text-[0.7rem] tabular-nums">
+        {duration}
+      </span>
+    </span>
+  </button>
+  <figcaption class="text-ink-500 mt-2 text-xs leading-snug line-clamp-3">
+    {voice.hyphenates}
+  </figcaption>
+</figure>

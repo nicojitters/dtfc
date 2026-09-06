@@ -1,0 +1,23 @@
+---
+import { VOICES } from '@/data/voices';
+import VoiceCard from './VoiceCard.astro';
+import VideoModal from './VideoModal.astro';
+---
+
+<section aria-label="Voices of DT:FC" class="mx-auto mb-10 max-w-6xl md:mb-14">
+  <p class="text-teal-800 text-xs font-semibold uppercase tracking-widest">
+    Voices of DT:FC
+  </p>
+  <p class="text-ink-700 mt-1 text-sm">
+    Nine short reflections from Players, teachers, and collaborators on why this work matters.
+  </p>
+
+  <div
+    class="mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 md:gap-2"
+    data-voices-strip
+  >
+    {VOICES.map((voice) => <VoiceCard voice={voice} />)}
+  </div>
+</section>
+
+<VideoModal />

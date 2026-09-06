@@ -1,0 +1,128 @@
+---
+/**
+ * Single modal instance shared by all VoiceCard triggers on the page.
+ * Reads name/hyphenates/tag/poster/ytId from the clicked trigger’s data-*
+ * attributes and populates the modal on open.
+ *
+ * YouTube facade pattern: modal opens with a poster + play button; the actual
+ * iframe (which ships ~500 KB of YouTube JS) only loads on the second click.
+ * This keeps landing-page LCP unaffected by the strip.
+ */
+---
+
+<dialog
+  id="voices-modal"
+  class="bg-white text-ink-900 mx-auto mt-8 w-[calc(100%-2rem)] max-w-3xl rounded-[var(--radius-card)] border-0 p-0 backdrop:bg-ink-900/60"
+  aria-labelledby="voices-modal-title"
+  data-pagefind-ignore
+>
+  <div class="p-5 md:p-6">
+    <div class="flex items-start justify-between gap-4">
+      <div class="min-w-0 flex-1">
+        <h2 id="voices-modal-title" data-voice-name class="font-display text-ink-900 m-0 text-2xl leading-tight"></h2>
+        <p data-voice-hyphenates class="text-ink-700 mt-1 text-sm leading-snug"></p>
+        <p data-voice-tag class="text-teal-800 mt-1 text-xs font-semibold uppercase tracking-widest" hidden></p>
+      </div>
+      <button
+        type="button"
+        data-voice-close
+        aria-label="Close video"
+        class="text-ink-500 hover:text-ink-900 focus-visible:ring-clay-500 shrink-0 rounded p-1 focus-visible:ring-2 focus-visible:ring-offset-2"
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+
+    <div data-voice-body class="bg-ink-900 mt-4 aspect-video overflow-hidden rounded"></div>
+  </div>
+</dialog>
+
+<script is:inline>
+  (function initVoicesModal() {
+    if (window.__dtfcVoicesModalInit) return;
+    window.__dtfcVoicesModalInit = true;
+
+    const attach = () => {
+      const modal = document.getElementById('voices-modal');
+      if (!modal) return;
+      const nameEl = modal.querySelector('[data-voice-name]');
+      const hyphEl = modal.querySelector('[data-voice-hyphenates]');
+      const tagEl = modal.querySelector('[data-voice-tag]');
+      const bodyEl = modal.querySelector('[data-voice-body]');
+      const closeBtn = modal.querySelector('[data-voice-close]');
+      const triggers = document.querySelectorAll('[data-voice-trigger]');
+
+      const openFor = (btn) => {
+        const {
+          ytId,
+          name,
+          hyphenates,
+          tag,
+          poster,
+        } = btn.dataset;
+        nameEl.textContent = name || '';
+        hyphEl.textContent = hyphenates || '';
+        if (tag) {
+          tagEl.textContent = tag;
+          tagEl.hidden = false;
+        } else {
+          tagEl.textContent = '';
+          tagEl.hidden = true;
+        }
+        // Facade — poster + play button; iframe loads only on interaction.
+        bodyEl.innerHTML =
+          '<button type="button" data-voice-play class="relative block h-full w-full overflow-hidden"' +
+          ' aria-label="Play video: ' + (name || '') + '">' +
+          '<img src="' + (poster || '') + '" alt="" class="absolute inset-0 h-full w-full object-cover" />' +
+          '<span aria-hidden="true" class="absolute inset-0 flex items-center justify-center">' +
+          '<svg width="72" height="72" viewBox="0 0 72 72" class="drop-shadow-lg">' +
+          '<circle cx="36" cy="36" r="32" fill="rgba(20,112,123,0.95)" />' +
+          '<path d="M 28 22 L 52 36 L 28 50 Z" fill="white" />' +
+          '</svg></span></button>';
+        const playBtn = bodyEl.querySelector('[data-voice-play]');
+        playBtn.addEventListener('click', () => {
+          bodyEl.innerHTML =
+            '<iframe src="https://www.youtube-nocookie.com/embed/' + ytId + '?autoplay=1&rel=0" ' +
+            'title="' + (name || '') + ' — DT:FC voice" ' +
+            'allow="autoplay; encrypted-media; picture-in-picture" ' +
+            'allowfullscreen ' +
+            'class="h-full w-full border-0"></iframe>';
+        });
+        if (typeof modal.showModal === 'function') {
+          modal.showModal();
+        } else {
+          modal.setAttribute('open', '');
+        }
+      };
+
+      const closeModal = () => {
+        if (typeof modal.close === 'function') {
+          modal.close();
+        } else {
+          modal.removeAttribute('open');
+        }
+        // Stop video by tearing down iframe/facade on close.
+        bodyEl.innerHTML = '';
+      };
+
+      triggers.forEach((btn) => btn.addEventListener('click', () => openFor(btn)));
+      closeBtn.addEventListener('click', closeModal);
+      // Click backdrop (dialog element itself, not its inner panel) to close.
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+      // Escape triggers native <dialog>'s cancel event before close.
+      modal.addEventListener('close', () => {
+        bodyEl.innerHTML = '';
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', attach);
+    } else {
+      attach();
+    }
+  })();
+</script>
