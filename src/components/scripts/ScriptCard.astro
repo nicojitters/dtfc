@@ -14,12 +14,12 @@ const isSoliloquy = entry.data.library === 'soliloquies';
 
 // Register color mapping using existing token families (amber/charcoal/indigo not in tokens.css).
 // comic → teal (light, playful); dramatic → clay (warm, serious);
-// villain → ivory-200/ink-900 (neutral, shadowed); grief → mustard (muted, somber).
+// villain → ivory-200/ink-900 (neutral, shadowed); grief → teal-100/teal-800 (muted, somber).
 const registerColors: Record<string, string> = {
   comic:    'bg-teal-100 text-teal-800',
   dramatic: 'bg-clay-100 text-clay-700',
   villain:  'bg-ivory-200 text-ink-900',
-  grief:    'bg-mustard-200 text-ink-700',
+  grief:    'bg-teal-100 text-teal-800',
 };
 ---
 
