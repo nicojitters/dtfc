@@ -18,7 +18,15 @@ const tagLabel = voice.tag
   : null;
 ---
 
-<figure class="w-[140px] shrink-0 snap-start md:w-[110px] lg:w-[120px]">
+<figure class="group/card relative w-[140px] shrink-0 snap-start md:w-[110px] lg:w-[120px]">
+  {tagLabel && (
+    <span
+      aria-hidden="true"
+      class="text-teal-800 group-hover/card:opacity-100 pointer-events-none absolute -top-5 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap text-center text-[0.65rem] font-semibold uppercase tracking-widest opacity-0 transition-opacity duration-200"
+    >
+      {tagLabel}
+    </span>
+  )}
   <button
     type="button"
     data-voice-trigger
@@ -29,7 +37,7 @@ const tagLabel = voice.tag
     data-poster={voice.posterSrc}
     data-duration={duration}
     aria-label={`Watch: ${voice.name}, ${duration}${voice.tag ? `, ${voice.tag}` : ''}`}
-    class="group border-ink-500/15 hover:border-teal-600 focus-visible:ring-clay-500 focus-visible:ring-offset-2 relative block aspect-[3/4] w-full overflow-hidden rounded-[var(--radius-card)] border bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)] focus-visible:ring-2"
+    class="group/poster border-ink-500/15 hover:border-teal-600 focus-visible:ring-clay-500 focus-visible:ring-offset-2 relative block aspect-[3/4] w-full overflow-hidden rounded-[var(--radius-card)] border bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)] focus-visible:ring-2"
   >
     <img
       src={voice.posterSrc}
@@ -40,17 +48,9 @@ const tagLabel = voice.tag
       decoding="async"
       class="absolute inset-0 h-full w-full object-cover"
     />
-    {tagLabel && (
-      <span
-        aria-hidden="true"
-        class="text-teal-800 bg-white/95 pointer-events-none absolute left-1/2 top-2 -translate-x-1/2 whitespace-nowrap rounded-full px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-widest opacity-0 shadow-sm transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
-      >
-        {tagLabel}
-      </span>
-    )}
     <span
       aria-hidden="true"
-      class="absolute inset-0 flex items-center justify-center opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100"
+      class="absolute inset-0 flex items-center justify-center opacity-0 transition group-hover/poster:opacity-100 group-focus-visible/poster:opacity-100"
     >
       <svg width="40" height="40" viewBox="0 0 40 40" class="drop-shadow-lg">
         <circle cx="20" cy="20" r="18" fill="rgba(20,112,123,0.9)" />
@@ -66,10 +66,15 @@ const tagLabel = voice.tag
       </span>
     </span>
   </button>
-  <figcaption
-    class="text-ink-500 mt-2 text-xs leading-snug line-clamp-3"
-    title={voice.hyphenates}
-  >
+  <figcaption class="text-ink-500 mt-2 text-xs leading-snug line-clamp-3">
     {voice.hyphenates}
   </figcaption>
+  {/* Hover-reveal full hyphenates: absolute-positioned popover under the caption,
+      wider than the card for readability, no layout shift. Shown on card hover/focus. */}
+  <div
+    aria-hidden="true"
+    class="text-ink-700 ring-ink-500/15 group-hover/card:opacity-100 group-focus-within/card:opacity-100 pointer-events-none absolute left-1/2 top-[calc(100%+0.25rem)] z-30 w-[200px] -translate-x-1/2 rounded-md bg-white p-2.5 text-[0.72rem] leading-snug opacity-0 shadow-lg ring-1 transition-opacity duration-200"
+  >
+    {voice.hyphenates}
+  </div>
 </figure>
