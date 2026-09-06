@@ -42,7 +42,7 @@ const registerColors: Record<string, string> = {
     {entry.data.theme && <Chip tone="clay">{entry.data.theme}</Chip>}
     {entry.data.series && <Chip tone="teal">{entry.data.series}</Chip>}
     {entry.data.register && (
-      <span class={`inline-flex items-center rounded-[var(--radius-chip)] px-3 py-0.5 text-xs font-medium ${registerColors[entry.data.register] ?? 'bg-white text-ink-500'}`}>
+      <span class={`inline-flex items-center rounded-[var(--radius-chip)] px-3 py-0.5 text-xs font-medium ${registerColors[entry.data.register] ?? 'bg-ink-500/10 text-ink-500'}`}>
         {entry.data.register}
       </span>
     )}
