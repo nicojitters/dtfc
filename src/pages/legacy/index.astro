@@ -3,6 +3,7 @@ import { getEntry, render } from 'astro:content';
 import LegacyLayout from '@/layouts/LegacyLayout.astro';
 import ReflectivePrompt from '@/components/section/ReflectivePrompt.astro';
 import InfluencesChart from '@/components/legacy/InfluencesChart.astro';
+import DecorativeArrow from '@/components/brand/DecorativeArrow.astro';
 
 // Lola Wilcox’s "Theatre Influences" essay doubles as the Legacy landing
 // narrative per vision spec §3 Doc #4. Rendered inline here; the essay URL
@@ -84,8 +85,9 @@ const directoryCards = [
 
   <section
     aria-label="Recruitment"
-    class="border-teal-600/60 my-14 mx-auto max-w-3xl border-l-4 py-6 pl-6 pr-4"
+    class="border-teal-600/60 relative my-14 mx-auto max-w-3xl border-l-4 py-6 pl-6 pr-4"
   >
+    <DecorativeArrow variant="swirl" class="text-teal-800 pointer-events-none absolute -top-6 -right-6 hidden h-16 w-16 md:block" />
     <p class="font-display text-ink-900 text-2xl leading-snug md:text-3xl">
       You are the next heroes and heroines to continue this legacy.
     </p>

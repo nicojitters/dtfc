@@ -5,6 +5,7 @@ import Concept from '@/components/concept/Concept.astro';
 import Chip from '@/components/ui/Chip.astro';
 import { COMPETENCIES, COMPETENCY_LABELS, COMPETENCY_SUBSETS } from '@/lib/types';
 import ReflectivePrompt from '@/components/section/ReflectivePrompt.astro';
+import DecorativeArrow from '@/components/brand/DecorativeArrow.astro';
 
 const audiences = [
   {
@@ -178,7 +179,8 @@ const cohesionRungs = [
       </aside>
     </div>
 
-    <aside class="lg:sticky lg:top-8 lg:self-start">
+    <aside class="relative lg:sticky lg:top-8 lg:self-start">
+      <DecorativeArrow variant="down-right" class="text-teal-800 pointer-events-none absolute -top-8 -left-8 hidden h-16 w-16 md:block" />
       <div class="bg-teal-600 text-ivory-50 rounded-[var(--radius-card)] p-6">
         <p class="font-display text-2xl">Find a game</p>
         <p class="text-white mt-2 text-sm">
