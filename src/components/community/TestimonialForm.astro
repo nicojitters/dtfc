@@ -122,13 +122,13 @@ const { action, fallbackMode } = formActionFor('testimonial');
             } else {
               form.insertAdjacentHTML(
                 'afterend',
-                `<p role="alert" class="mt-2 text-sm text-clay-700">Something went wrong. Please email us at <a href="mailto:${email}" class="underline">${email}</a>.</p>`,
+                `<p role="alert" class="mt-2 text-sm text-teal-800">Something went wrong. Please email us at <a href="mailto:${email}" class="underline">${email}</a>.</p>`,
               );
             }
           } catch {
             form.insertAdjacentHTML(
               'afterend',
-              `<p role="alert" class="mt-2 text-sm text-clay-700">Network error. Please email us at <a href="mailto:${email}" class="underline">${email}</a>.</p>`,
+              `<p role="alert" class="mt-2 text-sm text-teal-800">Network error. Please email us at <a href="mailto:${email}" class="underline">${email}</a>.</p>`,
             );
           }
         });
