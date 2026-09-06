@@ -1,0 +1,47 @@
+---
+/**
+ * Decorative hand-drawn arrow SVGs echoing the DT:FC primary logo’s brush-stroke
+ * arrows. Purely decorative — aria-hidden + role="presentation". Fill inherits
+ * from currentColor so parent `text-<color>` drives the tint.
+ *
+ * Variants:
+ *   down-right — swoop from top-left, tip pointing bottom-right (place above-left of target)
+ *   down-left  — swoop from top-right, tip pointing bottom-left (place above-right of target)
+ *   swirl      — spiral inward ending in arrowhead (place near a hero element it curls into)
+ */
+interface Props {
+  variant: 'down-right' | 'down-left' | 'swirl';
+  class?: string;
+}
+const { variant, class: className = '' } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 100 100"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+  role="presentation"
+  class={className}
+>
+  {variant === 'down-right' && (
+    <g stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <path d="M 12 12 Q 35 25 55 45 Q 70 60 85 82" />
+      <path d="M 85 82 L 74 78" />
+      <path d="M 85 82 L 82 72" />
+    </g>
+  )}
+  {variant === 'down-left' && (
+    <g stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <path d="M 88 12 Q 65 25 45 45 Q 30 60 15 82" />
+      <path d="M 15 82 L 26 78" />
+      <path d="M 15 82 L 18 72" />
+    </g>
+  )}
+  {variant === 'swirl' && (
+    <g stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <path d="M 90 50 Q 90 20 55 15 Q 15 15 15 50 Q 15 78 50 82 Q 72 82 72 62 Q 72 48 55 48" />
+      <path d="M 55 48 L 63 42" />
+      <path d="M 55 48 L 60 56" />
+    </g>
+  )}
+</svg>
