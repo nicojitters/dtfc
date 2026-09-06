@@ -1,13 +1,19 @@
 ---
 interface Props {
-  size?: 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   class?: string;
 }
 const { size = 'md', class: className = '' } = Astro.props;
 
-const sizing = size === 'lg'
-  ? { width: 320, height: 212, wClass: 'w-[240px] md:w-[320px]', loading: 'eager' as const }
-  : { width: 240, height: 159, wClass: 'w-[180px] md:w-[240px]', loading: 'lazy' as const };
+// Native logo is 800x530 (~1.51 aspect ratio). Widths tuned so:
+//   sm — header chrome (~48px tall)
+//   md — About page (~159px tall)
+//   lg — landing hero (~212px tall)
+const sizing = {
+  sm: { width: 72,  height: 48,  wClass: 'w-[72px]',                loading: 'eager' as const },
+  md: { width: 240, height: 159, wClass: 'w-[180px] md:w-[240px]', loading: 'lazy'  as const },
+  lg: { width: 320, height: 212, wClass: 'w-[240px] md:w-[320px]', loading: 'eager' as const },
+}[size];
 ---
 
 <img
