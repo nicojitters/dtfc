@@ -18,4 +18,5 @@ const { box, mode, class: className = '' } = Astro.props;
     <h2 class="font-display text-ink-900 text-xl">{box.label}</h2>
     <BoxContent box={box} mode={mode} />
   </a>
+  <slot />
 </li>

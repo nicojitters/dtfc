@@ -1,5 +1,6 @@
 ---
 import CommunityLayout from '@/layouts/CommunityLayout.astro';
+import BrandMark from '@/components/brand/BrandMark.astro';
 ---
 
 <CommunityLayout
@@ -8,6 +9,8 @@ import CommunityLayout from '@/layouts/CommunityLayout.astro';
   eyebrow="Purpose, promise, and the five competencies"
   description="What DT:FC is, what it&rsquo;s for, and the life skills it builds."
 >
+  <BrandMark size="md" class="mx-auto my-6 md:my-8 block" />
+
   <div class="max-w-2xl space-y-8">
     {/* CLIENT REVIEW: drafted from source spec §5 About subsection; adapt from imported "About DT:FC" doc when Task 4 stages it. */}
 

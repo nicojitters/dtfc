@@ -4,6 +4,7 @@ import CommunityCenter from './CommunityCenter.astro';
 import SectionBox from './SectionBox.astro';
 import WorkshopsTile from './WorkshopsTile.astro';
 import NewsletterTile from './NewsletterTile.astro';
+import DecorativeArrow from '@/components/brand/DecorativeArrow.astro';
 
 // Resolve per-tile mode (per-box override wins over global LANDING_MODE).
 const resolveMode = (override?: BoxMode): BoxMode => override ?? LANDING_MODE;
@@ -28,7 +29,9 @@ const prc = findTile('resource-center');
   <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
     {/* Row 1 — top section tiles */}
     <ul class="contents">
-      <SectionBox box={theatreGames} mode={resolveMode(theatreGames.mode)} class="md:col-start-1 md:row-start-1" />
+      <SectionBox box={theatreGames} mode={resolveMode(theatreGames.mode)} class="md:col-start-1 md:row-start-1 relative">
+        <DecorativeArrow variant="down-right" class="text-teal-800 pointer-events-none absolute -top-6 -left-6 hidden h-14 w-14 md:block" />
+      </SectionBox>
       <SectionBox box={shakespeare}  mode={resolveMode(shakespeare.mode)}  class="md:col-start-2 md:row-start-1" />
       <SectionBox box={childrens}    mode={resolveMode(childrens.mode)}    class="md:col-start-3 md:row-start-1" />
     </ul>
@@ -42,12 +45,14 @@ const prc = findTile('resource-center');
     </div>
 
     {/* Row 2 col 2 — Community (the identity center) */}
-    <div class="order-first md:order-none md:col-start-2 md:row-start-2">
+    <div class="order-first relative md:order-none md:col-start-2 md:row-start-2">
+      <DecorativeArrow variant="down-left" class="text-teal-800 pointer-events-none absolute -top-6 -right-6 hidden h-14 w-14 md:block" />
       <CommunityCenter />
     </div>
 
     {/* Row 2 col 3 — PRC stacked snug with the Workshops tile below it */}
-    <div class="flex flex-col gap-4 md:col-start-3 md:row-start-2">
+    <div class="relative flex flex-col gap-4 md:col-start-3 md:row-start-2">
+      <DecorativeArrow variant="swirl" class="text-teal-800 pointer-events-none absolute -top-8 -right-4 hidden h-16 w-16 md:block" />
       <ul class="contents">
         <SectionBox box={prc} mode={resolveMode(prc.mode)} />
       </ul>

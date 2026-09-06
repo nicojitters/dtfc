@@ -1,0 +1,20 @@
+---
+interface Props {
+  size?: 'md' | 'lg';
+  class?: string;
+}
+const { size = 'md', class: className = '' } = Astro.props;
+
+const sizing = size === 'lg'
+  ? { width: 320, height: 212, wClass: 'w-[240px] md:w-[320px]', loading: 'eager' as const }
+  : { width: 240, height: 159, wClass: 'w-[180px] md:w-[240px]', loading: 'lazy' as const };
+---
+
+<img
+  src="/DTFC-primary-logo.png"
+  alt="Developmental Theatre: Fearless Creativity"
+  width={sizing.width}
+  height={sizing.height}
+  loading={sizing.loading}
+  class={`${sizing.wClass} h-auto ${className}`.trim()}
+/>
